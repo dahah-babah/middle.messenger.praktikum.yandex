@@ -1,0 +1,48 @@
+@import 'normalize';
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/src/assets/fonts/Inter/Inter.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.Inter() {
+  font-family: 'Inter', sans-serif;
+}
+
+.text-constructor(@size; @height; @weight) {
+  .Inter();
+
+  font-size: @size;
+  line-height: @height;
+  font-weight: @weight;
+}
+
+.title_xl {
+  .text-constructor(40px, 40px, 500);
+}
+
+.title_l {
+  .text-constructor(20px, 20px, 500);
+}
+
+.title_m {
+  .text-constructor(16px, 16px, 600);
+}
+
+.text_l {
+  .text-constructor(13px, 13px, 500);
+}
+
+.text_m {
+  .text-constructor(12px, 12px, 500);
+}
+
+.text_s {
+  .text-constructor(9px, 9px, 500);
+}
+
+.text_xs {
+  .text-constructor(8px, 8px, 400);
+}
