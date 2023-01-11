@@ -5,7 +5,7 @@ const port = 3000
 
 app.use(express.static(`${__dirname}/dist`))
 
-app.get('*', (req, res) => {
+app.get('/*', (req, res) => {
     res.sendFile(`${__dirname}/dist/index.html`)
 })
 
