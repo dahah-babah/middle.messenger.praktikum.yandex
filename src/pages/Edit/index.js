@@ -16,7 +16,7 @@ const Edit = `
         <section class="${s.profile}">
             <header class="${s.header}">
                 <div class="${s.avatar}">
-                    <img src="${avatar}" alt="avatar" />
+                    <input src="${avatar}" type="image" name="avatar" alt="avatar"  />
     
                     <div class="${s.overlay}"> Поменять аватар </div>
                 </div>
