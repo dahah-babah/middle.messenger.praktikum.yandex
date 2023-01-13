@@ -2,18 +2,17 @@
   "name": "web-messenger",
   "version": "1.0.0",
   "scripts": {
-    "start:dev": "nodemon --watch src server.js --exec 'parcel build src/index.html && parcel src/index.html'",
+    "dev": "parcel src/index.html --open",
     "start": "node server.js",
     "build": "parcel build src/index.html"
   },
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.20",
-    "parcel": "^2.8.2"
+    "parcel": "2.8.2"
   },
   "dependencies": {
-    "@parcel/transformer-less": "^2.8.2",
-    "express": "^4.18.2"
+    "@parcel/transformer-less": "2.8.2",
+    "express": "4.18.2"
   },
   "alias": {
     "process": {
