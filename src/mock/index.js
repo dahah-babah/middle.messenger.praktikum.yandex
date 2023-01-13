@@ -24,21 +24,21 @@ const signUpFields = [{
 },{
     id: 'login',
     type: 'text',
-    name: 'text',
+    name: 'login',
     label: 'Логин',
     value: 'ivanivanov',
     placeholder: 'Логин',
 },{
     id: 'first_name',
     type: 'text',
-    name: 'text',
+    name: 'first_name',
     label: 'Имя',
     value: 'Иван',
     placeholder: 'Имя',
 },{
     id: 'second_name',
     type: 'text',
-    name: 'text',
+    name: 'second_name',
     label: 'Фамилия',
     value: 'Иванов',
     placeholder: 'Фамилия',
@@ -91,7 +91,7 @@ const userFields = [{
     value: 'Иванushka',
     type: 'text',
 },{
-    phone: 'phone',
+    name: 'phone',
     label: 'Телефон',
     value: '+7 (909) 967 30 30',
     type: 'phone',
