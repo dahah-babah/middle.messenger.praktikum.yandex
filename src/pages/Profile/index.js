@@ -13,7 +13,7 @@ const Profile = `
             </a>
         </aside>
             
-        <section class="${s.profile}">
+        <form class="${s.profile}">
             <header class="${s.header}">
                 <div class="${s.avatar}">
                     <input src="${avatar}" type="image" name="avatar" alt="avatar"  />
@@ -33,12 +33,12 @@ const Profile = `
                 %}
             </ul>
     
-            <footer class="${s.footer}">
+            <div class="${s.controls}">
                 {set changeDataLink in ${Link('link')} %}
                 {set changePasswordLink in ${Link('link')} %}
                 {set exitLink in ${Link('link')} %}
-            </footer>
-        </section>
+            </div>
+        </form>
     </article>
 `
 

@@ -6,7 +6,7 @@ import Link from '/src/components/Link'
 
 const Auth = `
     <section class="${s.root}">
-      <div class="${s.form}">
+      <form class="${s.form}">
         <h2 class="${s.title}"> {title} </h2>
 
         <ul class="${s.list}">
@@ -17,11 +17,11 @@ const Auth = `
             %}
         </ul>
 
-        <footer class="${s.footer}">
+        <div class="${s.controls}">
             {set button in ${Button('button')} %}
             {set link in ${Link('link')} %}
-        </footer>
-      </div>
+        </div>
+      </form>
     </section>
 `
 

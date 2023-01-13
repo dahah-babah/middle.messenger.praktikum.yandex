@@ -22,18 +22,20 @@ const Edit = `
                 </div>
             </header>
             
-            <ul class="${s.list}">
-                {for field in fields
-                    <li class="${s.listItem}">
-                        <label for="{name}"> {label} </label>
-                        <input id="{name}" type="{type}" name="{name}" class="${s.input}" value="{value}" placeholder="{label}"/>
-                    </li>
-                %}
-            </ul>
-    
-            <footer class="${s.footer}">
-                {set button in ${Button('button')} %}
-            </footer>
+            <form class="${s.form}">
+                <ul class="${s.list}">
+                    {for field in fields
+                        <li class="${s.listItem}">
+                            <label for="{name}"> {label} </label>
+                            <input id="{name}" type="{type}" name="{name}" class="${s.input}" value="{value}" placeholder="{label}"/>
+                        </li>
+                    %}
+                </ul>
+                
+                <div class="${s.button}">
+                    {set button in ${Button('button')} %}
+                </div>
+            </form>
         </section>
     </article>
 `
