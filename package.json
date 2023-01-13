@@ -8,11 +8,11 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "parcel": "^2.8.2"
+    "parcel": "2.8.2"
   },
   "dependencies": {
-    "@parcel/transformer-less": "^2.8.2",
-    "express": "^4.18.2"
+    "@parcel/transformer-less": "2.8.2",
+    "express": "4.18.2"
   },
   "alias": {
     "process": {
