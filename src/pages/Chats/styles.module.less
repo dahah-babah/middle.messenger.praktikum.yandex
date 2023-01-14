@@ -1,0 +1,63 @@
+@import '/src/styles/colors';
+@import '/src/styles/typography';
+
+.root {
+  display: flex;
+  height: 100%;
+}
+
+.chats {
+  min-width: 310px;
+  background-color: @alabaster;
+  padding: 0 10px;
+}
+
+.chat {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.profile {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.link {
+  .text_m();
+
+  color: @dustyGray;
+  text-decoration: none;
+  margin-right: 8px;
+}
+
+.search {
+  .text_m();
+
+  width: 100%;
+  border-radius: 5px;
+  border: none;
+  background-color: @gallery;
+  padding: 10px 0;
+  color: @dustyGray;
+  text-align: center;
+}
+
+.footer {
+  padding: 11px 20px;
+  width: 100%;
+}
+
+.input {
+  .text_m();
+
+  width: 100%;
+  background-color: @gallery;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 20px;
+  color: @dustyGray;
+}
