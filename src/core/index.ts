@@ -59,13 +59,13 @@ const Core = {
     if (template === childrenTpl) return Core.createElement(tag, props, template)
 
     // проверка на наличие в чилдренах только значения для подстановки вида: {title}
-    const onlyValueRegExp = new RegExp('^\\{(.+)\\}$', 'g')
+    const onlyValueRegExp = /^\{(.+)\}$/g
     // проверка на наличие в чилдренах только текста
     const onlyTextRegExp = new RegExp('^([\\wа-я\\W][^<>{}]+)$', 'ig')
     // пока цикл это только fields -> нужна проверка на название массива из data, искать его в childrenTpl
-    const cycleRegExp = new RegExp('^{for\\s(\\w+)\\sin\\s(fields)(.+)%}$', 'g')
+    const cycleRegExp = /^{for\s(\w+)\sin\s(fields)(.+)%}$/g
     // поиск пропов вида: проп={} / {} -> нужен для поиска имен пропсов в компонентах
-    const propInAttrRegExp = new RegExp('^.*{(\\w+)}.*$', 'g')
+    const propInAttrRegExp = /^.*{(\w+)}.*$/g
     // поиск компонентов по ключевому слову set
     const component = '{set\\s(\\w+)\\sin\\s(<[\\w|\\s|=|"|{|}]+>[\\s|\\w|{|}]+<\\/[\\w|\\s|=|"|{|}]+>)\\s%}'
     const componentRegExp = new RegExp(component, 'g')
