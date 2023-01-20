@@ -1,9 +1,8 @@
+import Button from '@/components/Button'
+
+import avatar from '@/assets/icons/avatar.svg'
+import arrowLeft from '@/assets/icons/arrowLeft.svg'
 import * as s from './styles.module.less'
-
-import Button from '/src/components/Button'
-
-import avatar from '/src/assets/icons/avatar.svg'
-import arrowLeft from '/src/assets/icons/arrowLeft.svg'
 
 const Edit = `
     <article class="${s.root}">

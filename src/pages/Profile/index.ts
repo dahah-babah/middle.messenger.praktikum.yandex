@@ -1,9 +1,8 @@
+import Link from '@/components/Link'
+
+import avatar from '@/assets/icons/avatar.svg'
+import arrowLeft from '@/assets/icons/arrowLeft.svg'
 import * as s from './styles.module.less'
-
-import Link from '/src/components/Link'
-
-import avatar from '/src/assets/icons/avatar.svg'
-import arrowLeft from '/src/assets/icons/arrowLeft.svg'
 
 const Profile = `
     <article class="${s.root}">

@@ -1,8 +1,7 @@
+import Button from '@/components/Button'
+import Input from '@/components/Input'
+import Link from '@/components/Link'
 import * as s from './styles.module.less'
-
-import Button from '/src/components/Button'
-import Input from '/src/components/Input'
-import Link from '/src/components/Link'
 
 const Auth = `
     <section class="${s.root}">

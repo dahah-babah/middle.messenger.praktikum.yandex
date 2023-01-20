@@ -33,22 +33,6 @@
   gap: 21px;
 }
 
-.avatar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  width: 130px;
-  height: 130px;
-  background-color: @gallery;
-  border-radius: 100%;
-  overflow: hidden;
-
-  &:hover .overlay {
-    display: flex;
-  }
-}
-
 .overlay {
   .text_l();
 
@@ -65,6 +49,22 @@
   opacity: .5;
   padding: 16px;
   text-align: center;
+}
+
+.avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 130px;
+  height: 130px;
+  background-color: @gallery;
+  border-radius: 100%;
+  overflow: hidden;
+
+  &:hover .overlay {
+    display: flex;
+  }
 }
 
 .title {

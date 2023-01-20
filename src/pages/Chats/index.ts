@@ -1,6 +1,5 @@
+import caretRight from '@/assets/icons/caretRight.svg'
 import * as s from './styles.module.less'
-
-import caretRight from '/src/assets/icons/caretRight.svg'
 
 const Chats = `
     <section class="${s.root}">

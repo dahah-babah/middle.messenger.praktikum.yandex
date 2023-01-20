@@ -1,10 +1,9 @@
 import * as s from './styles.module.less'
 
 const Button = ({
-    type = '{type}',
-    children = '{children}',
-}) => {
-    return `
+  type = '{type}',
+  children = '{children}',
+}) => `
         <button 
             type="${type}"
             class="${s.button} ${s.primary}"
@@ -12,6 +11,5 @@ const Button = ({
             ${children}
         </button>
     `
-}
 
 export default Button

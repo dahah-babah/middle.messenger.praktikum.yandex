@@ -1,6 +1,5 @@
+import Link from '@/components/Link'
 import * as s from './styles.module.less'
-
-import Link from '../../components/Link'
 
 const Error = `
     <section class="${s.root}">
