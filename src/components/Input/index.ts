@@ -1,19 +1,25 @@
-import * as s from './styles.module.less'
+import InputTpl from '@/components/Input/template'
+import Component from '@/core/Component'
 
-const Input = (props) => {
-  const {
-    id = '{id}',
-    type = '{type}',
-    name = '{name}',
-    label = '{label}',
-    value = '{value}',
-    placeholder = '{placeholder}',
-  } = props
+type TInputType = 'text' | 'email' | 'password'
 
-  return `
-        <label for="${id}" class="${s.label}"> ${label} </label>
-        <input id="${id}" type="${type}" name="${name}" value="${value}" placeholder="${placeholder}" class="${s.input}" />
-    `
+interface IProps {
+    id: string
+    type: TInputType
+    name: string
+    label: string
+    value: string | number
+    placeholder: string
+}
+
+class Input extends Component<IProps> {
+    constructor(props: IProps) {
+        super('div', props, InputTpl)
+    }
+
+    render() {
+        return this.compile(InputTpl)
+    }
 }
 
 export default Input

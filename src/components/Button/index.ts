@@ -1,15 +1,19 @@
-import * as s from './styles.module.less'
+import Component from '@/core/Component'
+import ButtonTpl from '@/components/Button/template'
 
-const Button = ({
-  type = '{type}',
-  children = '{children}',
-}) => `
-        <button 
-            type="${type}"
-            class="${s.button} ${s.primary}"
-        >
-            ${children}
-        </button>
-    `
+interface IProps {
+    type: string
+    children: string
+}
+
+class Button extends Component<IProps> {
+    constructor(props: IProps) {
+        super('button', props, ButtonTpl)
+    }
+
+    render() {
+        return this.compile(ButtonTpl)
+    }
+}
 
 export default Button

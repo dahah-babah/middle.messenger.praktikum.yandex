@@ -1,27 +1,59 @@
+import AuthTpl from '@/pages/Auth/template'
 import Button from '@/components/Button'
-import Input from '@/components/Input'
 import Link from '@/components/Link'
-import * as s from './styles.module.less'
+import Component from '@/core/Component'
+import Input from '@/components/Input'
 
-const Auth = `
-    <section class="${s.root}">
-      <form class="${s.form}">
-        <h2 class="${s.title}"> {title} </h2>
+interface IProps {
+    title: string
+    button: Button
+    link: Link
+}
 
-        <ul class="${s.list}">
-            {for field in fields
-                <li class="${s.listItem}">
-                    ${Input('field')}
-                </li>
-            %}
-        </ul>
+class Auth extends Component<IProps> {
+    constructor(props: IProps) {
+        super('section', props, AuthTpl)
+    }
 
-        <div class="${s.controls}">
-            {set button in ${Button('button')} %}
-            {set link in ${Link('link')} %}
-        </div>
-      </form>
-    </section>
-`
+    render() {
+        return this.compile(AuthTpl)
+    }
+}
 
-export default Auth
+const signInPageData = {
+    title: 'Вход',
+    fields: [
+        {
+            input: new Input({
+                id: 'login',
+                type: 'email',
+                name: 'email',
+                label: 'Логин',
+                value: 'ivanivanov',
+                placeholder: 'Логин',
+            }),
+        },
+        {
+            input: new Input({
+                id: 'password',
+                type: 'password',
+                name: 'password',
+                label: 'Пароль',
+                value: 'ivanivanov',
+                placeholder: 'Пароль',
+            }),
+        },
+    ],
+    button: new Button({
+        type: 'submit',
+        children: 'Войти',
+    }),
+    link: new Link({
+        href: '/sign-up',
+        children: 'Нет аккаунта?',
+    }),
+}
+
+const SignInPage = new Auth(signInPageData)
+
+export { SignInPage }

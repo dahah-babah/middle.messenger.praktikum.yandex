@@ -1,14 +1,37 @@
+import Component from '@/core/Component'
 import Link from '@/components/Link'
-import * as s from './styles.module.less'
+import ErrorTpl from '@/pages/Error/template'
 
-const Error = `
-    <section class="${s.root}">
-        <h1 class="${s.title}"> {code} </h1>
-        
-        <span class="${s.caption}"> {caption} </span>
-        
-        <div> {set link in ${Link('link')} %} </div>
-    </section>
-`
+interface IProps {
+    code: string
+    caption: string
+    link: Link
+}
 
-export default Error
+class Error extends Component<IProps> {
+    constructor(props: IProps) {
+        super('section', props, ErrorTpl)
+    }
+
+    render() {
+        return this.compile(ErrorTpl)
+    }
+}
+
+const errorPageData404 = {
+    code: '404',
+    caption: 'Не туда попали',
+    link: new Link({ href: '/chats', children: 'Назад к чатам' }),
+}
+
+const errorPageData500 = {
+    code: '500',
+    caption: 'Мы уже фиксим',
+    link: new Link({ href: '/chats', children: 'Назад к чатам' }),
+}
+
+const ErrorPage404 = new Error(errorPageData404)
+const ErrorPage500 = new Error(errorPageData500)
+
+// export default Error
+export { ErrorPage404, ErrorPage500 }

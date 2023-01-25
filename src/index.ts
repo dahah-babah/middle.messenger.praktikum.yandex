@@ -1,3 +1,5 @@
-import { component } from './utils/router'
+import element from './utils/router'
 
-document.getElementById('root').appendChild(component())
+console.log(element.getContent())
+
+document.getElementById('root')?.appendChild(element.getContent())

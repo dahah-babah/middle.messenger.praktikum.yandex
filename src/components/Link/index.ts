@@ -1,10 +1,19 @@
-import * as s from './styles.module.less'
+import Component from '@/core/Component'
+import LinkTpl from '@/components/Link/template'
 
-const Link = ({
-  href = '{href}',
-  children = '{children}',
-}) => `
-        <a href="${href}" class="${s.link}"> ${children} </a>
-    `
+interface IProps {
+    href: string
+    children: string
+}
+
+class Link extends Component<IProps> {
+    constructor(props: IProps) {
+        super('a', props, LinkTpl)
+    }
+
+    render() {
+        return this.compile(LinkTpl)
+    }
+}
 
 export default Link
