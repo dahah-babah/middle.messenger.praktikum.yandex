@@ -1,5 +1,5 @@
 import element from './utils/router'
 
-console.log(element.getContent())
+const root = document.getElementById('root')
 
-document.getElementById('root')?.appendChild(element.getContent())
+root?.appendChild(element.getContent())

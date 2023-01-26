@@ -6,13 +6,13 @@
   height: 100%;
 }
 
-.chats {
+.menu {
   min-width: 310px;
   background-color: @alabaster;
   padding: 0 10px;
 }
 
-.chat {
+.field {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -32,6 +32,25 @@
   color: @dustyGray;
   text-decoration: none;
   margin-right: 8px;
+}
+
+.chats {
+  margin-top: 14px;
+}
+
+.chat {
+  position: relative;
+
+  &::before {
+    content: '';
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: @gallery;
+    margin-top: 2px;
+  }
 }
 
 .search {

@@ -26,7 +26,7 @@ export const getChildren = (template: string): string[] => {
         if (currentTags.length === 0 && !elem.match(loopStartRegExp)) {
             let curChildStr = curChild.join(' ')
 
-            if (elem.match(loopEndRegExp)) {
+            if (loopEndRegExp.test(elem)) {
                 const lastElem = result.pop()
                 curChildStr = [lastElem, elem].join(' ')
             }
@@ -43,18 +43,19 @@ type TProps = {
     [key: string]: string | Component<TProps>
 }
 
-type TChildren = 'tag' | 'value' | 'component' | 'loop'
+type TChildren = 'tag' | 'value' | 'component' | 'loop' | 'text'
 
 export const getChildrenType = (template: string, props: TProps): TChildren => {
-    const onlyValueRegExp = /^{(.+)}$/g
+    const textRegExp = /^<.*?>([a-zа-яё]+)<\/.*?>$/gi
+    const valueRegExp = /^{(.+)}$/g
     const loopRegExp = /^{loop:.+%loop}$/g
 
-    if (template.match(loopRegExp)) {
+    if (loopRegExp.test(template)) {
         return 'loop'
     }
 
-    if (template.match(onlyValueRegExp)) {
-        const name = template.trim().replace(onlyValueRegExp, '$1')
+    if (valueRegExp.test(template)) {
+        const name = template.trim().replace(valueRegExp, '$1')
         const value = props[name]
 
         if (value instanceof Component) {
@@ -64,21 +65,28 @@ export const getChildrenType = (template: string, props: TProps): TChildren => {
         return 'value'
     }
 
+    if (textRegExp.test(template.split(' ').join(''))) {
+        return 'text'
+    }
+
     return 'tag'
 }
 
-export const replacePropValue = (
+export const replaceValue = (
     template: string,
     props: TProps,
-    isLoop?: boolean,
+    type?: TChildren,
 ): string | Component<TProps> => {
-    if (isLoop) {
+    if (type === 'loop') {
         const loop = template.replace(/^{loop:(.+)%loop}$/g, '$1')
         const loopName = loop.split(' ')[0]
-        // const loopData = props[loopName]
-        // const loopChild = loop.replace(loopName, '').trim()
 
         return props[loopName]
+    }
+
+    if (type === 'text') {
+        const textRegExp = /^<.*?>([a-zа-яё\s]+)<\/.*?>$/gi
+        return template.replace(textRegExp, '$1').trim().split(' ').join('*')
     }
 
     const onlyValueRegExp = /^{(.+)}$/g

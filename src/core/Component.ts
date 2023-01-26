@@ -4,7 +4,7 @@ import {
     getChildren,
     getChildrenType,
     getChildTag,
-    replacePropValue,
+    replaceValue,
 } from '@/core/helpers'
 
 export default class Component<T extends {}> {
@@ -117,10 +117,18 @@ export default class Component<T extends {}> {
         if (clearTemplate === childrenTpl)
             return this.createElement(rootTag, { ...attrs }, childrenTpl)
 
-        const children: HTMLElement[] = []
+        const children: HTMLElement[] | Text[] = []
 
         if (childrenTpl) {
-            const childrenArr = getChildren(childrenTpl)
+            // для текста нужно проверять отдельно
+            const textRegExp = /^[a-zа-яё\s]+$/gi
+            const hasOnlyTextNode = textRegExp.test(childrenTpl)
+
+            if (hasOnlyTextNode) {
+                children.push(childrenTpl.trim())
+            }
+
+            const childrenArr = hasOnlyTextNode ? [] : getChildren(childrenTpl)
             // console.log(childrenArr)
 
             childrenArr.forEach((childTpl) => {
@@ -130,7 +138,7 @@ export default class Component<T extends {}> {
 
                 switch (childType) {
                     case 'loop': {
-                        const values = replacePropValue(childTpl, rootProps, true)
+                        const values = replaceValue(childTpl, rootProps, 'loop')
                         const hasComponent = Object.values(values[0]).every(
                             (value) => value instanceof Component,
                         )
@@ -147,13 +155,13 @@ export default class Component<T extends {}> {
                     }
 
                     case 'component': {
-                        const value = replacePropValue(childTpl, rootProps)
+                        const value = replaceValue(childTpl, rootProps)
                         children.push(value.render())
                         break
                     }
 
                     case 'value': {
-                        const value = replacePropValue(childTpl, rootProps)
+                        const value = replaceValue(childTpl, rootProps)
                         children.push(value)
                         break
                     }
@@ -171,7 +179,11 @@ export default class Component<T extends {}> {
         return this.createElement(rootTag, { ...attrs }, children)
     }
 
-    createElement(tag: string, attrs: { [key: string]: string }, ...children: HTMLElement[]) {
+    createElement(
+        tag: string,
+        attrs: { [key: string]: string },
+        ...children: HTMLElement[] | Text[]
+    ) {
         const element = document.createElement(tag)
 
         // console.log(tag, attrs, children)

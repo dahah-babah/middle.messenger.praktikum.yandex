@@ -2,6 +2,7 @@ import { ErrorPage404, ErrorPage500 } from '@/pages/Error'
 import { SignInPage, SignUpPage } from '@/pages/Auth'
 import { EditPasswordPage, EditUserPage } from '@/pages/Edit'
 import { ProfilePage } from '@/pages/Profile'
+import { ChatsPage } from '@/pages/Chats'
 
 type TRouter = {
     path: string
@@ -15,11 +16,10 @@ const routes: TRouter[] = [
     { path: '/500', component: ErrorPage500 },
     { path: '/404', component: ErrorPage404 },
     { path: '/profile', component: ProfilePage },
-    // { path: '/chats', component: Core.compile(Chats, mock.chats) },
+    { path: '/chats', component: ChatsPage },
 ]
 
 const currentComponent = () =>
     routes.find((route) => route.path.match(`\\${window.location.pathname}`))
 
-// export default EditUserPage
 export default currentComponent()?.component ?? ErrorPage404
