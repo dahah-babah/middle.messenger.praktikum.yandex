@@ -1,7 +1,7 @@
 import InputTpl from '@/components/Input/template'
 import Component from '@/core/Component'
 
-type TInputType = 'text' | 'email' | 'password'
+export type TInputType = 'text' | 'email' | 'password' | 'phone'
 
 interface IProps {
     id: string

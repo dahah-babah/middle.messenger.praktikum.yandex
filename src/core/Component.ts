@@ -1,5 +1,11 @@
 import EventBus, { IEventBus } from '@/core/EventBus'
-import { getChildren, getChildrenType, replacePropValue } from '@/core/helpers'
+import {
+    getAttributes,
+    getChildren,
+    getChildrenType,
+    getChildTag,
+    replacePropValue,
+} from '@/core/helpers'
 
 export default class Component<T extends {}> {
     static EVENTS = {
@@ -95,55 +101,6 @@ export default class Component<T extends {}> {
         // addAttrs
     }
 
-    getAttributes(template: string) {
-        const templateAsArray = template.split(' ')
-        const attrs = {}
-
-        const clearTag = (str: string) => str.replace(/<|>/g, '').split(' ')[0]
-        const isAttr = (str: string) => str.includes('=') && !str.includes('{')
-
-        for (let i = 0; i < templateAsArray.length; i++) {
-            const [name, value] = clearTag(templateAsArray[i]).replace(/['"]/g, '').split('=')
-
-            // если значение уже установлено, не нужно его перезаписывать
-            if (attrs[name]) {
-                break
-            }
-
-            // if (templateAsArray[i].includes('>') && value) {
-            //   props[name] = value
-            //   break
-            // }
-
-            // if (isAttr(templateAsArray[i]) && value) {
-            if (name && value) {
-                // меняю ллогику для подстановки атрибутов
-                if (value.match(/{\w+}/g)) {
-                    const propsName = value.replace(/{(\w+)}/g, '$1')
-
-                    attrs[name] = this.props[propsName]
-                } else {
-                    attrs[name] = value
-                }
-
-                const isFullValue = templateAsArray[i].match(/"(.+)"/g)
-
-                // вычленение значения для множественных значений (например, несколько классов)
-                if (!isFullValue) {
-                    for (let j = i + 1; j < templateAsArray.length; j++) {
-                        if (templateAsArray[j].includes('>') || isAttr(templateAsArray[j])) {
-                            break
-                        }
-
-                        attrs[name] += ` ${templateAsArray[j].replace(/['"]/g, '')}`
-                    }
-                }
-            }
-        }
-
-        return attrs
-    }
-
     compile(template: string, tag?: string, props?: T) {
         this._i += 1
 
@@ -155,7 +112,7 @@ export default class Component<T extends {}> {
         const childrenRegExp = new RegExp(`^(<${rootTag}.*?>)(.+)(</${rootTag}>)$`, 'gm')
         const childrenTpl = clearTemplate.replace(childrenRegExp, '$2')
 
-        const attrs = this.getAttributes(clearTemplate)
+        const attrs = getAttributes(clearTemplate, rootProps)
 
         if (clearTemplate === childrenTpl)
             return this.createElement(rootTag, { ...attrs }, childrenTpl)
@@ -167,10 +124,28 @@ export default class Component<T extends {}> {
             // console.log(childrenArr)
 
             childrenArr.forEach((childTpl) => {
-                const childTag = childTpl.split(' ')[0].replace(/<|>/g, '')
-                const childType = getChildrenType(childTpl, childTag, rootProps)
+                const childType = getChildrenType(childTpl, rootProps)
+                const loopTpl = childTpl.replace(/^{loop:\w+(.+)%loop}$/g, '$1').trim()
+                const childTag = getChildTag(childType === 'loop' ? loopTpl : childTpl)
 
                 switch (childType) {
+                    case 'loop': {
+                        const values = replacePropValue(childTpl, rootProps, true)
+                        const hasComponent = Object.values(values[0]).every(
+                            (value) => value instanceof Component,
+                        )
+
+                        values.forEach((value) => {
+                            if (hasComponent) {
+                                children.push(this.compile(loopTpl, childTag, { ...value }))
+                            } else {
+                                children.push(this.compile(loopTpl, childTag, value))
+                            }
+                        })
+
+                        break
+                    }
+
                     case 'component': {
                         const value = replacePropValue(childTpl, rootProps)
                         children.push(value.render())
@@ -196,7 +171,7 @@ export default class Component<T extends {}> {
         return this.createElement(rootTag, { ...attrs }, children)
     }
 
-    createElement(tag: string, attrs: T, ...children: string[]) {
+    createElement(tag: string, attrs: { [key: string]: string }, ...children: HTMLElement[]) {
         const element = document.createElement(tag)
 
         // console.log(tag, attrs, children)

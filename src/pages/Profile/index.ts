@@ -1,44 +1,88 @@
+import { TInputType } from '@/components/Input'
 import Link from '@/components/Link'
+import Component from '@/core/Component'
+import ProfileTpl from '@/pages/Profile/template'
+import Avatar from '@/components/Avatar'
 
-import avatar from '@/assets/icons/avatar.svg'
-import arrowLeft from '@/assets/icons/arrowLeft.svg'
-import * as s from './styles.module.less'
+type TField = {
+    name: string
+    label: string
+    value: string
+    type: TInputType
+}
 
-const Profile = `
-    <article class="${s.root}">
-        <aside class="${s.back}">
-            <a href="/chats">
-                <img src="${arrowLeft}" alt="back" />
-            </a>
-        </aside>
-            
-        <form class="${s.profile}">
-            <header class="${s.header}">
-                <div class="${s.avatar}">
-                    <input src="${avatar}" type="image" name="avatar" alt="avatar"  />
-    
-                    <div class="${s.overlay}"> Поменять аватар </div>
-                </div>
-    
-                <h3 class="${s.title}"> {title} </h3>
-            </header>
-            
-            <ul class="${s.list}">
-                {for field in fields
-                    <li class="${s.listItem}">
-                        <span> {label} </span>
-                        <span class="${s.grey}"> {value} </span>
-                    </li>
-                %}
-            </ul>
-    
-            <div class="${s.controls}">
-                {set changeDataLink in ${Link('link')} %}
-                {set changePasswordLink in ${Link('link')} %}
-                {set exitLink in ${Link('link')} %}
-            </div>
-        </form>
-    </article>
-`
+interface IProps {
+    title: string
+    fields: TField[]
+    changeDataLink: Link
+    changePasswordLink: Link
+    exitLink: Link
+    avatar: Avatar
+}
 
-export default Profile
+class Profile extends Component<IProps> {
+    constructor(props: IProps) {
+        super('article', props, ProfileTpl)
+    }
+
+    render() {
+        return this.compile(ProfileTpl)
+    }
+}
+
+const profileData = {
+    title: 'Иван',
+    avatar: new Avatar(),
+    fields: [
+        {
+            name: 'email',
+            label: 'Почта',
+            value: 'pochta@yandex.ru',
+            type: 'email' as TInputType,
+        },
+        {
+            name: 'login',
+            label: 'Логин',
+            value: 'ivanivanov',
+            type: 'text' as TInputType,
+        },
+        {
+            name: 'first_name',
+            label: 'Имя',
+            value: 'Иван',
+            type: 'text' as TInputType,
+        },
+        {
+            name: 'second_name',
+            label: 'Фамилия',
+            value: 'Иванов',
+            type: 'text' as TInputType,
+        },
+        {
+            name: 'display_name',
+            label: 'Имя в чате',
+            value: 'Иванushka',
+            type: 'text' as TInputType,
+        },
+        {
+            name: 'phone',
+            label: 'Телефон',
+            value: '+7 (909) 967 30 30',
+            type: 'phone' as TInputType,
+        },
+    ],
+    changeDataLink: new Link({
+        href: '/edit',
+        children: 'Изменить данные',
+    }),
+    changePasswordLink: new Link({
+        href: '/password',
+        children: 'Изменить пароль',
+    }),
+    exitLink: new Link({
+        href: '/sign-in',
+        children: 'Выйти',
+    }),
+}
+
+export const ProfilePage = new Profile(profileData)
