@@ -9,7 +9,9 @@ const ChatsTpl = `
                 <img src="${caretRight}" alt="" />
             </div>
             
-            <input class="${s.search}" type="search" placeholder="Поиск" />
+            <div class="${s.searchWrapper}">
+                <input class="${s.search}" type="search" placeholder="Поиск" />
+            </div>
             
             <ul class="${s.chats}">
                 {loop:chats
@@ -18,10 +20,14 @@ const ChatsTpl = `
             </ul>
         </aside>
         
-        <article class="${s.field}">             
-            <div class="${s.footer}">
-                <input class="${s.input}" name="message" placeholder="Сообщение" />
-            </div>
+        <article class="${s.field}">
+            {if:hasNoChats
+                <div class="${s.noChats}"> Выберите чат чтобы отправить сообщение </div>
+            %if}
+            
+            {if:activeChatId      
+                <div class="${s.activeChat}"> {activeChat} </div>
+            %if}
         </article>
     </section>
 `

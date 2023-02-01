@@ -1,75 +1,76 @@
 @import '/src/styles/colors';
 @import '/src/styles/typography';
 
-.chat {
-  display: grid;
-  row-gap: 4px;
-  column-gap: 10px;
-  grid-template-rows: 13px;
-  grid-template-columns: 47px;
-  grid-template-areas:
-    'avatar name time'
-    'avatar preview count'
-  ;
-  padding: 12px 0;
+.root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 10px 20px;
+
+  &::after {
+    content: '';
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: @gallery;
+    margin-top: 10px;
+  }
 }
 
 .avatar {
-  .title_l();
-
-  grid-area: avatar;
+  .title_m();
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  width: 47px;
-  height: 47px;
+  width: 34px;
+  height: 34px;
   background-color: @gallery;
   border-radius: 100%;
   color: @dustyGray;
 }
 
-.name {
+.user {
   .text_l();
 
-  grid-area: name;
   font-weight: 600;
-  color: @godGray;
+  margin-left: 10px;
 }
 
-.preview {
-  .text_m_special_height();
-
-  grid-area: preview;
-  color: @dustyGray;
-  margin: 0;
+.messages {
+  margin: 0 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
-.time {
-  .text_s_special_height();
-
-  grid-area: time;
-  justify-self: end;
-
-  color: @dustyGray;
+.message {
+  border: 1px solid blueviolet;
 }
 
-.counter {
+.footer {
+  padding: 11px 20px;
+  width: 100%;
+}
+
+.input {
   .text_m();
 
-  grid-area: counter;
-  grid-column: 3;
-  grid-row: 2;
-  place-self: end;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background-color: @royalBlue;
-  color: @white;
-  border-radius: 100%;
-  width: 20px;
-  height: 20px;
+  width: 100%;
+  background-color: @gallery;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 20px;
+  color: @dustyGray;
 }

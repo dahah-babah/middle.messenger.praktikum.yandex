@@ -1,51 +1,37 @@
-import Component from '@/core/Component'
+import Component, { TEvent } from '@/core/Component'
 import ChatsTpl from '@/pages/Chats/template'
-import Chat from '@/components/Chat'
+import Chat from '@/components/ChatPreview'
+import { chatsPageData } from '@/data/pages/chats'
 
 interface IProps {
-    chats: { [key: string]: Chat }[]
+  hasNoChats: boolean
+  activeChatId: number
+  chats: { [key: string]: Chat }[]
+  events: TEvent[]
 }
 
 class Chats extends Component<IProps> {
-    constructor(props: IProps) {
-        super('section', props, ChatsTpl)
-    }
+  constructor(props: IProps) {
+    super('section', props, ChatsTpl)
+  }
 
-    render() {
-        return this.compile(ChatsTpl)
-    }
-}
+  addEvents() {
+    super.addEvents()
 
-const chatsPageData = {
-    chats: [
-        {
-            chat: new Chat({
-                avatar: 'A',
-                name: 'Андрей',
-                preview: 'Изображение',
-                time: '10:49',
-                unreadCount: 2,
-            }),
-        },
-        {
-            chat: new Chat({
-                avatar: 'И',
-                name: 'Илья',
-                preview: 'Друзья, у меня для вас особенный выпуск новостей!...',
-                time: '15:12',
-                unreadCount: 4,
-            }),
-        },
-        {
-            chat: new Chat({
-                avatar: 'T',
-                name: 'тет-а-теты',
-                preview: 'И Human Interface Guidelines и Material Design рекомендуют...',
-                time: 'Ср',
-                unreadCount: 0,
-            }),
-        },
-    ],
+    const chats = this._element.querySelectorAll('li')
+
+    chats.forEach((chat) =>
+      chat.addEventListener('click', (event) => {
+        const chatId = event.target.closest('li').firstChild.id
+
+        this.setProps({ hasNoChats: false, activeChatId: chatId })
+      }),
+    )
+  }
+
+  render() {
+    return this.compile(ChatsTpl)
+  }
 }
 
 export const ChatsPage = new Chats(chatsPageData)

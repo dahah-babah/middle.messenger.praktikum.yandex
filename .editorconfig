@@ -6,8 +6,8 @@ root = true
 end_of_line = lf
 insert_final_newline = true
 
-# Отступы в 4 пробела
+# Отступы в 2 пробела
 [{*.ts, *.js}]
-indent_size = 4
+indent_size = 2
 indent_style = space
 

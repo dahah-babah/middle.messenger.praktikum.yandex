@@ -15,7 +15,7 @@ const EditTpl = `
                 {avatar}
             </header>
             
-            <form class="${s.form}">
+            <form id="{formId}" class="${s.form}">
                 <ul class="${s.list}">
                     {loop:fields
                         <li class="${s.listItem}">

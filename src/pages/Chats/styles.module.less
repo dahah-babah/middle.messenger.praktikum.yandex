@@ -9,21 +9,18 @@
 .menu {
   min-width: 310px;
   background-color: @alabaster;
-  padding: 0 10px;
+  border-right: 1px solid @gallery;
 }
 
 .field {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
 }
 
 .profile {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin: 20px 0;
+  margin: 20px 10px;
 }
 
 .link {
@@ -53,6 +50,10 @@
   }
 }
 
+.searchWrapper {
+  margin: 0 10px;
+}
+
 .search {
   .text_m();
 
@@ -65,18 +66,14 @@
   text-align: center;
 }
 
-.footer {
-  padding: 11px 20px;
-  width: 100%;
-}
-
-.input {
+.noChats {
   .text_m();
 
-  width: 100%;
-  background-color: @gallery;
-  border: none;
-  border-radius: 30px;
-  padding: 10px 20px;
   color: @dustyGray;
+  line-height: 100vh;
+  text-align: center;
+}
+
+.activeChat {
+  height: 100%;
 }
