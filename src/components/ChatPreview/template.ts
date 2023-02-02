@@ -1,6 +1,6 @@
 import * as s from './styles.module.less'
 
-export const ChatPreviewTpl = `
+const ChatPreviewTpl = `
     <div id="{id}" class="${s.chat}">
         <div class="${s.avatar}"> {avatar} </div>
         
