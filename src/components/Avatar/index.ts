@@ -17,11 +17,11 @@ class Avatar extends Component<IProps> {
     const input = this._element.querySelector('input')
 
     input?.addEventListener('change', (event: Event) => {
-      const target: HTMLInputElement = event.target
+      const { target } = event
 
       if (!target) return
 
-      const { files } = target
+      const { files } = target as HTMLInputElement
 
       if (!files) return
 

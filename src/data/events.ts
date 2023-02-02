@@ -4,12 +4,12 @@ export const validationEvents = [
   {
     tag: 'input',
     name: 'focus',
-    callback: (event: { target: HTMLInputElement }) => {
+    callback: (event: Event) => {
       const { target } = event
 
       if (!target) return
 
-      const { name, value } = target
+      const { name, value } = target as HTMLInputElement
 
       const isValid = validate(value, validName(name) as TField)
       // eslint-disable-next-line no-console
@@ -19,12 +19,12 @@ export const validationEvents = [
   {
     tag: 'input',
     name: 'blur',
-    callback: (event: { target: HTMLInputElement }) => {
+    callback: (event: Event) => {
       const { target } = event
 
       if (!target) return
 
-      const { name, value } = target
+      const { name, value } = target as HTMLInputElement
 
       const isValid = validate(value, validName(name) as TField)
       // eslint-disable-next-line no-console

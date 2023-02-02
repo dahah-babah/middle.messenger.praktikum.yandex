@@ -2,7 +2,6 @@ import ChatPreview from '@/components/ChatPreview'
 
 export const chatsPageData = {
   hasNoChats: true,
-  activeChatId: 0,
   activeChat: null,
   chats: [
     {

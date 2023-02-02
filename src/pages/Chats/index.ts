@@ -7,9 +7,8 @@ import Message from '@/components/Message'
 
 interface IProps {
   hasNoChats: boolean
-  activeChatId: number
   chats: { [key: string]: ChatPreview }[]
-  activeChat: Chat
+  activeChat: Chat | null
 }
 
 const activeChat = new Chat({
@@ -35,6 +34,7 @@ class Chats extends Component<IProps> {
 
     const chats = this._element.querySelectorAll('li')
 
+    // выбирается только первый из списка чат
     chats[0].addEventListener('click', () => {
       this.setProps({ hasNoChats: false, activeChat })
     })

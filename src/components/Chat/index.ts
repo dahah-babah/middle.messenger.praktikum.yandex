@@ -16,16 +16,20 @@ class Chat extends Component<IProps> {
   addEvents() {
     super.addEvents()
 
-    const input = this._element.querySelector('#message')
-    const button = this._element.querySelector('#send-message')
+    const input = this._element.querySelector('#message') as HTMLInputElement
+    const button = this._element.querySelector('#send-message') as HTMLButtonElement
 
     if (!button || !input) return
 
     input.addEventListener('input', (event) => {
-      input.value = event.target.value
+      const { target } = event
+
+      if (!target) return
+
+      input.value = (target as HTMLInputElement).value
     })
 
-    button.addEventListener('click', (event) => {
+    button.addEventListener('click', () => {
       const text = input.value
       const message = new Message({
         text,
