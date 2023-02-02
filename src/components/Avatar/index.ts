@@ -1,14 +1,43 @@
 import Component from '@/core/Component'
 import AvatarTpl from '@/components/Avatar/template'
+import avatar from '@/assets/icons/avatar.svg'
 
-class Avatar extends Component<{}> {
-    constructor() {
-        super('div', {}, AvatarTpl)
-    }
+interface IProps {
+  picture: string
+}
 
-    render() {
-        return this.compile(AvatarTpl)
-    }
+class Avatar extends Component<IProps> {
+  constructor() {
+    super('div', { picture: avatar }, AvatarTpl)
+  }
+
+  addEvents() {
+    super.addEvents()
+
+    const input = this._element.querySelector('input')
+
+    input?.addEventListener('change', (event: Event) => {
+      const target: HTMLInputElement = event.target
+
+      if (!target) return
+
+      const { files } = target
+
+      if (!files) return
+
+      const newPicture = URL.createObjectURL(files[0])
+
+      this.setProps({ picture: newPicture })
+    })
+  }
+
+  componentDidUpdate(oldProps: IProps, newProps: IProps): boolean {
+    return oldProps.picture !== newProps.picture
+  }
+
+  render() {
+    return this.compile(AvatarTpl)
+  }
 }
 
 export default Avatar

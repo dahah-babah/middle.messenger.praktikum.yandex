@@ -1,3 +1,5 @@
+import arrowLeft from '@/assets/icons/arrowLeft.svg'
+
 import * as s from './styles.module.less'
 
 const ChatTpl = `
@@ -10,14 +12,17 @@ const ChatTpl = `
         <ul class="${s.messages}">
             {loop:messages
                 <li class="${s.message}">
-                  <p> {text} </p>
-                  <span> {date} </span>
+                  {message}
                 </li>
             %loop}
         </ul>
         
         <div class="${s.footer}">
-            <input class="${s.input}" name="message" placeholder="Сообщение" />
+            <input id="message" class="${s.input}" name="message" placeholder="Сообщение" />
+            
+            <button id="send-message" class="${s.sendButton}">
+                <img class="${s.arrow}" src="${arrowLeft}" alt="Отправить" />
+            </button>
         </div>
     </div>   
 `

@@ -1,14 +1,29 @@
-import Component, { TEvent } from '@/core/Component'
+import Component from '@/core/Component'
 import ChatsTpl from '@/pages/Chats/template'
-import Chat from '@/components/ChatPreview'
 import { chatsPageData } from '@/data/pages/chats'
+import ChatPreview from '@/components/ChatPreview'
+import Chat from '@/components/Chat'
+import Message from '@/components/Message'
 
 interface IProps {
   hasNoChats: boolean
   activeChatId: number
-  chats: { [key: string]: Chat }[]
-  events: TEvent[]
+  chats: { [key: string]: ChatPreview }[]
+  activeChat: Chat
 }
+
+const activeChat = new Chat({
+  avatar: 'В',
+  user: 'Вадим',
+  messages: [
+    {
+      message: new Message({ text: 'Ping', date: '13:13', fromMe: false, fromUser: true }),
+    },
+    {
+      message: new Message({ text: 'Pong', date: '13:15', fromMe: true, fromUser: false }),
+    },
+  ],
+})
 
 class Chats extends Component<IProps> {
   constructor(props: IProps) {
@@ -20,13 +35,9 @@ class Chats extends Component<IProps> {
 
     const chats = this._element.querySelectorAll('li')
 
-    chats.forEach((chat) =>
-      chat.addEventListener('click', (event) => {
-        const chatId = event.target.closest('li').firstChild.id
-
-        this.setProps({ hasNoChats: false, activeChatId: chatId })
-      }),
-    )
+    chats[0].addEventListener('click', () => {
+      this.setProps({ hasNoChats: false, activeChat })
+    })
   }
 
   render() {

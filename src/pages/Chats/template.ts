@@ -25,7 +25,7 @@ const ChatsTpl = `
                 <div class="${s.noChats}"> Выберите чат чтобы отправить сообщение </div>
             %if}
             
-            {if:activeChatId      
+            {if:activeChat      
                 <div class="${s.activeChat}"> {activeChat} </div>
             %if}
         </article>

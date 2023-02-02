@@ -1,4 +1,4 @@
-import { TField, validate, validName } from '@/core/validation'
+import { TField, validate, validName } from '@/utils/validation'
 
 export const validationEvents = [
   {
@@ -12,6 +12,7 @@ export const validationEvents = [
       const { name, value } = target
 
       const isValid = validate(value, validName(name) as TField)
+      // eslint-disable-next-line no-console
       console.log({ event: 'focus', name, value, isValid })
     },
   },
@@ -26,6 +27,7 @@ export const validationEvents = [
       const { name, value } = target
 
       const isValid = validate(value, validName(name) as TField)
+      // eslint-disable-next-line no-console
       console.log({ event: 'blur', name, value, isValid })
     },
   },

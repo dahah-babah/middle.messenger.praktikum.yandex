@@ -1,25 +1,9 @@
 import ChatPreview from '@/components/ChatPreview'
-import Chat from '@/components/Chat'
 
 export const chatsPageData = {
-  hasNoChats: false,
-  activeChatId: 1,
-  activeChat: new Chat({
-    avatar: 'В',
-    user: 'Вадим',
-    messages: [
-      {
-        text: 'Ping',
-        date: '13:13',
-        fromMe: false,
-      },
-      {
-        text: 'Pong',
-        date: '13:15',
-        fromMe: true,
-      },
-    ],
-  }),
+  hasNoChats: true,
+  activeChatId: 0,
+  activeChat: null,
   chats: [
     {
       chat: new ChatPreview({

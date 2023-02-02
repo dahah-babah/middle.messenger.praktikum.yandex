@@ -1,25 +1,29 @@
 import EventBus, { IEventBus } from '@/core/EventBus'
 import {
-  getAttributes,
+  clearTemplate,
+  getAttributeData,
   getChildren,
-  getChildrenType,
+  getChildrenTpl,
   getChildTag,
-  replaceValue,
-} from '@/core/helpers'
+  getExpressionTemplate,
+  getPropName,
+  isAttribute,
+  isFullAttributeValue,
+  isProp,
+} from '@/utils/helpers'
+import { regExpProps, regExpSubstitution } from '@/utils/regExp'
+
+type TChildren = 'tag' | 'value' | 'component' | 'loop' | 'text' | 'if'
 
 export type TEvent = {
   tag: string
   name: string
-  callback: (event: Event | { target: HTMLInputElement }) => void
+  callback: (event: Event) => void
 }
 
-interface IProps {
+interface IComponent {
   [key: string]: any
-}
-
-interface IComponent extends IProps {
   events?: TEvent[]
-  // attrs?: { [key: string]: string }
 }
 
 abstract class Component<T extends IComponent> {
@@ -38,7 +42,7 @@ abstract class Component<T extends IComponent> {
 
   _element: HTMLElement
 
-  _props: T
+  _props: IComponent
 
   _shouldUpdate: boolean
 
@@ -77,20 +81,22 @@ abstract class Component<T extends IComponent> {
     }
   }
 
-  private _makePropsProxy(props: T) {
+  private _makePropsProxy(props: IComponent) {
     return new Proxy(props, {
       deleteProperty: () => {
         throw new Error('Нет доступа')
       },
 
-      get: (target, prop) => {
+      get: (target, prop: string) => {
         const value = target[prop]
         return typeof value === 'function' ? value.bind(target) : value
       },
 
-      set: (target, prop, value) => {
+      set: (target, prop: string, value) => {
         if (target[prop] !== value) {
+          // eslint-disable-next-line no-param-reassign
           target[prop] = value
+
           this._shouldUpdate = true
         }
 
@@ -122,21 +128,19 @@ abstract class Component<T extends IComponent> {
     const rootTag = tag ?? this._tag
     const rootProps = props ?? this._props
 
-    const clearTemplate = template.replace(/[\n\r\s\t]+/g, ' ').trim()
+    const clearedTemplate = clearTemplate(template)
+    const childrenTpl = getChildrenTpl(clearedTemplate, rootTag)
+    const attrs = this.getAttributes(clearedTemplate, rootProps)
 
-    const childrenRegExp = new RegExp(`^(<${rootTag}.*?>)(.+)(</${rootTag}>)$`, 'gm')
-    const childrenTpl = clearTemplate.replace(childrenRegExp, '$2')
-
-    const attrs = getAttributes(clearTemplate, rootProps)
-
-    if (clearTemplate === childrenTpl) return this.createElement(rootTag, { ...attrs }, childrenTpl)
+    if (clearedTemplate === childrenTpl)
+      return this.createElement(rootTag, { ...attrs }, [childrenTpl])
 
     const children: (HTMLElement | string)[] = []
 
     if (childrenTpl) {
       // для текста нужно проверять отдельно
       const textRegExp = /^[a-zа-яё\s]+$/gi
-      const hasOnlyTextNode = textRegExp.test(childrenTpl)
+      const hasOnlyTextNode = childrenTpl.match(textRegExp)
 
       if (hasOnlyTextNode) {
         children.push(childrenTpl.trim())
@@ -145,13 +149,10 @@ abstract class Component<T extends IComponent> {
       const childrenArr = hasOnlyTextNode ? [] : getChildren(childrenTpl)
 
       childrenArr.forEach((childTpl) => {
-        const childType = getChildrenType(childTpl, rootProps)
-
-        const exprRegExp = new RegExp(`^{${childType}:\\w+(.+)%${childType}}$`, 'g')
-        const exprTpl = childTpl.replace(exprRegExp, '$1').trim()
-
+        const childType = this.getChildrenType(childTpl, rootProps)
+        const exprTpl = getExpressionTemplate(childType, childTpl)
         const childTag = getChildTag(['loop', 'if'].includes(childType) ? exprTpl : childTpl)
-        const value = replaceValue(childTpl, rootProps, childType)
+        const value = this.replaceValue(childTpl, rootProps, childType)
 
         switch (childType) {
           case 'if': {
@@ -179,13 +180,13 @@ abstract class Component<T extends IComponent> {
 
           case 'component': {
             if (value instanceof Component) {
-              children.push(value.render())
+              children.push(value.getContent())
             }
             break
           }
 
           case 'value': {
-            children.push(value as string)
+            children.push(value.toString())
             break
           }
 
@@ -198,14 +199,13 @@ abstract class Component<T extends IComponent> {
       })
     }
 
-    // console.log(this.createElement(rootTag, { ...attrs }, children), children)
     return this.createElement(rootTag, { ...attrs }, children)
   }
 
   createElement(
     tag: string,
     attrs: { [key: string]: string },
-    ...children: HTMLElement[] | Text[]
+    children: (HTMLElement | string)[],
   ): HTMLElement {
     const element = document.createElement(tag)
 
@@ -213,17 +213,111 @@ abstract class Component<T extends IComponent> {
       element.setAttribute(name, value)
     })
 
-    children.forEach((child) => this.appendChild(element, child))
+    Array.from(children).forEach((child) => this.appendChild(element, child))
 
     return element
   }
 
-  appendChild(parent: HTMLElement, child: Node) {
+  appendChild(parent: HTMLElement, child: Node | string) {
     if (Array.isArray(child)) {
       child.forEach((nestedChild) => this.appendChild(parent, nestedChild))
     } else {
-      parent.appendChild(child?.nodeType ? child : document.createTextNode(child))
+      parent.appendChild(typeof child === 'string' ? document.createTextNode(child) : child)
     }
+  }
+
+  getChildrenType(template: string, props: IComponent): TChildren {
+    if (template.match(regExpProps.loop)) {
+      return 'loop'
+    }
+
+    if (template.match(regExpProps.condition)) {
+      return 'if'
+    }
+
+    if (template.match(regExpProps.value)) {
+      const name = template.trim().replace(regExpProps.value, '$1')
+      const value = props[name]
+
+      if (value instanceof Component) {
+        return 'component'
+      }
+
+      return 'value'
+    }
+
+    if (template.split(' ').join('').match(regExpProps.text)) {
+      return 'text'
+    }
+
+    return 'tag'
+  }
+
+  replaceValue(
+    template: string,
+    props: IComponent,
+    type: TChildren,
+  ):
+    | string
+    | boolean
+    | Component<IComponent>
+    | Array<{ [key: string]: string | Component<IComponent> }> {
+    if (type === 'if') {
+      const condition = template.replace(regExpSubstitution.condition, '$1')
+      const conditionName = condition.split(' ')[0]
+
+      return !!props[conditionName]
+    }
+
+    if (type === 'loop') {
+      const loop = template.replace(regExpSubstitution.loop, '$1')
+      const loopName = loop.split(' ')[0]
+
+      return props[loopName]
+    }
+
+    if (type === 'text') {
+      return template.replace(regExpSubstitution.text, '$1').trim().split(' ').join('*')
+    }
+
+    const name = template.trim().replace(regExpSubstitution.value, '$1')
+
+    return props[name]
+  }
+
+  getAttributes(template: string, props: IComponent): IComponent {
+    const templateAsArray = template.split(' ')
+    const attrs: IComponent = {}
+
+    for (let i = 0; i < templateAsArray.length; i += 1) {
+      const [name, value] = getAttributeData(templateAsArray[i])
+
+      // если значение уже установлено, не нужно его перезаписывать
+      if (attrs[name]) {
+        break
+      }
+
+      if (name && value) {
+        if (isProp(value)) {
+          attrs[name] = props[getPropName(value)]
+        } else {
+          attrs[name] = value
+        }
+
+        // поиск значения для множественных значений (например, несколько классов)
+        if (!isFullAttributeValue(templateAsArray[i])) {
+          for (let j = i + 1; j < templateAsArray.length; j += 1) {
+            if (templateAsArray[j].includes('>') || isAttribute(templateAsArray[j])) {
+              break
+            }
+
+            attrs[name] += ` ${templateAsArray[j].replace(/['"]/g, '')}`
+          }
+        }
+      }
+    }
+
+    return attrs
   }
 
   get element(): HTMLElement {
@@ -234,7 +328,7 @@ abstract class Component<T extends IComponent> {
     return this.element
   }
 
-  setProps(nextProps: T) {
+  setProps(nextProps: IComponent) {
     if (!nextProps) {
       return
     }
@@ -248,18 +342,12 @@ abstract class Component<T extends IComponent> {
     }
 
     if (this._shouldUpdate) {
-      this._eventBus.emit(Component.EVENTS.FLOW_CDU, oldProps, this._props)
+      const args = [oldProps, this._props]
+
+      this._eventBus.emit(Component.EVENTS.FLOW_CDU, args)
       this._shouldUpdate = false
     }
   }
-
-  // addAttributes() {
-  //   const { attrs = {} } = this._props
-  //
-  //   Object.entries(attrs).forEach(([key, value]) => {
-  //     this._element.setAttribute(key, value)
-  //   })
-  // }
 
   addEvents() {
     const { events = [] } = this._props
@@ -288,11 +376,11 @@ abstract class Component<T extends IComponent> {
     this._eventBus.emit(Component.EVENTS.FLOW_CDM)
   }
 
-  componentDidUpdate(oldProps: T, newProps: T): boolean {
-    return true
+  componentDidUpdate(oldProps: IComponent, newProps: IComponent): boolean {
+    return oldProps !== newProps
   }
 
-  abstract componentDidMount(): void
+  componentDidMount(): void {}
 
   abstract render(): HTMLElement
 }

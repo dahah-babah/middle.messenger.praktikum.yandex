@@ -56,10 +56,13 @@
 }
 
 .message {
-  border: 1px solid blueviolet;
+  margin-bottom: 10px;
 }
 
 .footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   padding: 11px 20px;
   width: 100%;
 }
@@ -73,4 +76,16 @@
   border-radius: 30px;
   padding: 10px 20px;
   color: @dustyGray;
+}
+
+.sendButton {
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+}
+
+.arrow {
+  transform: rotate(180deg);
+  width: 28px;
+  height: 28px;
 }
