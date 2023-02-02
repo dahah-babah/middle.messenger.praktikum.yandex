@@ -1,7 +1,7 @@
 import * as s from './styles.module.less'
 
 const MessageTpl = `
-    <div class="${s.root}">
+    <div>
         {if:fromUser
             <div class="${s.message} ${s.fromUser}" > 
                 <p class="${s.text}"> {text} </p> 
