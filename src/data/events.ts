@@ -32,13 +32,17 @@ export const validationEvents = [
     },
   },
   {
-    tag: 'button',
-    name: 'click',
+    tag: 'form',
+    name: 'submit',
     callback: (event: Event) => {
       event.preventDefault()
 
-      const form = document.querySelector('form')
-      const fields = Array.from(form?.querySelectorAll('input') || [])
+      const { target } = event
+
+      if (!target) return
+
+      const form = target as HTMLFormElement
+      const fields = Array.from(form.querySelectorAll('input') || [])
 
       const validation = fields.map(({ name, value }) => ({
         name,
@@ -47,7 +51,7 @@ export const validationEvents = [
       }))
 
       // eslint-disable-next-line no-console
-      console.log({ form: form?.id, event: 'submit', validation })
+      console.log({ form: form.id, event: 'submit', validation })
     },
   },
 ]
