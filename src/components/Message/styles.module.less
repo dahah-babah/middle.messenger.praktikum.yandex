@@ -1,0 +1,46 @@
+@import '/src/styles/colors';
+@import '/src/styles/typography';
+
+.message {
+  position: relative;
+  max-width: 20%;
+  border-radius: 10px;
+}
+
+.date {
+  .text_s();
+
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 0 11px 11px 0;
+}
+
+.fromMe {
+  text-align: right;
+  background-color: @lightBlue;
+  margin-left: auto;
+
+  .date {
+    color: @royalBlue;
+  }
+}
+
+.fromUser {
+  text-align: left;
+  background-color: @alabaster;
+
+  .date {
+    color: @dustyGray;
+  }
+}
+
+.text {
+  .text_m_special_height();
+
+  color: @godGray;
+  padding: 11px;
+  margin: 0;
+  text-align: left;
+  word-wrap: break-word;
+}
