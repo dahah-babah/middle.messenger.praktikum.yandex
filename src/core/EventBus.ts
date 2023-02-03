@@ -5,7 +5,7 @@ interface IListener {
 export interface IEventBus {
   on(event: string, callback: Function): void
   off(event: string, callback: Function): void
-  emit<T extends {}>(event: string, args?: T): void
+  emit<T extends []>(event: string, args?: T): void
 }
 
 export default class EventBus implements IEventBus {
@@ -31,13 +31,17 @@ export default class EventBus implements IEventBus {
     this.listeners[event] = this.listeners[event].filter((listener) => listener !== callback)
   }
 
-  emit<T extends {}>(event: string, args?: T): void {
+  emit<T extends []>(event: string, args?: T): void {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`)
     }
 
     this.listeners[event].forEach((listener) => {
-      listener(args)
+      if (args) {
+        listener(...args)
+      } else {
+        listener()
+      }
     })
   }
 }
