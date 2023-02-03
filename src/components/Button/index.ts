@@ -8,11 +8,11 @@ interface IProps {
 
 class Button extends Component<IProps> {
   constructor(props: IProps) {
-    super('button', props, ButtonTpl)
+    super('div', props, ButtonTpl)
   }
 
   render() {
-    return this.compile(ButtonTpl)
+    return this.compile(ButtonTpl, 'button')
   }
 }
 

@@ -8,7 +8,7 @@ interface IProps {
 
 class Link extends Component<IProps> {
   constructor(props: IProps) {
-    super('a', props, LinkTpl)
+    super('div', props, LinkTpl)
   }
 
   render() {

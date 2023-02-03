@@ -14,19 +14,19 @@ export const editPasswordData = {
     {
       name: 'oldPassword',
       label: 'Старый пароль',
-      value: 'ivanivanov',
+      value: '',
       type: 'password' as TInputType,
     },
     {
       name: 'newPassword',
       label: 'Новый пароль',
-      value: 'ivanivanov123',
+      value: '',
       type: 'password' as TInputType,
     },
     {
       name: 'repeatPassword',
       label: 'Повторите новый пароль',
-      value: 'ivanivanov123',
+      value: '',
       type: 'password' as TInputType,
     },
   ],

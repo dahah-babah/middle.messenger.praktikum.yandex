@@ -116,8 +116,6 @@ abstract class Component<T extends IComponent> {
     this._element.textContent = ''
     this._element.appendChild(component)
     this.addEvents()
-    // атрибуты должны вешаться после маунта компонента (не в компайле) ?
-    // addAttrs
   }
 
   compile(
