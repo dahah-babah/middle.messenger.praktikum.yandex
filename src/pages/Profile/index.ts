@@ -1,9 +1,9 @@
-import { TInputType } from '@/components/Input'
-import Link from '@/components/Link'
-import Component from '@/core/Component'
-import Avatar from '@/components/Avatar'
-import ProfileTpl from '@/pages/Profile/template'
-import { profilePageData } from '@/data/pages/profile'
+import { TInputType } from 'src/components/Input'
+import Link from 'src/components/Link'
+import Component from 'src/core/Component'
+import Avatar from 'src/components/Avatar'
+import ProfileTpl from 'src/pages/Profile/template'
+import { profilePageData } from 'src/data/pages/profile'
 
 type TField = {
   name: string

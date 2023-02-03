@@ -1,12 +1,12 @@
-import EditTpl from '@/pages/Edit/template'
+import EditTpl from 'src/pages/Edit/template'
 
-import Component, { TEvent } from '@/core/Component'
-import Button from '@/components/Button'
-import Avatar from '@/components/Avatar'
-import { TInputType } from '@/components/Input'
+import Component, { TEvent } from 'src/core/Component'
+import Button from 'src/components/Button'
+import Avatar from 'src/components/Avatar'
+import { TInputType } from 'src/components/Input'
 
-import { editUserData } from '@/data/pages/editUser'
-import { editPasswordData } from '@/data/pages/editPassword'
+import { editUserData } from 'src/data/pages/editUser'
+import { editPasswordData } from 'src/data/pages/editPassword'
 
 type TField = {
   name: string

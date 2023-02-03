@@ -1,6 +1,6 @@
-import Component from '@/core/Component'
-import ChatTpl from '@/components/Chat/template'
-import Message from '@/components/Message'
+import Component from 'src/core/Component'
+import ChatTpl from 'src/components/Chat/template'
+import Message from 'src/components/Message'
 
 interface IProps {
   avatar: string

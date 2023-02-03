@@ -1,7 +1,7 @@
-import Avatar from '@/components/Avatar'
-import Button from '@/components/Button'
-import { TInputType } from '@/components/Input'
-import { validationEvents } from '@/data/events'
+import Avatar from 'src/components/Avatar'
+import Button from 'src/components/Button'
+import { TInputType } from 'src/components/Input'
+import { validationEvents } from 'src/data/events'
 
 export const editUserData = {
   formId: 'edit-user',

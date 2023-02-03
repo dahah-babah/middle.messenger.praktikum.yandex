@@ -1,4 +1,4 @@
-import EventBus, { IEventBus } from '@/core/EventBus'
+import EventBus, { IEventBus } from 'src/core/EventBus'
 import {
   clearTemplate,
   getAttributeData,
@@ -10,8 +10,8 @@ import {
   isAttribute,
   isFullAttributeValue,
   isProp,
-} from '@/utils/helpers'
-import { regExpProps, regExpSubstitution } from '@/utils/regExp'
+} from 'src/utils/helpers'
+import { regExpProps, regExpSubstitution } from 'src/utils/regExp'
 
 type TChildren = 'tag' | 'value' | 'component' | 'loop' | 'text' | 'if'
 

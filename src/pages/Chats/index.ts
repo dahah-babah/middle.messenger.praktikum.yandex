@@ -1,9 +1,9 @@
-import Component from '@/core/Component'
-import ChatsTpl from '@/pages/Chats/template'
-import { chatsPageData } from '@/data/pages/chats'
-import ChatPreview from '@/components/ChatPreview'
-import Chat from '@/components/Chat'
-import Message from '@/components/Message'
+import Component from 'src/core/Component'
+import ChatsTpl from 'src/pages/Chats/template'
+import { chatsPageData } from 'src/data/pages/chats'
+import ChatPreview from 'src/components/ChatPreview'
+import Chat from 'src/components/Chat'
+import Message from 'src/components/Message'
 
 interface IProps {
   hasNoChats: boolean

@@ -1,4 +1,4 @@
-import ChatPreview from '@/components/ChatPreview'
+import ChatPreview from 'src/components/ChatPreview'
 
 export const chatsPageData = {
   hasNoChats: true,

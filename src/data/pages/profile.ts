@@ -1,6 +1,6 @@
-import Avatar from '@/components/Avatar'
-import { TInputType } from '@/components/Input'
-import Link from '@/components/Link'
+import Avatar from 'src/components/Avatar'
+import { TInputType } from 'src/components/Input'
+import Link from 'src/components/Link'
 
 export const profilePageData = {
   title: 'Иван',

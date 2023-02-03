@@ -1,8 +1,8 @@
-import { ErrorPage404, ErrorPage500 } from '@/pages/Error'
-import { SignInPage, SignUpPage } from '@/pages/Auth'
-import { EditPasswordPage, EditUserPage } from '@/pages/Edit'
-import { ProfilePage } from '@/pages/Profile'
-import { ChatsPage } from '@/pages/Chats'
+import { ErrorPage404, ErrorPage500 } from 'src/pages/Error'
+import { SignInPage, SignUpPage } from 'src/pages/Auth'
+import { EditPasswordPage, EditUserPage } from 'src/pages/Edit'
+import { ProfilePage } from 'src/pages/Profile'
+import { ChatsPage } from 'src/pages/Chats'
 
 type TRouter = {
   path: string

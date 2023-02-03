@@ -1,4 +1,4 @@
-import arrowLeft from '@/assets/icons/arrowLeft.svg'
+import arrowLeft from 'src/assets/icons/arrowLeft.svg'
 
 import * as s from './styles.module.less'
 

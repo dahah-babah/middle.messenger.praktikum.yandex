@@ -1,7 +1,7 @@
-import Input from '@/components/Input'
-import Button from '@/components/Button'
-import Link from '@/components/Link'
-import { validationEvents } from '@/data/events'
+import Input from 'src/components/Input'
+import Button from 'src/components/Button'
+import Link from 'src/components/Link'
+import { validationEvents } from 'src/data/events'
 
 export const signInPageData = {
   formId: 'sign-in',

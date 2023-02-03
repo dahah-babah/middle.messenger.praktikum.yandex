@@ -1,5 +1,5 @@
-import Component from '@/core/Component'
-import ButtonTpl from '@/components/Button/template'
+import Component from 'src/core/Component'
+import ButtonTpl from 'src/components/Button/template'
 
 interface IProps {
   type: string
