@@ -1,10 +1,14 @@
-import { TField, validate, validName } from '@/utils/validation'
+import { TField, validate, validName } from 'src/utils/validation'
+
+import 'src/styles/normalize.less'
 
 export const validationEvents = [
   {
     tag: 'input',
     name: 'focus',
     callback: (event: Event) => {
+      event.preventDefault()
+
       const { target } = event
 
       if (!target) return
@@ -20,6 +24,8 @@ export const validationEvents = [
     tag: 'input',
     name: 'blur',
     callback: (event: Event) => {
+      event.preventDefault()
+
       const { target } = event
 
       if (!target) return
@@ -44,11 +50,21 @@ export const validationEvents = [
       const form = target as HTMLFormElement
       const fields = Array.from(form.querySelectorAll('input') || [])
 
-      const validation = fields.map(({ name, value }) => ({
-        name,
-        value,
-        isValid: validate(value, validName(name) as TField),
-      }))
+      const validation = fields.map((field) => {
+        const isValid = validate(field.value, validName(field.name) as TField)
+
+        if (isValid) {
+          field.classList.remove('error')
+        } else {
+          field.classList.add('error')
+        }
+
+        return {
+          name: field.name,
+          value: field.value,
+          isValid,
+        }
+      })
 
       // eslint-disable-next-line no-console
       console.log({ form: form.id, event: 'submit', validation })

@@ -1,6 +1,6 @@
-import Component from '@/core/Component'
-import Link from '@/components/Link'
-import ErrorTpl from '@/pages/Error/template'
+import Component from 'src/core/Component'
+import Link from 'src/components/Link'
+import ErrorTpl from 'src/pages/Error/template'
 
 interface IProps {
   code: string

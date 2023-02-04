@@ -1,5 +1,5 @@
-import Component from '@/core/Component'
-import ChatPreviewTpl from '@/components/ChatPreview/template'
+import Component from 'src/core/Component'
+import ChatPreviewTpl from 'src/components/ChatPreview/template'
 
 interface IProps {
   id: string

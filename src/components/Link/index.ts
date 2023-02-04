@@ -1,5 +1,5 @@
-import Component from '@/core/Component'
-import LinkTpl from '@/components/Link/template'
+import Component from 'src/core/Component'
+import LinkTpl from 'src/components/Link/template'
 
 interface IProps {
   href: string

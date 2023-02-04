@@ -1,12 +1,12 @@
-import AuthTpl from '@/pages/Auth/template'
+import AuthTpl from 'src/pages/Auth/template'
 
-import Component, { TEvent } from '@/core/Component'
-import Button from '@/components/Button'
-import Link from '@/components/Link'
-import Input from '@/components/Input'
+import Component, { TEvent } from 'src/core/Component'
+import Button from 'src/components/Button'
+import Link from 'src/components/Link'
+import Input from 'src/components/Input'
 
-import { signInPageData } from '@/data/pages/signIn'
-import { signUpPageData } from '@/data/pages/signUp'
+import { signInPageData } from 'src/data/pages/signIn'
+import { signUpPageData } from 'src/data/pages/signUp'
 
 interface IProps {
   formId: string

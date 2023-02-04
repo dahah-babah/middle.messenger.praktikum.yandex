@@ -1,6 +1,6 @@
-import Component from '@/core/Component'
-import AvatarTpl from '@/components/Avatar/template'
-import avatar from '@/assets/icons/avatar.svg'
+import Component from 'src/core/Component'
+import AvatarTpl from 'src/components/Avatar/template'
+import avatar from 'src/assets/icons/avatar.svg'
 
 interface IProps {
   picture: string
