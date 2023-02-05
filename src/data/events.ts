@@ -2,39 +2,40 @@ import { TField, validate, validName } from 'src/utils/validation'
 
 import 'src/styles/normalize.less'
 
+const validateField = (event: Event, eventName: string) => {
+  event.preventDefault()
+
+  const { target } = event
+
+  if (!target) return
+
+  const input = target as HTMLInputElement
+
+  const isValid = validate(input.value, validName(input.name) as TField)
+
+  if (isValid) {
+    input.classList.remove('error')
+  } else {
+    input.classList.add('error')
+  }
+
+  // eslint-disable-next-line no-console
+  console.log({ event: eventName, name: input.name, value: input.value, isValid })
+}
+
 export const validationEvents = [
   {
     tag: 'input',
     name: 'focus',
     callback: (event: Event) => {
-      event.preventDefault()
-
-      const { target } = event
-
-      if (!target) return
-
-      const { name, value } = target as HTMLInputElement
-
-      const isValid = validate(value, validName(name) as TField)
-      // eslint-disable-next-line no-console
-      console.log({ event: 'focus', name, value, isValid })
+      validateField(event, 'focus')
     },
   },
   {
     tag: 'input',
     name: 'blur',
     callback: (event: Event) => {
-      event.preventDefault()
-
-      const { target } = event
-
-      if (!target) return
-
-      const { name, value } = target as HTMLInputElement
-
-      const isValid = validate(value, validName(name) as TField)
-      // eslint-disable-next-line no-console
-      console.log({ event: 'blur', name, value, isValid })
+      validateField(event, 'blur')
     },
   },
   {

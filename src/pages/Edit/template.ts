@@ -20,7 +20,7 @@ const EditTpl = `
                     {loop:fields
                         <li class="${s.listItem}">
                             <label for="{name}"> {label} </label>
-                            <input id="{name}" type="{type}" name="{name}" class="${s.input}" value="{value}" placeholder="{label}" />
+                            <input id="{name}" type="{type}" name="{name}" required="" class="${s.input}" value="{value}" placeholder="{label}" />
                         </li>
                     %loop}
                 </ul>
