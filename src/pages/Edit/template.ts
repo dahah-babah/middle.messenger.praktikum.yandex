@@ -19,8 +19,7 @@ const EditTpl = `
                 <ul class="${s.list}">
                     {loop:fields
                         <li class="${s.listItem}">
-                            <label for="{name}"> {label} </label>
-                            <input id="{name}" type="{type}" name="{name}" required="" class="${s.input}" value="{value}" placeholder="{label}" />
+                            {input}
                         </li>
                     %loop}
                 </ul>
@@ -33,3 +32,8 @@ const EditTpl = `
     </article>
 `
 export default EditTpl
+
+/*
+<label for="{name}"> {label} </label>
+<input id="{name}" type="{type}" name="{name}" required="" class="${s.input}" value="{value}" placeholder="{label}" />
+ */

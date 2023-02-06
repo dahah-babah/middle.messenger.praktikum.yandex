@@ -22,6 +22,26 @@ class Auth extends Component<IProps> {
     super('section', props, AuthTpl)
   }
 
+  componentDidUpdate(oldProps: IProps, newProps: IProps): boolean {
+    const oldFields = oldProps.fields
+    const newFields = newProps.fields
+
+    let shouldUpdate = false
+
+    oldFields.forEach((oldField, index) => {
+      // eslint-disable-next-line no-underscore-dangle
+      const oldInputProps = oldField.input._props
+      // eslint-disable-next-line no-underscore-dangle
+      const newInputProps = newFields[index].input._props
+
+      if (oldInputProps.error !== newInputProps.error) {
+        shouldUpdate = true
+      }
+    })
+
+    return shouldUpdate
+  }
+
   render() {
     return this.compile(AuthTpl)
   }

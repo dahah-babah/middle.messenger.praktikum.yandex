@@ -15,17 +15,12 @@
 }
 
 .profile {
-  min-width: 510px;
+  max-width: 510px;
+  width: 510px;
   margin: 60px auto 0;
   display: flex;
   flex-direction: column;
   gap: 60px;
-}
-
-.input {
-  color: @dustyGray;
-  text-align: right;
-  width: 80%;
 }
 
 .header {
@@ -61,15 +56,8 @@
   justify-content: space-between;
   align-items: center;
 
-  &:not(:last-child)::after {
-    content: '';
+  & div {
     width: 100%;
-    height: 1px;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: @gallery;
-    margin-top: 10px;
   }
 }
 

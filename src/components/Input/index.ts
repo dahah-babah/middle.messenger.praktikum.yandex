@@ -7,9 +7,10 @@ interface IProps {
   id: string
   type: TInputType
   name: string
-  label: string
   value: string | number
   placeholder: string
+  label?: string
+  error?: string
 }
 
 class Input extends Component<IProps> {

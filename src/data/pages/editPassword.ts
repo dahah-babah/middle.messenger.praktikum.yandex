@@ -1,6 +1,6 @@
 import Avatar from 'src/components/Avatar'
 import Button from 'src/components/Button'
-import { TInputType } from 'src/components/Input'
+import Input from 'src/components/Input'
 import { validationEvents } from 'src/data/events'
 
 export const editPasswordData = {
@@ -12,22 +12,34 @@ export const editPasswordData = {
   }),
   fields: [
     {
-      name: 'oldPassword',
-      label: 'Старый пароль',
-      value: '',
-      type: 'password' as TInputType,
+      input: new Input({
+        id: 'old_password',
+        name: 'old_password',
+        value: '',
+        type: 'password',
+        label: 'Старый пароль',
+        placeholder: 'Старый пароль',
+      }),
     },
     {
-      name: 'newPassword',
-      label: 'Новый пароль',
-      value: '',
-      type: 'password' as TInputType,
+      input: new Input({
+        id: 'new_password',
+        name: 'new_password',
+        placeholder: 'Новый пароль',
+        label: 'Новый пароль',
+        value: '',
+        type: 'password',
+      }),
     },
     {
-      name: 'repeatPassword',
-      label: 'Повторите новый пароль',
-      value: '',
-      type: 'password' as TInputType,
+      input: new Input({
+        id: 'repeat_password',
+        name: 'repeat_password',
+        label: 'Повторите новый пароль',
+        placeholder: 'Повторите новый пароль',
+        value: '',
+        type: 'password',
+      }),
     },
   ],
   events: validationEvents,

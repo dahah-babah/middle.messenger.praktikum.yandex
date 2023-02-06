@@ -1,6 +1,6 @@
 import Avatar from 'src/components/Avatar'
 import Button from 'src/components/Button'
-import { TInputType } from 'src/components/Input'
+import Input from 'src/components/Input'
 import { validationEvents } from 'src/data/events'
 
 export const editUserData = {
@@ -12,40 +12,64 @@ export const editUserData = {
   }),
   fields: [
     {
-      name: 'email',
-      label: 'Почта',
-      value: '',
-      type: 'email' as TInputType,
+      input: new Input({
+        id: 'email',
+        type: 'email',
+        name: 'email',
+        label: 'Почта',
+        value: '',
+        placeholder: 'Почта',
+      }),
     },
     {
-      name: 'login',
-      label: 'Логин',
-      value: '',
-      type: 'text' as TInputType,
+      input: new Input({
+        id: 'login',
+        name: 'login',
+        label: 'Логин',
+        value: '',
+        type: 'text',
+        placeholder: 'Логин',
+      }),
     },
     {
-      name: 'first_name',
-      label: 'Имя',
-      value: '',
-      type: 'text' as TInputType,
+      input: new Input({
+        id: 'first_name',
+        name: 'first_name',
+        label: 'Имя',
+        value: '',
+        type: 'text',
+        placeholder: 'Имя',
+      }),
     },
     {
-      name: 'second_name',
-      label: 'Фамилия',
-      value: '',
-      type: 'text' as TInputType,
+      input: new Input({
+        id: 'second_name',
+        name: 'second_name',
+        label: 'Фамилия',
+        value: '',
+        type: 'text',
+        placeholder: 'Фамилия',
+      }),
     },
     {
-      name: 'display_name',
-      label: 'Имя в чате',
-      value: '',
-      type: 'text' as TInputType,
+      input: new Input({
+        id: 'display_name',
+        name: 'display_name',
+        label: 'Имя в чате',
+        value: '',
+        type: 'text',
+        placeholder: 'Имя в чате',
+      }),
     },
     {
-      name: 'phone',
-      label: 'Телефон',
-      value: '',
-      type: 'phone' as TInputType,
+      input: new Input({
+        id: 'phone',
+        name: 'phone',
+        label: 'Телефон',
+        value: '',
+        type: 'phone',
+        placeholder: 'Телефон',
+      }),
     },
   ],
   events: validationEvents,
