@@ -1,34 +1,38 @@
-import Component from 'src/core/Component'
+import Component, { TEvent } from 'src/core/Component'
 import AvatarTpl from 'src/components/Avatar/template'
 import avatar from 'src/assets/icons/avatar.svg'
 
 interface IProps {
   picture: string
+  events: TEvent[]
+}
+
+const props = {
+  picture: avatar,
+  events: [
+    {
+      tag: 'input',
+      name: 'change',
+      callback(event: Event) {
+        const { target } = event
+
+        if (!target) return
+
+        const { files } = target as HTMLInputElement
+
+        if (!files) return
+
+        const newPicture = URL.createObjectURL(files[0])
+
+        this.setProps({ picture: newPicture })
+      },
+    },
+  ],
 }
 
 class Avatar extends Component<IProps> {
   constructor() {
-    super('div', { picture: avatar }, AvatarTpl)
-  }
-
-  addEvents() {
-    super.addEvents()
-
-    const input = this._element.querySelector('input')
-
-    input?.addEventListener('change', (event: Event) => {
-      const { target } = event
-
-      if (!target) return
-
-      const { files } = target as HTMLInputElement
-
-      if (!files) return
-
-      const newPicture = URL.createObjectURL(files[0])
-
-      this.setProps({ picture: newPicture })
-    })
+    super('div', props, AvatarTpl)
   }
 
   componentDidUpdate(oldProps: IProps, newProps: IProps): boolean {

@@ -351,7 +351,9 @@ abstract class Component<T extends IComponent> {
     const { events = [] } = this._props
 
     events.map(({ name, tag, callback }) =>
-      this._element.querySelectorAll(tag).forEach((elem) => elem.addEventListener(name, callback)),
+      this._element
+        .querySelectorAll(tag)
+        .forEach((elem) => elem.addEventListener(name, callback.bind(this))),
     )
   }
 
@@ -361,7 +363,7 @@ abstract class Component<T extends IComponent> {
     events.map(({ name, tag, callback }) =>
       this._element
         .querySelectorAll(tag)
-        .forEach((elem) => elem.removeEventListener(name, callback)),
+        .forEach((elem) => elem.removeEventListener(name, callback.bind(this))),
     )
   }
 

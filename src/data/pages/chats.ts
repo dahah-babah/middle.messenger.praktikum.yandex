@@ -1,4 +1,5 @@
 import ChatPreview from 'src/components/ChatPreview'
+import { chatPreviewEvents } from 'src/data/events'
 
 export const chatsPageData = {
   hasNoChats: true,
@@ -35,4 +36,5 @@ export const chatsPageData = {
       }),
     },
   ],
+  events: chatPreviewEvents,
 }
