@@ -19,6 +19,8 @@ type TOptions = {
   retries: number
 }
 
+type HTTPMethod = (url: string, options: TOptions) => Promise<XMLHttpRequest>
+
 function queryStringify(data: TData) {
   return `?${Object.entries(data)
     .map((param) => param.join('='))
@@ -26,7 +28,7 @@ function queryStringify(data: TData) {
 }
 
 class HTTPTransport {
-  get = (url: string, options: TOptions) => {
+  get: HTTPMethod = (url, options) => {
     const query = url.concat(queryStringify((options.data as TData) || {}))
     return this.request(query, {
       ...options,
@@ -35,13 +37,13 @@ class HTTPTransport {
     })
   }
 
-  post = (url: string, options: TOptions) =>
+  post: HTTPMethod = (url, options) =>
     this.request(url, { ...options, method: METHODS.POST as TMethod, timeout: options.timeout })
 
-  put = (url: string, options: TOptions) =>
+  put: HTTPMethod = (url, options) =>
     this.request(url, { ...options, method: METHODS.PUT as TMethod, timeout: options.timeout })
 
-  delete = (url: string, options: TOptions) =>
+  delete: HTTPMethod = (url, options) =>
     this.request(url, { ...options, method: METHODS.DELETE as TMethod, timeout: options.timeout })
 
   request = (url: string, options: TOptions): Promise<XMLHttpRequest> => {
