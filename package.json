@@ -2,13 +2,30 @@
   "name": "web-messenger",
   "version": "1.0.0",
   "scripts": {
-    "dev": "parcel src/index.html --open",
+    "dev": "parcel src/index.html",
     "start": "node server.js",
-    "build": "parcel build src/index.html"
+    "build": "parcel build src/index.html",
+    "lint": "eslint . --ext ts --ext js",
+    "lint:fix": "eslint . --ext ts --ext js --fix",
+    "lint:css": "stylelint \"**/*.less\""
   },
   "license": "ISC",
   "devDependencies": {
-    "parcel": "2.8.2"
+    "@parcel/config-default": "2.8.2",
+    "@parcel/plugin": "2.8.2",
+    "eslint": "8.32.0",
+    "eslint-config-airbnb-typescript": "17.0.0",
+    "eslint-config-prettier": "8.6.0",
+    "eslint-import-resolver-typescript": "3.5.3",
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-prettier": "4.2.1",
+    "parcel": "2.8.2",
+    "parcel-resolver-ts-base-url": "1.3.1",
+    "postcss-less": "6.0.0",
+    "prettier": "2.8.3",
+    "stylelint": "14.16.1",
+    "stylelint-config-recommended-less": "1.0.4",
+    "typescript": "4.9.4"
   },
   "dependencies": {
     "@parcel/transformer-less": "2.8.2",
@@ -21,5 +38,10 @@
   },
   "engines": {
     "node": ">=12.0.0"
+  },
+  "targets": {
+    "default": {
+      "includeNodeModules": true
+    }
   }
 }
