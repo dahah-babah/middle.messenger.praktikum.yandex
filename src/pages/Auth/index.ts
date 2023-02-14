@@ -5,9 +5,6 @@ import Button from 'src/components/Button'
 import Link from 'src/components/Link'
 import Input from 'src/components/Input'
 
-import { signInPageData } from 'src/data/pages/signIn'
-import { signUpPageData } from 'src/data/pages/signUp'
-
 interface IProps {
   formId: string
   title: string
@@ -47,7 +44,4 @@ class Auth extends Component<IProps> {
   }
 }
 
-const SignInPage = new Auth(signInPageData)
-const SignUpPage = new Auth(signUpPageData)
-
-export { SignInPage, SignUpPage }
+export default Auth

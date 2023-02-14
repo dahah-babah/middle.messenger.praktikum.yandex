@@ -1,6 +1,5 @@
 import Component, { TEvent } from 'src/core/Component'
 import ChatsTpl from 'src/pages/Chats/template'
-import { chatsPageData } from 'src/data/pages/chats'
 import ChatPreview from 'src/components/ChatPreview'
 import Chat from 'src/components/Chat'
 
@@ -21,4 +20,4 @@ class Chats extends Component<IProps> {
   }
 }
 
-export const ChatsPage = new Chats(chatsPageData)
+export default Chats

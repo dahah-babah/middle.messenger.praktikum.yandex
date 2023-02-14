@@ -1,7 +1,7 @@
 import Input from 'src/components/Input'
 import Button from 'src/components/Button'
 import Link from 'src/components/Link'
-import { validationEvents } from 'src/data/events'
+import { routerEvents, validationEvents } from 'src/data/events'
 
 export const signInPageData = {
   formId: 'sign-in',
@@ -33,8 +33,8 @@ export const signInPageData = {
     children: 'Войти',
   }),
   link: new Link({
-    href: '/sign-up',
+    id: 'sign-up',
     children: 'Нет аккаунта?',
   }),
-  events: validationEvents,
+  events: [...validationEvents, ...routerEvents],
 }

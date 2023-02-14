@@ -1,4 +1,5 @@
 import { TField, validate, validationError, validName } from 'src/utils/validation'
+import { handleRoute } from 'src/utils/router'
 import Message from 'src/components/Message'
 import Chat from 'src/components/Chat'
 import Input from 'src/components/Input'
@@ -163,6 +164,19 @@ export const chatPreviewEvents = [
     name: 'click',
     callback() {
       this.setProps({ hasNoChats: false, activeChat })
+    },
+  },
+]
+
+export const routerEvents = [
+  {
+    tag: 'div',
+    name: 'click',
+    callback(event: Event) {
+      const target = event.target as HTMLDivElement
+      const closest = target.closest('div') as HTMLDivElement
+
+      handleRoute(target.id || closest.id)
     },
   },
 ]

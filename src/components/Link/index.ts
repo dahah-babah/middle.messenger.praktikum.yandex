@@ -2,7 +2,7 @@ import Component from 'src/core/Component'
 import LinkTpl from 'src/components/Link/template'
 
 interface IProps {
-  href: string
+  id: string
   children: string
 }
 

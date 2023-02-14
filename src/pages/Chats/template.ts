@@ -5,7 +5,7 @@ const ChatsTpl = `
     <section class="${s.root}">
         <aside class="${s.menu}"> 
             <div class="${s.profile}"> 
-                <a href="/profile" class="${s.link}"> Профиль </a> 
+                <div id="profile" class="${s.link}"> Профиль </div> 
                 <img src="${caretRight}" alt="" />
             </div>
             

@@ -1,7 +1,7 @@
 import Avatar from 'src/components/Avatar'
 import Button from 'src/components/Button'
 import Input from 'src/components/Input'
-import { validationEvents } from 'src/data/events'
+import { routerEvents, validationEvents } from 'src/data/events'
 
 export const editUserData = {
   formId: 'edit-user',
@@ -72,5 +72,5 @@ export const editUserData = {
       }),
     },
   ],
-  events: validationEvents,
+  events: [...validationEvents, ...routerEvents],
 }

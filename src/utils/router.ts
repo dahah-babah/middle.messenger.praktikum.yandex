@@ -1,26 +1,44 @@
-import { ErrorPage404, ErrorPage500 } from 'src/pages/Error'
-import { SignInPage, SignUpPage } from 'src/pages/Auth'
-import { EditPasswordPage, EditUserPage } from 'src/pages/Edit'
-import { ProfilePage } from 'src/pages/Profile'
-import { ChatsPage } from 'src/pages/Chats'
+// eslint-disable-next-line import/no-cycle
+import { router, ROUTES } from '/index'
 
-type TRouter = {
-  path: string
-  component: any
+const routeIds = ['sign-in', 'sign-up', 'chats', 'profile', 'settings-user', 'settings-pass']
+
+const route = (id: string) => {
+  switch (id) {
+    case 'sign-in': {
+      router.go(ROUTES.SIGN_IN)
+      break
+    }
+
+    case 'sign-up': {
+      router.go(ROUTES.SIGN_UP)
+      break
+    }
+
+    case 'chats': {
+      router.go(ROUTES.MESSENGER)
+      break
+    }
+
+    case 'profile': {
+      router.go(ROUTES.PROFILE)
+      break
+    }
+
+    case 'settings-user':
+    case 'settings-pass': {
+      router.go(ROUTES.SETTINGS)
+      break
+    }
+
+    default:
+      router.go(ROUTES.NOT_FOUND)
+      break
+  }
 }
 
-const routes: TRouter[] = [
-  { path: '/sign-in', component: SignInPage },
-  { path: '/sign-up', component: SignUpPage },
-  { path: '/edit', component: EditUserPage },
-  { path: '/password', component: EditPasswordPage },
-  { path: '/500', component: ErrorPage500 },
-  { path: '/404', component: ErrorPage404 },
-  { path: '/profile', component: ProfilePage },
-  { path: '/chats', component: ChatsPage },
-]
-
-const currentComponent = () =>
-  routes.find((route) => route.path.match(`\\${window.location.pathname}`))
-
-export default currentComponent()?.component ?? ErrorPage404
+export const handleRoute = (id: string) => {
+  if (routeIds.includes(id)) {
+    route(id)
+  }
+}

@@ -1,6 +1,7 @@
 import Avatar from 'src/components/Avatar'
 import { TInputType } from 'src/components/Input'
 import Link from 'src/components/Link'
+import { routerEvents } from '/data/events'
 
 export const profilePageData = {
   title: 'Иван',
@@ -44,15 +45,16 @@ export const profilePageData = {
     },
   ],
   changeDataLink: new Link({
-    href: '/edit',
+    id: 'settings-user',
     children: 'Изменить данные',
   }),
   changePasswordLink: new Link({
-    href: '/password',
+    id: 'settings-pass',
     children: 'Изменить пароль',
   }),
   exitLink: new Link({
-    href: '/sign-in',
+    id: 'sign-in',
     children: 'Выйти',
   }),
+  events: routerEvents,
 }

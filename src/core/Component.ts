@@ -21,7 +21,7 @@ export type TEvent = {
   callback: (event: Event) => void
 }
 
-interface IComponent {
+export interface IComponent {
   [key: string]: any
   events?: TEvent[]
 }
@@ -52,7 +52,7 @@ abstract class Component<T extends IComponent> {
     this._shouldUpdate = false
 
     this._eventBus = new EventBus()
-    this._props = this._makePropsProxy(props) // for child too
+    this._props = this._makePropsProxy(props)
 
     this._registerEvents()
     this._eventBus.emit(Component.EVENTS.INIT)
@@ -378,6 +378,10 @@ abstract class Component<T extends IComponent> {
 
   componentDidUpdate(oldProps: IComponent, newProps: IComponent): boolean {
     return oldProps !== newProps
+  }
+
+  clear() {
+    this._element.remove()
   }
 
   componentDidMount(): void {}

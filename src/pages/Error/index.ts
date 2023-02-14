@@ -1,4 +1,4 @@
-import Component from 'src/core/Component'
+import Component, { TEvent } from 'src/core/Component'
 import Link from 'src/components/Link'
 import ErrorTpl from 'src/pages/Error/template'
 
@@ -6,6 +6,7 @@ interface IProps {
   code: string
   caption: string
   link: Link
+  events: TEvent[]
 }
 
 class Error extends Component<IProps> {
@@ -18,19 +19,4 @@ class Error extends Component<IProps> {
   }
 }
 
-const errorPageData404 = {
-  code: '404',
-  caption: 'Не туда попали',
-  link: new Link({ href: '/chats', children: 'Назад к чатам' }),
-}
-
-const errorPageData500 = {
-  code: '500',
-  caption: 'Мы уже фиксим',
-  link: new Link({ href: '/chats', children: 'Назад к чатам' }),
-}
-
-const ErrorPage404 = new Error(errorPageData404)
-const ErrorPage500 = new Error(errorPageData500)
-
-export { ErrorPage404, ErrorPage500 }
+export default Error

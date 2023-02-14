@@ -5,9 +5,9 @@ import * as s from './styles.module.less'
 const EditTpl = `
     <article class="${s.root}">
         <aside class="${s.back}">
-            <a href="/chats">
+            <div id="chats">
                 <img src="${arrowLeft}" alt="back" />
-            </a>
+            </div>
         </aside>
             
         <section class="${s.profile}">
@@ -32,8 +32,3 @@ const EditTpl = `
     </article>
 `
 export default EditTpl
-
-/*
-<label for="{name}"> {label} </label>
-<input id="{name}" type="{type}" name="{name}" required="" class="${s.input}" value="{value}" placeholder="{label}" />
- */
