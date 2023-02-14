@@ -1,16 +1,16 @@
-import Component, { IComponent } from 'src/core/Component'
+import Component, { TConstructable, IComponent } from 'src/core/Component'
 import render from 'src/utils/render'
 
 class Route {
   _pathname: string
 
-  _componentClass: new (props: {}) => Component<IComponent>
+  _componentClass: TConstructable
 
   _component: null | Component<IComponent>
 
   _props: IComponent
 
-  constructor(pathname: string, view: new (props: {}) => Component<IComponent>, props = {}) {
+  constructor(pathname: string, view: TConstructable, props = {}) {
     this._pathname = pathname
     this._componentClass = view
     this._component = null

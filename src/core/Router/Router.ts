@@ -1,5 +1,5 @@
 import Route from 'src/core/Router/Route'
-import Component, { IComponent } from 'src/core/Component'
+import { TConstructable } from 'src/core/Component'
 
 class Router {
   static instance: Router
@@ -45,7 +45,7 @@ class Router {
     return this.routes.find((route) => route.match(pathname))
   }
 
-  use(pathname: string, component: new (props: {}) => Component<IComponent>, props = {}) {
+  use(pathname: string, component: TConstructable, props = {}) {
     const route = new Route(pathname, component, { ...props, rootQuery: this._rootQuery })
 
     this.routes.push(route)

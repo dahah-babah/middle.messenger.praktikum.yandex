@@ -26,6 +26,10 @@ export interface IComponent {
   events?: TEvent[]
 }
 
+export type TConstructable = {
+  new (props: {}): Component<IComponent>
+}
+
 abstract class Component<T extends IComponent> {
   static EVENTS = {
     INIT: 'init',
