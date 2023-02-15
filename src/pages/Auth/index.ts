@@ -1,3 +1,6 @@
+import { validateField } from 'src/utils/validation'
+import AuthController from 'src/controllers/AuthController'
+import { ISignIn, ISignUp } from 'src/api/AuthAPI'
 import AuthTpl from 'src/pages/Auth/template'
 
 import Component, { TEvent } from 'src/core/Component'
@@ -19,6 +22,8 @@ class Auth extends Component<IProps> {
     super('section', props, AuthTpl)
   }
 
+  componentDidMount() {}
+
   componentDidUpdate(oldProps: IProps, newProps: IProps): boolean {
     const oldFields = oldProps.fields
     const newFields = newProps.fields
@@ -37,6 +42,36 @@ class Auth extends Component<IProps> {
     })
 
     return shouldUpdate
+  }
+
+  async onSubmit(event: Event) {
+    event.preventDefault()
+
+    const form = event.target as HTMLFormElement
+
+    if (!form) return
+
+    const fields = Array.from(form.querySelectorAll('input') || [])
+
+    fields.forEach((field) => {
+      validateField.call(this, field, 'submit')
+    })
+
+    const data = fields.reduce((acc, { id, value }) => ({ ...acc, [id]: value }), {})
+
+    if (form.id === 'sign-in') {
+      await this.signIn(data as ISignIn)
+    } else {
+      await this.signUp(data as ISignUp)
+    }
+  }
+
+  async signIn(data: ISignIn) {
+    await AuthController.signIn(data)
+  }
+
+  async signUp(data: ISignUp) {
+    await AuthController.signUp(data)
   }
 
   render() {

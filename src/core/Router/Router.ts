@@ -1,6 +1,15 @@
 import Route from 'src/core/Router/Route'
 import { TConstructable } from 'src/core/Component'
 
+export enum ROUTES {
+  SIGN_IN = '/',
+  SIGN_UP = '/sign-up',
+  PROFILE = '/profile',
+  SETTINGS = '/settings',
+  MESSENGER = '/messenger',
+  NOT_FOUND = '/404',
+}
+
 class Router {
   static instance: Router
 
@@ -77,4 +86,4 @@ class Router {
   }
 }
 
-export default Router
+export default new Router('#root')

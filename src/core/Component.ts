@@ -388,7 +388,7 @@ abstract class Component<T extends IComponent> {
     this._element.remove()
   }
 
-  componentDidMount(): void {}
+  abstract componentDidMount(): void
 
   abstract render(): HTMLElement
 }

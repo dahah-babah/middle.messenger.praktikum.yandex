@@ -1,67 +1,10 @@
-import { TField, validate, validationError, validName } from 'src/utils/validation'
+import { validateField } from 'src/utils/validation'
 import { handleRoute } from 'src/utils/router'
+
 import Message from 'src/components/Message'
 import Chat from 'src/components/Chat'
-import Input from 'src/components/Input'
 
 import 'src/styles/normalize.less'
-
-type TValidationEvent = 'focus' | 'blur' | 'submit'
-
-function highlightErrors() {
-  const inputs = this._element.querySelectorAll('input')
-
-  if (!inputs.length) return
-
-  inputs.forEach((input: HTMLInputElement) => {
-    const isValid = validate(input.value, validName(input.name) as TField)
-
-    if (isValid) {
-      input.classList.remove('error')
-    } else {
-      input.classList.add('error')
-    }
-  })
-}
-
-function getNewProps(target: HTMLInputElement, isValid: boolean) {
-  return this._props.fields.map((field: { [_key: string]: Input }) => {
-    // eslint-disable-next-line no-underscore-dangle
-    if (field.input._props.id !== target.id) {
-      return field
-    }
-    // eslint-disable-next-line no-underscore-dangle
-    const { id, type, name, label, placeholder } = field.input._props
-
-    return {
-      input: new Input({
-        id,
-        type,
-        name,
-        label,
-        placeholder,
-        value: target.value,
-        error: isValid ? '' : validationError[validName(name) as TField],
-      }),
-    }
-  })
-}
-
-function validateField(target: HTMLInputElement, eventName: TValidationEvent) {
-  if (!target) return
-
-  const { value: targetValue, name: targetName } = target
-
-  const isValid = validate(targetValue, validName(targetName) as TField)
-
-  if (eventName !== 'focus') {
-    this.setProps({ fields: getNewProps.call(this, target, isValid) })
-    highlightErrors.call(this)
-  }
-
-  // eslint-disable-next-line no-console
-  console.log({ event: eventName, name: targetName, value: targetValue, isValid })
-}
 
 export const validationEvents = [
   {
@@ -86,27 +29,12 @@ export const validationEvents = [
     tag: 'form',
     name: 'submit',
     callback(event: Event) {
-      event.preventDefault()
+      this.onSubmit(event)
 
-      const form = event.target as HTMLFormElement
-
-      if (!form) return
-      const fields = Array.from(form.querySelectorAll('input') || [])
-
-      const validation = fields.map((field) => {
-        const isValid = validate(field.value, validName(field.name) as TField)
-
-        validateField.call(this, field, 'submit')
-
-        return {
-          name: field.name,
-          value: field.value,
-          isValid,
-        }
-      })
-
-      // eslint-disable-next-line no-console
-      console.log({ form: form.id, event: 'submit', validation })
+      // const login = validation.find(({ name }) => name === 'login')?.value
+      // const password = validation.find(({ name }) => name === 'password')?.value
+      //
+      // ACTIONS.setUser(login, password)
     },
   },
 ]
