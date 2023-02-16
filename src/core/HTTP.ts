@@ -77,8 +77,14 @@ class HTTPTransport {
         xhr.setRequestHeader(key, value)
       })
 
-      xhr.onload = () => {
-        resolve(xhr)
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status < 400) {
+            resolve(xhr.response)
+          } else {
+            reject(xhr.response)
+          }
+        }
       }
 
       xhr.onabort = () => reject(new Error('Abort'))

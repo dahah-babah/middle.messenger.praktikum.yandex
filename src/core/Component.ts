@@ -27,7 +27,7 @@ export interface IComponent {
 }
 
 export type TConstructable = {
-  new (props: {}): Component<IComponent>
+  new (props: {}): any
 }
 
 abstract class Component<T extends IComponent> {
@@ -63,7 +63,7 @@ abstract class Component<T extends IComponent> {
   }
 
   private _registerEvents() {
-    this._eventBus.on(Component.EVENTS.INIT, this.init.bind(this))
+    this._eventBus.on(Component.EVENTS.INIT, this._init.bind(this))
     this._eventBus.on(Component.EVENTS.FLOW_CDM, this._componentDidMount.bind(this))
     this._eventBus.on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this))
     this._eventBus.on(Component.EVENTS.FLOW_RENDER, this._render.bind(this))
@@ -114,12 +114,21 @@ abstract class Component<T extends IComponent> {
   }
 
   private _render() {
+    if (!this._element) return
+
     const component = this.render()
 
     this.removeEvents()
     this._element.textContent = ''
     this._element.appendChild(component)
     this.addEvents()
+  }
+
+  private _init() {
+    this.init()
+
+    this._createResources()
+    this._eventBus.emit(Component.EVENTS.FLOW_RENDER)
   }
 
   compile(
@@ -188,7 +197,11 @@ abstract class Component<T extends IComponent> {
           }
 
           case 'value': {
-            children.push(value.toString())
+            if (value == null) {
+              children.push('')
+            } else {
+              children.push(value.toString())
+            }
             break
           }
 
@@ -371,11 +384,6 @@ abstract class Component<T extends IComponent> {
     )
   }
 
-  init() {
-    this._createResources()
-    this._eventBus.emit(Component.EVENTS.FLOW_RENDER)
-  }
-
   dispatchComponentDidMount() {
     this._eventBus.emit(Component.EVENTS.FLOW_CDM)
   }
@@ -388,7 +396,9 @@ abstract class Component<T extends IComponent> {
     this._element.remove()
   }
 
-  abstract componentDidMount(): void
+  init(): void {}
+
+  componentDidMount(): void {}
 
   abstract render(): HTMLElement
 }

@@ -35,6 +35,8 @@ class Avatar extends Component<IProps> {
     super('div', props, AvatarTpl)
   }
 
+  componentDidMount(): void {}
+
   componentDidUpdate(oldProps: IProps, newProps: IProps): boolean {
     return oldProps.picture !== newProps.picture
   }

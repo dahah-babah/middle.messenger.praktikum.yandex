@@ -46,4 +46,4 @@ class Store extends EventBus {
   }
 }
 
-export default new Store()
+export default Store

@@ -10,7 +10,7 @@ interface IProps {
 }
 
 class Error extends Component<IProps> {
-  constructor(props: IProps) {
+  constructor(props: string) {
     super('section', props, ErrorTpl)
   }
 

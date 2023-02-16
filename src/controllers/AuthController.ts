@@ -47,9 +47,14 @@ class AuthController {
     try {
       const user = await this.api.fetchUser()
 
+      if (!user) {
+        throw new Error(`User is ${user}`)
+      }
+
       ACTIONS.setUser(user)
     } catch (error: any) {
       console.error(error)
+      throw new Error(`Error: ${error}`)
     }
   }
 }

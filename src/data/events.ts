@@ -30,11 +30,6 @@ export const validationEvents = [
     name: 'submit',
     callback(event: Event) {
       this.onSubmit(event)
-
-      // const login = validation.find(({ name }) => name === 'login')?.value
-      // const password = validation.find(({ name }) => name === 'password')?.value
-      //
-      // ACTIONS.setUser(login, password)
     },
   },
 ]

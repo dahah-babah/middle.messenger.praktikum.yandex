@@ -1,18 +1,20 @@
 import Store from 'src/core/Store/Store'
 import { IUser } from 'src/api/AuthAPI'
 
+const store = new Store()
+
 export const ACTIONS = {
   setUser: (data: IUser) => {
-    const state = Store.getState()
+    const state = store.getState()
     const user = state.user ?? {}
 
-    Store.set('user', { ...user, ...data })
+    store.set('user', { ...user, ...data })
   },
 
   setUserId: (id: string) => {
-    const state = Store.getState()
+    const state = store.getState()
     const user = state.user ?? {}
 
-    Store.set('user', { ...user, id })
+    store.set('user', { ...user, id })
   },
 }

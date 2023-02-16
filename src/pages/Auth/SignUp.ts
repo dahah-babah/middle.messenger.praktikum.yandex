@@ -1,12 +1,15 @@
 import { validateField } from 'src/utils/validation'
 import AuthController from 'src/controllers/AuthController'
-import { ISignIn, ISignUp } from 'src/api/AuthAPI'
+import { ISignUp } from 'src/api/AuthAPI'
 import AuthTpl from 'src/pages/Auth/template'
 
 import Component, { TEvent } from 'src/core/Component'
 import Button from 'src/components/Button'
 import Link from 'src/components/Link'
 import Input from 'src/components/Input'
+import { validationEvents } from 'src/data/events'
+import { handleRoute } from 'src/utils/router'
+import { signUpFields } from 'src/data/pages/auth'
 
 interface IProps {
   formId: string
@@ -17,18 +20,47 @@ interface IProps {
   events: TEvent[]
 }
 
-class Auth extends Component<IProps> {
+class SignUp extends Component<IProps> {
   constructor(props: IProps) {
     super('section', props, AuthTpl)
   }
 
-  componentDidMount() {}
+  init() {
+    const formId = 'sign-up'
+    const title = 'Регистрация'
+
+    const button = new Button({
+      type: 'submit',
+      children: 'Зарегистрироваться',
+    })
+
+    const link = new Link({
+      id: 'sign-in',
+      children: 'Войти',
+      events: [
+        {
+          tag: 'div',
+          name: 'click',
+          callback: () => {
+            handleRoute('sign-in')
+          },
+        },
+      ],
+    })
+
+    const fields = signUpFields
+    const events = validationEvents
+
+    this.setProps({ formId, title, fields, button, link, events })
+  }
 
   componentDidUpdate(oldProps: IProps, newProps: IProps): boolean {
     const oldFields = oldProps.fields
     const newFields = newProps.fields
 
     let shouldUpdate = false
+
+    if (!oldFields) return false
 
     oldFields.forEach((oldField, index) => {
       // eslint-disable-next-line no-underscore-dangle
@@ -59,15 +91,7 @@ class Auth extends Component<IProps> {
 
     const data = fields.reduce((acc, { id, value }) => ({ ...acc, [id]: value }), {})
 
-    if (form.id === 'sign-in') {
-      await this.signIn(data as ISignIn)
-    } else {
-      await this.signUp(data as ISignUp)
-    }
-  }
-
-  async signIn(data: ISignIn) {
-    await AuthController.signIn(data)
+    await this.signUp(data as ISignUp)
   }
 
   async signUp(data: ISignUp) {
@@ -79,4 +103,4 @@ class Auth extends Component<IProps> {
   }
 }
 
-export default Auth
+export default SignUp

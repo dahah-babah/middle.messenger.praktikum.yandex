@@ -24,9 +24,13 @@ const route = (id: string) => {
       break
     }
 
-    case 'settings-user':
-    case 'settings-pass': {
+    case 'settings-user': {
       Router.go(ROUTES.SETTINGS)
+      break
+    }
+
+    case 'settings-pass': {
+      Router.go(ROUTES.PASSWORD)
       break
     }
 

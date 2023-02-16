@@ -3,6 +3,11 @@ import Link from 'src/components/Link'
 import Component, { TEvent } from 'src/core/Component'
 import Avatar from 'src/components/Avatar'
 import ProfileTpl from 'src/pages/Profile/template'
+import AuthController from 'src/controllers/AuthController'
+import { connect } from 'src/core/Store/Connect'
+import { IUser } from 'src/api/AuthAPI'
+import { profileFields } from 'src/data/pages/profile'
+import { handleRoute } from 'src/utils/router'
 
 type TField = {
   name: string
@@ -26,9 +31,94 @@ class Profile extends Component<IProps> {
     super('article', props, ProfileTpl)
   }
 
+  async init() {
+    const changeDataLink = new Link({
+      id: 'settings-user',
+      children: 'Изменить данные',
+      events: [
+        {
+          tag: 'div',
+          name: 'click',
+          callback: () => {
+            handleRoute('settings-user')
+          },
+        },
+      ],
+    })
+
+    const changePasswordLink = new Link({
+      id: 'settings-pass',
+      children: 'Изменить пароль',
+      events: [
+        {
+          tag: 'div',
+          name: 'click',
+          callback: () => {
+            handleRoute('settings-pass')
+          },
+        },
+      ],
+    })
+
+    const exitLink = new Link({
+      id: 'sign-in',
+      children: 'Выйти',
+      events: [
+        {
+          tag: 'div',
+          name: 'click',
+          async callback() {
+            await AuthController.logout()
+          },
+        },
+      ],
+    })
+
+    this.setProps({ changeDataLink, changePasswordLink, exitLink })
+  }
+
+  // async componentDidMount() {
+  //   await AuthController.fetchUser()
+  // }
+
+  async logout() {
+    await AuthController.logout()
+  }
+
+  componentDidUpdate(oldProps: IProps, newProps: IProps) {
+    return super.componentDidUpdate(oldProps, newProps)
+  }
+
   render() {
     return this.compile(ProfileTpl)
   }
 }
 
-export default Profile
+const mapStateToProps = (state: IUser): IProps => {
+  const { avatar, first_name: firstName, display_name: displayName } = state
+
+  const props = {} as IProps
+
+  props.title = firstName
+
+  if (avatar) {
+    props.avatar = new Avatar() // with pic
+  } else {
+    props.avatar = new Avatar()
+  }
+
+  props.fields = profileFields.map((field: TField) => ({
+    ...field,
+    value: state[field.name],
+  }))
+
+  if (!displayName) {
+    const displayNameIndex = props.fields.findIndex((field) => field.name === 'display_name')
+
+    props.fields[displayNameIndex].value = firstName
+  }
+
+  return props
+}
+
+export default connect(Profile, (state) => mapStateToProps(state.user ?? {}) ?? {})

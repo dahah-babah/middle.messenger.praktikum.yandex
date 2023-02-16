@@ -1,48 +1,16 @@
-// function connect(mapStateToProps: (state: Indexed) => Indexed) {
-//   return function (Component: typeof Block) {
-//     return class extends Component {
-//       constructor(props) {
-//         // сохраняем начальное состояние
-//         let state = mapStateToProps(store.getState())
-//
-//         super({ ...props, ...state })
-//
-//         // подписываемся на событие
-//         store.on(StoreEvents.Updated, () => {
-//           // при обновлении получаем новое состояние
-//           const newState = mapStateToProps(store.getState())
-//
-//           // если что-то из используемых данных поменялось, обновляем компонент
-//           if (!isEqual(state, newState)) {
-//             this.setProps({ ...newState })
-//           }
-//
-//           // не забываем сохранить новое состояние
-//           state = newState
-//         })
-//       }
-//     }
-//   }
-// }
-
-import Component from 'src/core/Component'
+import { TConstructable } from 'src/core/Component'
 import Store, { StoreEvents } from 'src/core/Store/Store'
 
-function connect(mapStateToProps: (state: Indexed) => Indexed) {
-  return function (Class: typeof Component) {
-    return class extends Class<{}> {
-      constructor(tag: string, props = {}) {
-        super(tag, { ...props, ...mapStateToProps(Store.getState()) }, '')
+export function connect(Class: TConstructable, mapStateToProps: (state: any) => any) {
+  return class extends Class {
+    constructor(props: any) {
+      const store = new Store()
 
-        Store.on(StoreEvents.UPDATED, () => {
-          this.setProps({ ...mapStateToProps(Store.getState()) })
-        })
-      }
+      super({ ...props, ...mapStateToProps(store.getState()) })
+
+      store.on(StoreEvents.UPDATED, () => {
+        this.setProps({ ...mapStateToProps(store.getState()) })
+      })
     }
   }
 }
-
-const withUser = connect((state) => ({ user: state.user }))
-
-withUser(UserProfile)
-withUser(SettingsPage)

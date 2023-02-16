@@ -6,8 +6,10 @@ export enum ROUTES {
   SIGN_UP = '/sign-up',
   PROFILE = '/profile',
   SETTINGS = '/settings',
+  PASSWORD = '/password',
   MESSENGER = '/messenger',
   NOT_FOUND = '/404',
+  SERVER_ERROR = '/500',
 }
 
 class Router {
@@ -54,8 +56,8 @@ class Router {
     return this.routes.find((route) => route.match(pathname))
   }
 
-  use(pathname: string, component: TConstructable, props = {}) {
-    const route = new Route(pathname, component, { ...props, rootQuery: this._rootQuery })
+  use(pathname: string, component: TConstructable) {
+    const route = new Route(pathname, component, { rootQuery: this._rootQuery })
 
     this.routes.push(route)
 
