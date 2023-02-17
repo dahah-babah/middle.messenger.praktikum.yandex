@@ -5,6 +5,7 @@ import UserController from 'src/controllers/UserController'
 import { connect } from '/core/Store/Connect'
 import { IUser } from '/api/AuthAPI'
 import { RESOURCES_URL } from '/constants/url'
+import Store from '/core/Store/Store'
 
 interface IProps {
   picture?: string
@@ -17,7 +18,9 @@ class Avatar extends Component<IProps> {
   }
 
   init() {
-    const picture = avatar
+    const store = new Store()
+    const storedAvatar = store.state.user?.avatar
+    const picture = RESOURCES_URL + storedAvatar || avatar
 
     const events = [
       {
