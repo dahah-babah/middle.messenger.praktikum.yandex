@@ -1,4 +1,4 @@
-import Component from 'src/core/Component'
+import Component, { TEvent } from 'src/core/Component'
 import ChatPreviewTpl from 'src/components/ChatPreview/template'
 
 interface IProps {
@@ -8,6 +8,7 @@ interface IProps {
   preview: string
   time: string
   unreadCount: number
+  events?: TEvent[]
 }
 
 class ChatPreview extends Component<IProps> {

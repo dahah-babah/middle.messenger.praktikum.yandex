@@ -77,10 +77,6 @@ class Profile extends Component<IProps> {
     this.setProps({ changeDataLink, changePasswordLink, exitLink })
   }
 
-  // async componentDidMount() {
-  //   await AuthController.fetchUser()
-  // }
-
   async logout() {
     await AuthController.logout()
   }
@@ -101,11 +97,7 @@ const mapStateToProps = (state: IUser): IProps => {
 
   props.title = firstName
 
-  if (avatar) {
-    props.avatar = new Avatar() // with pic
-  } else {
-    props.avatar = new Avatar()
-  }
+  props.avatar = new Avatar(avatar ? { picture: avatar } : {})
 
   props.fields = profileFields.map((field: TField) => ({
     ...field,

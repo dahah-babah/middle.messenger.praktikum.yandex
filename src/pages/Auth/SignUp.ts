@@ -60,7 +60,7 @@ class SignUp extends Component<IProps> {
 
     let shouldUpdate = false
 
-    if (!oldFields) return false
+    if (!oldFields) return shouldUpdate
 
     oldFields.forEach((oldField, index) => {
       // eslint-disable-next-line no-underscore-dangle

@@ -1,5 +1,4 @@
 import { validateField } from 'src/utils/validation'
-import { handleRoute } from 'src/utils/router'
 
 import Message from 'src/components/Message'
 import Chat from 'src/components/Chat'
@@ -34,6 +33,7 @@ export const validationEvents = [
   },
 ]
 
+// typing message
 export const chatEvents = [
   {
     tag: 'input',
@@ -81,25 +81,13 @@ const activeChat = new Chat({
   events: chatEvents,
 })
 
+// click on chat preview
 export const chatPreviewEvents = [
   {
     tag: 'li',
     name: 'click',
     callback() {
       this.setProps({ hasNoChats: false, activeChat })
-    },
-  },
-]
-
-export const routerEvents = [
-  {
-    tag: 'div',
-    name: 'click',
-    callback(event: Event) {
-      const target = event.target as HTMLDivElement
-      const closest = target.closest('div') as HTMLDivElement
-
-      handleRoute(target.id || closest.id)
     },
   },
 ]

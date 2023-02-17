@@ -53,7 +53,6 @@ class AuthController {
 
       ACTIONS.setUser(user)
     } catch (error: any) {
-      console.error(error)
       throw new Error(`Error: ${error}`)
     }
   }
