@@ -1,6 +1,10 @@
 import Component, { TEvent } from 'src/core/Component'
 import AvatarTpl from 'src/components/Avatar/template'
 import avatar from 'src/assets/icons/avatar.svg'
+import UserController from 'src/controllers/UserController'
+import { connect } from '/core/Store/Connect'
+import { IUser } from '/api/AuthAPI'
+import { RESOURCES_URL } from '/constants/url'
 
 interface IProps {
   picture?: string
@@ -28,14 +32,21 @@ class Avatar extends Component<IProps> {
 
           if (!files) return
 
-          const newPicture = URL.createObjectURL(files[0])
-
-          this.setProps({ picture: newPicture })
+          this.uploadFile(files[0])
         },
       },
     ]
 
     this.setProps({ picture, events })
+  }
+
+  async uploadFile(file: File) {
+    const formData = new FormData()
+    const newFile = new File([file], file.name.replace(/\s/g, '_'))
+
+    formData.append('avatar', newFile)
+
+    await UserController.uploadAvatar(formData)
   }
 
   componentDidUpdate(oldProps: IProps, newProps: IProps): boolean {
@@ -47,4 +58,14 @@ class Avatar extends Component<IProps> {
   }
 }
 
-export default Avatar
+const mapStateToProps = (user: IUser) => {
+  const { avatar: picture } = user
+
+  const props: IProps = {}
+
+  props.picture = RESOURCES_URL + picture
+
+  return props
+}
+
+export default connect(Avatar, (state) => mapStateToProps(state.user ?? {}) ?? {})

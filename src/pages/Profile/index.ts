@@ -22,7 +22,7 @@ interface IProps {
   changeDataLink: Link
   changePasswordLink: Link
   exitLink: Link
-  avatar: Avatar
+  avatar: typeof Avatar
   events: TEvent[]
 }
 
@@ -74,7 +74,9 @@ class Profile extends Component<IProps> {
       ],
     })
 
-    this.setProps({ changeDataLink, changePasswordLink, exitLink })
+    const avatar = new Avatar({})
+
+    this.setProps({ changeDataLink, changePasswordLink, exitLink, avatar })
   }
 
   async logout() {
@@ -82,6 +84,7 @@ class Profile extends Component<IProps> {
   }
 
   componentDidUpdate(oldProps: IProps, newProps: IProps) {
+    // TODO: при смене аватара не нужно перерисовывать весь компонент
     return super.componentDidUpdate(oldProps, newProps)
   }
 
@@ -91,13 +94,11 @@ class Profile extends Component<IProps> {
 }
 
 const mapStateToProps = (state: IUser): IProps => {
-  const { avatar, first_name: firstName, display_name: displayName } = state
+  const { first_name: firstName, display_name: displayName } = state
 
-  const props = {} as IProps
+  const props: IProps = {}
 
   props.title = firstName
-
-  props.avatar = new Avatar(avatar ? { picture: avatar } : {})
 
   props.fields = profileFields.map((field: TField) => ({
     ...field,

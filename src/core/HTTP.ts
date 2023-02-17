@@ -1,3 +1,5 @@
+import { API_URL } from 'src/constants/url'
+
 enum METHODS {
   GET = 'GET',
   PUT = 'PUT',
@@ -26,12 +28,10 @@ function queryStringify(data: TData) {
 }
 
 class HTTPTransport {
-  static API_URL = 'https://ya-praktikum.tech/api/v2'
-
   protected endpoint: string
 
   constructor(endpoint: string) {
-    this.endpoint = `${HTTPTransport.API_URL}${endpoint}`
+    this.endpoint = `${API_URL}${endpoint}`
   }
 
   get: HTTPMethod = (path, data) => {
@@ -39,7 +39,7 @@ class HTTPTransport {
     const query = url.concat(queryStringify(data || {}))
 
     return this.request(query, {
-      ...data,
+      data,
       method: METHODS.GET as TMethod,
     })
   }
@@ -52,13 +52,13 @@ class HTTPTransport {
 
   put: HTTPMethod = (path, data) =>
     this.request(this.endpoint + path, {
-      ...data,
+      data,
       method: METHODS.PUT as TMethod,
     })
 
   delete: HTTPMethod = (path, data) =>
     this.request(this.endpoint + path, {
-      ...data,
+      data,
       method: METHODS.DELETE as TMethod,
     })
 
@@ -70,7 +70,9 @@ class HTTPTransport {
 
       xhr.open(method, url)
 
-      xhr.setRequestHeader('Content-Type', 'application/json')
+      if (!(data instanceof FormData)) {
+        xhr.setRequestHeader('Content-Type', 'application/json')
+      }
 
       Object.entries<string>(headers).forEach(([key, value]) => {
         if (!key || !value) return
@@ -96,6 +98,8 @@ class HTTPTransport {
 
       if (method === METHODS.GET || !data) {
         xhr.send()
+      } else if (data instanceof FormData) {
+        xhr.send(data)
       } else {
         xhr.send(JSON.stringify(data))
       }
