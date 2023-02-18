@@ -5,18 +5,6 @@ export type TField = 'name' | 'email' | 'login' | 'phone' | 'password'
 
 type TValidationEvent = 'focus' | 'blur' | 'submit'
 
-export const validate = (str: string, type: TField): boolean => {
-  if (!str || !regExpValidation[type]) return false
-
-  return str.search(regExpValidation[type]) > -1
-}
-
-export const validName = (name: string): string => {
-  if (!name.includes('_')) return name
-
-  return name.split('_')[1]
-}
-
 export const validationError = {
   login:
     'Логин содержит от 3 до 20 символов, латиница, может содержать цифры, но не состоять из них, без пробелов, без спецсимволов (допустимы дефис и нижнее подчёркивание)',
@@ -27,15 +15,27 @@ export const validationError = {
   password: 'От 8 до 40 символов, обязательно хотя бы одна заглавная буква и цифра',
 }
 
+export const isValid = (str: string, type: TField): boolean => {
+  if (!str || !regExpValidation[type]) return false
+
+  return str.search(regExpValidation[type]) > -1
+}
+
+const validName = (name: string): string => {
+  if (!name.includes('_')) return name
+
+  return name.split('_')[1]
+}
+
 export function highlightErrors() {
   const inputs = this._element.querySelectorAll('input')
 
   if (!inputs.length) return
 
   inputs.forEach((input: HTMLInputElement) => {
-    const isValid = validate(input.value, validName(input.name) as TField)
+    const isInputValid = isValid(input.value, validName(input.name) as TField)
 
-    if (isValid) {
+    if (isInputValid) {
       input.classList.remove('error')
     } else {
       input.classList.add('error')
@@ -43,21 +43,7 @@ export function highlightErrors() {
   })
 }
 
-export function validateField(target: HTMLInputElement, eventName: TValidationEvent) {
-  if (!target) return
-
-  const { value: targetValue, name: targetName } = target
-
-  const isValid = validate(targetValue, validName(targetName) as TField)
-
-  if (eventName !== 'focus') {
-    this.setProps({ fields: getNewProps.call(this, target, isValid) })
-
-    highlightErrors.call(this)
-  }
-}
-
-function getNewProps(target: HTMLInputElement, isValid: boolean) {
+function getNewProps(target: HTMLInputElement, isValueValid: boolean) {
   return this._props.fields.map((field: { [_key: string]: Input }) => {
     // eslint-disable-next-line no-underscore-dangle
     if (field.input._props.id !== target.id) {
@@ -74,8 +60,22 @@ function getNewProps(target: HTMLInputElement, isValid: boolean) {
         label,
         placeholder,
         value: target.value,
-        error: isValid ? '' : validationError[validName(name) as TField],
+        error: isValueValid ? '' : validationError[validName(name) as TField],
       }),
     }
   })
+}
+
+export function validateField(target: HTMLInputElement, eventName: TValidationEvent) {
+  if (!target) return
+
+  const { value: targetValue, name: targetName } = target
+
+  const isValueValid = isValid(targetValue, validName(targetName) as TField)
+
+  if (eventName !== 'focus') {
+    this.setProps({ fields: getNewProps.call(this, target, isValueValid) })
+
+    highlightErrors.call(this)
+  }
 }

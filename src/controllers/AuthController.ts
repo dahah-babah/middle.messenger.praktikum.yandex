@@ -51,6 +51,12 @@ class AuthController {
         throw new Error(`User is ${user}`)
       }
 
+      const { display_name: displayName, first_name: firstName } = user
+
+      if (!displayName) {
+        user.display_name = firstName
+      }
+
       ACTIONS.setUser(user)
     } catch (error: any) {
       throw new Error(`Error: ${error}`)

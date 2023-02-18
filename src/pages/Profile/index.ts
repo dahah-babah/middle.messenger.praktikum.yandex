@@ -94,9 +94,9 @@ class Profile extends Component<IProps> {
 }
 
 const mapStateToProps = (state: IUser): IProps => {
-  const { first_name: firstName, display_name: displayName } = state
+  const { first_name: firstName } = state
 
-  const props: IProps = {}
+  const props = {} as IProps
 
   props.title = firstName
 
@@ -104,12 +104,6 @@ const mapStateToProps = (state: IUser): IProps => {
     ...field,
     value: state[field.name],
   }))
-
-  if (!displayName) {
-    const displayNameIndex = props.fields.findIndex((field) => field.name === 'display_name')
-
-    props.fields[displayNameIndex].value = firstName
-  }
 
   return props
 }
