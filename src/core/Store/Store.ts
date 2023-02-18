@@ -1,7 +1,21 @@
 import EventBus from 'src/core/EventBus'
+import { IUser } from 'src/api/AuthAPI'
+import { IChatsResponse } from 'src/api/ChatsAPI'
 
 export enum StoreEvents {
   UPDATED = 'updated',
+}
+
+type TKey = 'user' | 'chats'
+
+export interface IStoreChats {
+  searchQuery: string
+  chats: IChatsResponse[]
+}
+
+export interface IState {
+  user?: IUser
+  chats?: IStoreChats
 }
 
 class Store extends EventBus {
@@ -9,7 +23,7 @@ class Store extends EventBus {
 
   static STORE_NAME = 'store'
 
-  state: any = {}
+  state: IState = {}
 
   constructor() {
     if (Store.instance) {
@@ -38,7 +52,7 @@ class Store extends EventBus {
     this.emit(StoreEvents.UPDATED)
   }
 
-  set(key: string, value: string) {
+  set(key: TKey, value: any) {
     this.state[key] = value
     this.emit(StoreEvents.UPDATED)
 

@@ -1,5 +1,6 @@
 import Router, { ROUTES } from 'src/core/Router/Router'
 import AuthController from 'src/controllers/AuthController'
+import ChatsController from 'src/controllers/ChatsController'
 
 import SignIn from 'src/pages/Auth/SignIn'
 import SignUp from 'src/pages/Auth/SignUp'
@@ -29,6 +30,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   try {
     await AuthController.fetchUser()
+    await ChatsController.fetchChats()
 
     Router.start()
 

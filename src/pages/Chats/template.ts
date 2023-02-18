@@ -4,13 +4,15 @@ import * as s from './styles.module.less'
 const ChatsTpl = `
     <section class="${s.root}">
         <aside class="${s.menu}"> 
-            <div class="${s.profile}"> 
-                <div id="profile" class="${s.link}"> Профиль </div> 
-                <img src="${caretRight}" alt="" />
-            </div>
-            
-            <div class="${s.searchWrapper}">
-                <input class="${s.search}" type="search" placeholder="Поиск" />
+            <div class="${s.fixed}">
+                <div class="${s.profile}"> 
+                    <div id="profile" class="${s.link}"> Профиль </div> 
+                    <img src="${caretRight}" alt="" />
+                </div>
+                
+                <div class="${s.searchWrapper}">
+                    <input id="search" value="{searchQuery}" class="${s.search}" type="search" placeholder="Поиск" />
+                </div>
             </div>
             
             <ul class="${s.chats}">

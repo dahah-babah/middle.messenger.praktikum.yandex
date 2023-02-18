@@ -4,7 +4,7 @@ const ChatPreviewTpl = `
     <div id="{id}" class="${s.chat}">
         <div class="${s.avatar}"> {avatar} </div>
         
-        <span class="${s.name}"> {name} </span>
+        <span class="${s.name}"> {title} </span>
         
         <p class="${s.preview}"> {preview} </p>
         
