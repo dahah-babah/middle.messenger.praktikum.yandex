@@ -1,6 +1,6 @@
 import API, { IPassword, UserAPI } from 'src/api/UserAPI'
-import { ACTIONS } from 'src/core/Store/Actions'
 import { IUser } from 'src/api/AuthAPI'
+import { ACTIONS } from 'src/core/Store/Actions'
 
 class UserController {
   private readonly api: UserAPI

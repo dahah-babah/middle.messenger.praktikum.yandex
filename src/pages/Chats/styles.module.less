@@ -4,6 +4,12 @@
 .root {
   display: flex;
   height: 100%;
+
+  > div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .menu {
@@ -49,6 +55,15 @@
     background-color: @gallery;
     margin-top: 2px;
   }
+}
+
+.chatCreation {
+  .text_l();
+
+  cursor: pointer;
+  text-align: center;
+  padding: 20px 0;
+  color: @royalBlue;
 }
 
 .searchWrapper {

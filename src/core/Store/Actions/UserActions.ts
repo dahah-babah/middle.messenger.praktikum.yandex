@@ -3,7 +3,7 @@ import { IUser } from 'src/api/AuthAPI'
 
 const store = new Store()
 
-export const ACTIONS = {
+export const userActions = {
   setUser: (data: IUser) => {
     const state = store.getState()
     const user = state.user ?? {}

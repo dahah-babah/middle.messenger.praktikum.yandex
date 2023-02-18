@@ -17,7 +17,10 @@ const ChatsTpl = `
                 {loop:chats
                     <li class="${s.chat}"> {chat} </li>
                 %loop}
+                
+                <li id="new-chat" class="${s.chat} ${s.chatCreation}" > Новый чат </li>
             </ul>
+            
         </aside>
         
         <article class="${s.field}">
@@ -29,6 +32,8 @@ const ChatsTpl = `
                 <div class="${s.activeChat}"> {activeChat} </div>
             %if}
         </article>
+        
+        {modal}
     </section>
 `
 

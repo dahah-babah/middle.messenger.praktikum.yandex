@@ -18,6 +18,7 @@ type TChildren = 'tag' | 'value' | 'component' | 'loop' | 'text' | 'if'
 export type TEvent = {
   tag: string
   name: string
+  context?: any
   callback: (event: Event) => void
 }
 
@@ -367,20 +368,20 @@ abstract class Component<T extends IComponent> {
   addEvents() {
     const { events = [] } = this._props
 
-    events.map(({ name, tag, callback }) =>
+    events.map(({ name, tag, callback, context }) =>
       this._element
         .querySelectorAll(tag)
-        .forEach((elem) => elem.addEventListener(name, callback.bind(this))),
+        .forEach((elem) => elem.addEventListener(name, callback.bind(context ?? this))),
     )
   }
 
   removeEvents() {
     const { events = [] } = this._props
 
-    events.map(({ name, tag, callback }) =>
+    events.map(({ name, tag, callback, context }) =>
       this._element
         .querySelectorAll(tag)
-        .forEach((elem) => elem.removeEventListener(name, callback.bind(this))),
+        .forEach((elem) => elem.removeEventListener(name, callback.bind(context ?? this))),
     )
   }
 
