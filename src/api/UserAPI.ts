@@ -22,6 +22,10 @@ export class UserAPI extends BaseAPI {
   updatePassword(data: IPassword) {
     return this.http.put('/password', data)
   }
+
+  fetchUsersByLogin(data: { login: string }): Promise<IUser[]> {
+    return this.http.post('/search', data)
+  }
 }
 
 export default new UserAPI()

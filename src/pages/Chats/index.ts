@@ -7,8 +7,9 @@ import Input from 'src/components/Input'
 import Button from 'src/components/Button'
 import ChatsController from 'src/controllers/ChatsController'
 import { connect } from 'src/core/Store/Connect'
-import { IStoreChats } from '/core/Store/Store'
-import { handleRoute } from '/utils/router'
+import Store, { IStoreChats } from 'src/core/Store/Store'
+import { handleRoute } from 'src/utils/router'
+import { ACTIONS } from 'src/core/Store/Actions'
 
 type TChatPreview = { [chat: string]: ChatPreview }
 
@@ -28,9 +29,7 @@ class Chats extends Component<IProps> {
   }
 
   init() {
-    // TODO: чтобы избавиться от одного из флажков, нужно уметь парсить блок else
     const hasNoChats = true
-    const activeChat = null
 
     const events = [
       {
@@ -39,11 +38,18 @@ class Chats extends Component<IProps> {
         callback(event: Event) {
           const target = event.target as HTMLLIElement
 
+          if (!target) return
+
           if (target.id === 'new-chat') {
             this.openModal()
           } else {
-            // TODO: open existed chat
-            // this.setProps({ hasNoChats: false, activeChat })
+            const chatId = target.closest('div')?.getAttribute('id')
+
+            if (!chatId) {
+              throw new Error('No chat id')
+            }
+
+            this.openChat(chatId)
           }
         },
       },
@@ -88,7 +94,25 @@ class Chats extends Component<IProps> {
       },
     ]
 
-    this.setProps({ hasNoChats, activeChat, events })
+    this.setProps({ hasNoChats, events })
+  }
+
+  openChat(chatId: string) {
+    const store = new Store()
+    const chatData = store?.state?.chats?.chats.find((chat) => chat.id === +chatId)
+
+    if (!chatData) {
+      throw new Error('No chat data in store')
+    }
+    const activeChat = new Chat({
+      avatar: chatData.avatar,
+      user: chatData.title,
+      messages: [],
+    })
+
+    this.setProps({ activeChat, hasNoChats: false })
+
+    ACTIONS.setActiveChatId(+chatId)
   }
 
   openModal() {

@@ -30,6 +30,11 @@ export interface IChatDeleteResponse {
   }
 }
 
+export interface IUserRequest {
+  users: number[]
+  chatId: number
+}
+
 export class ChatsAPI extends BaseAPI {
   constructor() {
     super('/chats')
@@ -45,6 +50,14 @@ export class ChatsAPI extends BaseAPI {
 
   deleteChat(data: { chatId: number }): Promise<IChatDeleteResponse> {
     return this.http.delete('', data)
+  }
+
+  addUser(data: IUserRequest) {
+    return this.http.put('/users', data)
+  }
+
+  deleteUser(data: IUserRequest) {
+    return this.http.delete('/users', data)
   }
 }
 

@@ -1,4 +1,5 @@
 import arrowLeft from 'src/assets/icons/arrowLeft.svg'
+import options from 'src/assets/icons/options.svg'
 
 import * as s from './styles.module.less'
 
@@ -7,6 +8,9 @@ const ChatTpl = `
         <div class="${s.header}">
             <div class="${s.avatar}"> {avatar} </div>
             <div class="${s.user}"> {user} </div>
+            <img id="chat-options" src="${options}" class="${s.options}" alt="options" />
+            
+            {tooltip}
         </div>
         
         <ul class="${s.messages}">
@@ -24,6 +28,10 @@ const ChatTpl = `
                 <img class="${s.arrow}" src="${arrowLeft}" alt="Отправить" />
             </button>
         </div>
+        
+        {if:modal
+            <div class="${s.modal}"> {modal} </div>
+        %if}
     </div>   
 `
 

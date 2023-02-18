@@ -17,4 +17,11 @@ export const chatsActions = {
 
     store.set('chats', { ...chats, searchQuery: data })
   },
+
+  setActiveChatId: (data: number) => {
+    const state = store.getState()
+    const chats = state.chats ?? {}
+
+    store.set('chats', { ...chats, activeChatId: data })
+  },
 }

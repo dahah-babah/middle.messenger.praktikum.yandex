@@ -1,4 +1,5 @@
 import caretRight from 'src/assets/icons/caretRight.svg'
+
 import * as s from './styles.module.less'
 
 const ChatsTpl = `

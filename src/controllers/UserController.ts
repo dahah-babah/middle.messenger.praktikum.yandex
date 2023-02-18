@@ -36,6 +36,14 @@ class UserController {
       console.error(error)
     }
   }
+
+  async fetchUsersByLogin(data: { login: string }): Promise<IUser[]> {
+    try {
+      return await this.api.fetchUsersByLogin(data)
+    } catch (error) {
+      throw new Error('Users not found')
+    }
+  }
 }
 
 export default new UserController()

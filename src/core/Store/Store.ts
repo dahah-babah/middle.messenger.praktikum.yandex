@@ -10,6 +10,7 @@ type TKey = 'user' | 'chats'
 
 export interface IStoreChats {
   searchQuery: string
+  activeChatId: number
   chats: IChatsResponse[]
 }
 

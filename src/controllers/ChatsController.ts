@@ -1,4 +1,4 @@
-import API, { ChatsAPI, IChatsRequest } from 'src/api/ChatsAPI'
+import API, { ChatsAPI, IChatsRequest, IUserRequest } from 'src/api/ChatsAPI'
 import { ACTIONS } from 'src/core/Store/Actions'
 
 class ChatsController {
@@ -32,6 +32,22 @@ class ChatsController {
     try {
       await this.api.deleteChat(data)
       await this.fetchChats()
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  async addUser(data: IUserRequest) {
+    try {
+      await this.api.addUser(data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  async deleteUser(data: IUserRequest) {
+    try {
+      await this.api.deleteUser(data)
     } catch (error) {
       console.error(error)
     }
