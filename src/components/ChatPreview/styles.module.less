@@ -16,6 +16,10 @@
 
   &:hover {
     background-color: @lightBlue;
+
+    .cross {
+      display: block;
+    }
   }
 }
 
@@ -41,6 +45,8 @@
   grid-area: name;
   font-weight: 600;
   color: @godGray;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .preview {
@@ -77,4 +83,11 @@
   border-radius: 100%;
   width: 20px;
   height: 20px;
+}
+
+.cross {
+  display: none;
+  position: absolute;
+  top: 12px;
+  right: 10px;
 }

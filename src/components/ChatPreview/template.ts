@@ -1,3 +1,5 @@
+import cross from 'src/assets/icons/cross.svg'
+
 import * as s from './styles.module.less'
 
 const ChatPreviewTpl = `
@@ -13,6 +15,8 @@ const ChatPreviewTpl = `
         {if:unreadCount
             <div class="${s.counter}"> {unreadCount} </div>
         %if}
+        
+        <img id="cross" src="${cross}" alt="delete chat" class="${s.cross}" />
     </div>
 `
 

@@ -27,6 +27,15 @@ class ChatsController {
       console.error(error)
     }
   }
+
+  async deleteChat(data: { chatId: number }) {
+    try {
+      await this.api.deleteChat(data)
+      await this.fetchChats()
+    } catch (error) {
+      console.error(error)
+    }
+  }
 }
 
 export default new ChatsController()

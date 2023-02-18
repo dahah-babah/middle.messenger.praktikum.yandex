@@ -69,6 +69,23 @@ class Chats extends Component<IProps> {
           handleRoute('profile')
         },
       },
+      {
+        tag: 'img',
+        name: 'click',
+        callback: (event: Event) => {
+          const target = event.target as HTMLImageElement
+
+          if (!target || target.id !== 'cross') return
+
+          const chatId = target.parentElement?.id
+
+          if (!chatId) {
+            throw new Error('No chat id')
+          }
+
+          this.deleteChat(chatId)
+        },
+      },
     ]
 
     this.setProps({ hasNoChats, activeChat, events })
@@ -131,6 +148,10 @@ class Chats extends Component<IProps> {
 
   async fetchChats(title: string) {
     await ChatsController.fetchChats({ limit: 100, offset: 0, title })
+  }
+
+  async deleteChat(id: string) {
+    await ChatsController.deleteChat({ chatId: +id })
   }
 
   render() {

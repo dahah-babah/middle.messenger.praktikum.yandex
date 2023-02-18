@@ -21,6 +21,15 @@ export interface IChatsResponse {
   last_message: ILastMessage
 }
 
+export interface IChatDeleteResponse {
+  userId: string
+  result: {
+    id: number
+    title: string
+    avatar: string
+  }
+}
+
 export class ChatsAPI extends BaseAPI {
   constructor() {
     super('/chats')
@@ -32,6 +41,10 @@ export class ChatsAPI extends BaseAPI {
 
   fetchChats(data: IChatsRequest): Promise<IChatsResponse[]> {
     return this.http.get('', data)
+  }
+
+  deleteChat(data: { chatId: number }): Promise<IChatDeleteResponse> {
+    return this.http.delete('', data)
   }
 }
 
