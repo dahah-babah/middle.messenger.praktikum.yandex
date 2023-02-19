@@ -29,6 +29,7 @@
   ;
   padding: 12px 10px;
   cursor: pointer;
+  max-width: 310px;
 
   &:hover {
     background-color: @lightBlue;
@@ -75,6 +76,13 @@
   grid-area: preview;
   color: @dustyGray;
   margin: 0;
+
+  height: 30px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .counter {
