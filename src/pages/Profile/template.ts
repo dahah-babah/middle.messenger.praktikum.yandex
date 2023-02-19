@@ -4,8 +4,8 @@ import * as s from './styles.module.less'
 const ProfileTpl = `
     <article class="${s.root}">
         <aside class="${s.back}">
-            <div id="chats">
-                <img src="${arrowLeft}" alt="back" />
+            <div>
+                <img id="chats" src="${arrowLeft}" alt="back" />
             </div>
         </aside>
             

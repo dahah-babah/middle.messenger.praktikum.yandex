@@ -13,7 +13,7 @@ const ChatTpl = `
             {tooltip}
         </div>
         
-        <ul class="${s.messages}">
+        <ul id="messages" class="${s.messages}">
             {loop:messages
                 <li class="${s.message}">
                   {message}
@@ -21,13 +21,13 @@ const ChatTpl = `
             %loop}
         </ul>
         
-        <div class="${s.footer}">
-            <input id="message" class="${s.input}" name="message" placeholder="Сообщение" />
+        <form id="message" class="${s.footer}">
+            <input id="message-input" class="${s.input}" name="message" placeholder="Сообщение" />
             
-            <button id="send-message" class="${s.sendButton}">
+            <button id="message-button" class="${s.sendButton}">
                 <img class="${s.arrow}" src="${arrowLeft}" alt="Отправить" />
             </button>
-        </div>
+        </form>
         
         {if:modal
             <div class="${s.modal}"> {modal} </div>

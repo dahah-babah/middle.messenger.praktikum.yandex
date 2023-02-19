@@ -2,10 +2,10 @@ import Component, { TEvent } from 'src/core/Component'
 import AvatarTpl from 'src/components/Avatar/template'
 import avatar from 'src/assets/icons/avatar.svg'
 import UserController from 'src/controllers/UserController'
-import { connect } from '/core/Store/Connect'
-import { IUser } from '/api/AuthAPI'
-import { RESOURCES_URL } from '/constants/url'
-import Store from '/core/Store/Store'
+import { connect } from 'src/core/Store/Connect'
+import { IUser } from 'src/api/AuthAPI'
+import { RESOURCES_URL } from 'src/constants/url'
+import Store from 'src/core/Store/Store'
 
 interface IProps {
   picture?: string
@@ -20,7 +20,7 @@ class Avatar extends Component<IProps> {
   init() {
     const store = new Store()
     const storedAvatar = store.state.user?.avatar
-    const picture = RESOURCES_URL + storedAvatar || avatar
+    const picture = storedAvatar ? RESOURCES_URL + storedAvatar : avatar
 
     const events = [
       {
@@ -66,7 +66,7 @@ const mapStateToProps = (user: IUser) => {
 
   const props: IProps = {}
 
-  props.picture = RESOURCES_URL + picture
+  props.picture = picture ? RESOURCES_URL + picture : avatar
 
   return props
 }

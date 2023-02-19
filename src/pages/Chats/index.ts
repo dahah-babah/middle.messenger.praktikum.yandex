@@ -10,13 +10,14 @@ import { connect } from 'src/core/Store/Connect'
 import Store, { IStoreChats } from 'src/core/Store/Store'
 import { handleRoute } from 'src/utils/router'
 import { ACTIONS } from 'src/core/Store/Actions'
+import { getMessageTime } from 'src/utils/helpers'
 
 type TChatPreview = { [chat: string]: ChatPreview }
 
 interface IProps {
   hasNoChats: boolean
   searchQuery: string
-  activeChat: Chat | null
+  activeChat: typeof Chat | null
   modal: Modal
   chats: TChatPreview[]
   events: TEvent[]
@@ -59,7 +60,7 @@ class Chats extends Component<IProps> {
         callback(event: Event) {
           const target = event.target as HTMLInputElement
 
-          if (!target) return
+          if (!target || target.id !== 'search') return
 
           this.fetchChats(target.value)
         },
@@ -98,12 +99,15 @@ class Chats extends Component<IProps> {
   }
 
   openChat(chatId: string) {
+    ACTIONS.setActiveChatId(+chatId)
+
     const store = new Store()
     const chatData = store?.state?.chats?.chats.find((chat) => chat.id === +chatId)
 
     if (!chatData) {
       throw new Error('No chat data in store')
     }
+
     const activeChat = new Chat({
       avatar: chatData.avatar,
       user: chatData.title,
@@ -111,8 +115,6 @@ class Chats extends Component<IProps> {
     })
 
     this.setProps({ activeChat, hasNoChats: false })
-
-    ACTIONS.setActiveChatId(+chatId)
   }
 
   openModal() {
@@ -176,6 +178,8 @@ class Chats extends Component<IProps> {
 
   async deleteChat(id: string) {
     await ChatsController.deleteChat({ chatId: +id })
+
+    this.setProps({ activeChat: null })
   }
 
   render() {
@@ -188,18 +192,19 @@ const mapStateToProps = (state: IStoreChats): IProps => {
 
   const { chats, searchQuery } = state
 
-  props.searchQuery = searchQuery
+  props.searchQuery = searchQuery ?? ''
 
-  props.chats = chats.map((chat) => ({
-    chat: new ChatPreview({
-      id: chat.id,
-      title: chat.title,
-      avatar: chat.avatar ?? chat.title.slice(0, 1).toUpperCase(),
-      preview: chat.last_message?.content ?? 'Сообщений нет',
-      time: chat.last_message?.time ?? '',
-      unreadCount: chat.unread_count,
-    }),
-  }))
+  props.chats =
+    chats?.map((chat) => ({
+      chat: new ChatPreview({
+        id: chat.id,
+        title: chat.title,
+        avatar: chat.avatar ?? chat.title.slice(0, 1).toUpperCase(),
+        preview: chat.last_message?.content ?? 'Сообщений нет',
+        time: chat.last_message?.time ? getMessageTime(chat.last_message?.time) : '',
+        unreadCount: chat.unread_count,
+      }),
+    })) ?? []
 
   return props
 }

@@ -10,6 +10,8 @@ import { connect } from 'src/core/Store/Connect'
 import { IUser } from 'src/api/AuthAPI'
 import { validateField } from 'src/utils/validation'
 import UserController from 'src/controllers/UserController'
+import { handleRoute } from 'src/utils/router'
+import { getPropsValue } from 'src/utils/helpers'
 
 interface IProps {
   formId: string
@@ -35,7 +37,20 @@ class User extends Component<IProps> {
       children: 'Сохранить',
     })
 
-    const events = validationEvents
+    const events = [
+      ...validationEvents,
+      {
+        tag: 'img',
+        name: 'click',
+        callback: (event: Event) => {
+          const target = event.target as HTMLDivElement
+
+          if (!target || target.id !== 'chats') return
+
+          handleRoute('chats')
+        },
+      },
+    ]
 
     this.setProps({ formId, avatar, button, events })
   }
@@ -95,12 +110,17 @@ const mapStateToProps = (state: IUser): IProps => {
 
   props.fields = userSettingsFields.map((field) => {
     // eslint-disable-next-line no-underscore-dangle
-    const { id } = field.input._props
+    const { id, name, type, placeholder } = field.input._props
 
     return {
       input: new Input({
+        // eslint-disable-next-line no-underscore-dangle
         ...field.input._props,
-        value: state[id],
+        id,
+        name,
+        type,
+        placeholder,
+        value: getPropsValue(state, id),
       }),
     }
   })

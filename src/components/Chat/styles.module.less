@@ -2,7 +2,6 @@
 @import '/src/styles/typography';
 
 .root {
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -16,10 +15,13 @@
 }
 
 .header {
-  position: relative;
+  position: fixed;
   display: flex;
   align-items: center;
-  margin: 10px 20px;
+  padding: 10px 20px;
+  width: calc(100% - 310px);
+  background-color: @white;
+  z-index: 1;
 
   &::after {
     content: '';
@@ -29,7 +31,6 @@
     top: 100%;
     left: 0;
     background-color: @gallery;
-    margin-top: 10px;
   }
 }
 
@@ -61,8 +62,7 @@
 }
 
 .messages {
-  margin: 0 20px;
-  height: 100%;
+  margin: 66px 20px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -77,7 +77,11 @@
   align-items: center;
   gap: 10px;
   padding: 11px 20px;
-  width: 100%;
+  margin: 0;
+  position: fixed;
+  bottom: 0;
+  width: calc(100% - 310px);
+  background-color: @white;
 }
 
 .input {

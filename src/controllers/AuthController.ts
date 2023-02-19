@@ -12,6 +12,7 @@ class AuthController {
   async signIn(data: ISignIn) {
     try {
       await this.api.signIn(data)
+      await this.fetchUser()
 
       Router.go(ROUTES.PROFILE)
     } catch (error: any) {

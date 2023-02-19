@@ -10,6 +10,8 @@ import { IUser } from 'src/api/AuthAPI'
 import { connect } from 'src/core/Store/Connect'
 import { isValid, validateField } from 'src/utils/validation'
 import UserController from '/controllers/UserController'
+import { handleRoute } from '/utils/router'
+import { getPropsValue } from '/utils/helpers'
 
 interface IProps {
   formId: string
@@ -36,7 +38,20 @@ class Password extends Component<IProps> {
     })
 
     const fields = userPasswordFields
-    const events = validationEvents
+    const events = [
+      ...validationEvents,
+      {
+        tag: 'img',
+        name: 'click',
+        callback: (event: Event) => {
+          const target = event.target as HTMLDivElement
+
+          if (!target || target.id !== 'chats') return
+
+          handleRoute('chats')
+        },
+      },
+    ]
 
     this.setProps({ formId, avatar, button, fields, events })
   }
@@ -102,12 +117,17 @@ const mapStateToProps = (state: IUser): IProps => {
 
   props.fields = userPasswordFields.map((field) => {
     // eslint-disable-next-line no-underscore-dangle
-    const { id } = field.input._props
+    const { id, name, type, placeholder } = field.input._props
 
     return {
       input: new Input({
+        // eslint-disable-next-line no-underscore-dangle
         ...field.input._props,
-        value: state[id],
+        id,
+        name,
+        type,
+        placeholder,
+        value: getPropsValue(state, id),
       }),
     }
   })

@@ -1,3 +1,5 @@
+import { IUser } from '/api/AuthAPI'
+
 export const getChildren = (template: string): string[] => {
   const arr = template.trim().split(' ')
 
@@ -72,4 +74,29 @@ type TChildren = 'tag' | 'value' | 'component' | 'loop' | 'text' | 'if'
 export const getExpressionTemplate = (childType: TChildren, template: string): string => {
   const exprRegExp = new RegExp(`^{${childType}:\\w+(.+)%${childType}}$`, 'g')
   return template.replace(exprRegExp, '$1').trim()
+}
+
+export const getMessageTime = (isoDate: string): string => {
+  const date = new Date(isoDate)
+
+  return `${date.getHours()}:${date.getMinutes()}`
+}
+
+export const getPropsValue = (state: IUser, fieldName: string): string => {
+  switch (fieldName) {
+    case 'email':
+      return state.email
+    case 'login':
+      return state.login
+    case 'first_name':
+      return state.first_name
+    case 'second_name':
+      return state.second_name
+    case 'display_name':
+      return state.display_name
+    case 'phone':
+      return state.phone
+    default:
+      return ''
+  }
 }

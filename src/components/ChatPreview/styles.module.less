@@ -1,6 +1,13 @@
 @import '/src/styles/colors';
 @import '/src/styles/typography';
 
+.cross {
+  display: none;
+  position: absolute;
+  top: 12px;
+  right: 10px;
+}
+
 .chat {
   display: grid;
   row-gap: 4px;
@@ -19,6 +26,10 @@
 
     .cross {
       display: block;
+    }
+
+    .time {
+      display: none;
     }
   }
 }
@@ -83,11 +94,4 @@
   border-radius: 100%;
   width: 20px;
   height: 20px;
-}
-
-.cross {
-  display: none;
-  position: absolute;
-  top: 12px;
-  right: 10px;
 }

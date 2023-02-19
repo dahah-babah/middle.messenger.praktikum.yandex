@@ -1,4 +1,4 @@
-import API, { ChatsAPI, IChatsRequest, IUserRequest } from 'src/api/ChatsAPI'
+import API, { ChatsAPI, IChatsRequest, ITokenResponse, IUserRequest } from 'src/api/ChatsAPI'
 import { ACTIONS } from 'src/core/Store/Actions'
 
 class ChatsController {
@@ -50,6 +50,14 @@ class ChatsController {
       await this.api.deleteUser(data)
     } catch (error) {
       console.error(error)
+    }
+  }
+
+  async getWSToken(data: number): Promise<ITokenResponse> {
+    try {
+      return await this.api.getWSToken(data)
+    } catch (error) {
+      throw new Error('Fetch ws token failed')
     }
   }
 }

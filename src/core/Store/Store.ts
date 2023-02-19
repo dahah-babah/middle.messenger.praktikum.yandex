@@ -6,7 +6,7 @@ export enum StoreEvents {
   UPDATED = 'updated',
 }
 
-type TKey = 'user' | 'chats'
+type TKey = 'user' | 'chats' | 'messages'
 
 export interface IStoreChats {
   searchQuery: string
@@ -14,9 +14,29 @@ export interface IStoreChats {
   chats: IChatsResponse[]
 }
 
+interface IMessageFile {
+  id: number
+  user_id: number
+  path: string
+  filename: string
+  content_type: string
+  content_size: number
+  upload_date: string
+}
+
+export interface IStoreMessage {
+  chat_id: number
+  time: string
+  type: string
+  user_id: number
+  content: string
+  file?: IMessageFile
+}
+
 export interface IState {
   user?: IUser
   chats?: IStoreChats
+  messages?: IStoreMessage[]
 }
 
 class Store extends EventBus {
@@ -46,11 +66,6 @@ class Store extends EventBus {
 
   getState() {
     return this.state
-  }
-
-  removeState() {
-    this.state = {}
-    this.emit(StoreEvents.UPDATED)
   }
 
   set(key: TKey, value: any) {

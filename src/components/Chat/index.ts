@@ -5,10 +5,13 @@ import Tooltip from 'src/components/Tooltip'
 import Modal from 'src/components/Modal'
 import Input from 'src/components/Input'
 import Button from 'src/components/Button'
-import Store from 'src/core/Store/Store'
+import Store, { IStoreMessage } from 'src/core/Store/Store'
 import UserController from 'src/controllers/UserController'
 import ChatsController from 'src/controllers/ChatsController'
 import { IUserRequest } from 'src/api/ChatsAPI'
+import WebSocketMessages from 'src/core/WebSocket'
+import { connect } from 'src/core/Store/Connect'
+import { getMessageTime } from 'src/utils/helpers'
 
 interface IProps {
   avatar: string
@@ -25,6 +28,17 @@ class Chat extends Component<IProps> {
   }
 
   init() {
+    const store = new Store()
+
+    const userId = store.state?.user?.id
+    const chatId = store.state?.chats?.activeChatId
+
+    if (!userId || !chatId) {
+      throw new Error('Cannot open ws without chat id and user id')
+    }
+
+    const socket = new WebSocketMessages(userId, chatId)
+
     const events = [
       {
         tag: 'img',
@@ -39,6 +53,23 @@ class Chat extends Component<IProps> {
           } else {
             this.openTooltip(target.id)
           }
+        },
+      },
+      {
+        tag: 'form',
+        name: 'submit',
+        callback(event: Event) {
+          event.preventDefault()
+
+          const target = event.target as HTMLFormElement
+
+          if (!target) return
+
+          const input = target.querySelector('#message-input') as HTMLInputElement
+
+          if (!input) return
+
+          socket?.sendMessage(input.value)
         },
       },
     ]
@@ -156,9 +187,45 @@ class Chat extends Component<IProps> {
     }
   }
 
+  componentDidUpdate(oldProps: IProps, newProps: IProps): boolean {
+    if (oldProps.messages.length !== newProps.messages.length) {
+      setTimeout(() => {
+        const lastLiElement = document.querySelector('#messages')?.lastChild as HTMLLIElement
+
+        if (!lastLiElement) return
+
+        lastLiElement.scrollIntoView({ behavior: 'smooth' })
+      }, 0)
+    }
+
+    return super.componentDidUpdate(oldProps, newProps)
+  }
+
   render() {
     return this.compile(ChatTpl)
   }
 }
 
-export default Chat
+const mapStateToProps = (state: IStoreMessage[]): IProps => {
+  const props = {} as IProps
+  const store = new Store()
+
+  const userId = store.state?.user?.id
+
+  if (!userId) {
+    throw new Error('No user id while mapping messages')
+  }
+
+  props.messages = state.map((msg) => ({
+    message: new Message({
+      text: msg.content,
+      date: getMessageTime(msg.time),
+      fromMe: msg.user_id === userId,
+      fromUser: msg.user_id !== userId,
+    }),
+  }))
+
+  return props
+}
+
+export default connect(Chat, (state) => mapStateToProps(state.messages ?? []) ?? {})

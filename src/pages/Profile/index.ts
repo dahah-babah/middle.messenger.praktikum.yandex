@@ -8,6 +8,7 @@ import { connect } from 'src/core/Store/Connect'
 import { IUser } from 'src/api/AuthAPI'
 import { profileFields } from 'src/data/pages/profile'
 import { handleRoute } from 'src/utils/router'
+import { getPropsValue } from 'src/utils/helpers'
 
 type TField = {
   name: string
@@ -74,9 +75,23 @@ class Profile extends Component<IProps> {
       ],
     })
 
+    const events = [
+      {
+        tag: 'img',
+        name: 'click',
+        callback: (event: Event) => {
+          const target = event.target as HTMLDivElement
+
+          if (!target || target.id !== 'chats') return
+
+          handleRoute('chats')
+        },
+      },
+    ]
+
     const avatar = new Avatar({})
 
-    this.setProps({ changeDataLink, changePasswordLink, exitLink, avatar })
+    this.setProps({ changeDataLink, changePasswordLink, exitLink, avatar, events })
   }
 
   async logout() {
@@ -102,7 +117,7 @@ const mapStateToProps = (state: IUser): IProps => {
 
   props.fields = profileFields.map((field: TField) => ({
     ...field,
-    value: state[field.name],
+    value: getPropsValue(state, field.name),
   }))
 
   return props

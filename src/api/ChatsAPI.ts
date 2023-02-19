@@ -35,6 +35,10 @@ export interface IUserRequest {
   chatId: number
 }
 
+export interface ITokenResponse {
+  token: string
+}
+
 export class ChatsAPI extends BaseAPI {
   constructor() {
     super('/chats')
@@ -58,6 +62,10 @@ export class ChatsAPI extends BaseAPI {
 
   deleteUser(data: IUserRequest) {
     return this.http.delete('/users', data)
+  }
+
+  getWSToken(data: number): Promise<ITokenResponse> {
+    return this.http.post(`/token/${data}`)
   }
 }
 
