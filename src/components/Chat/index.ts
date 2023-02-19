@@ -12,7 +12,7 @@ import { IUserRequest } from 'src/api/ChatsAPI'
 import WebSocketMessages from 'src/core/WebSocket'
 import { connect } from 'src/core/Store/Connect'
 import { getMessageTime } from 'src/utils/helpers'
-import avatar from 'src/assets/icons/avatar.svg'
+import avatar from 'src/assets/icons/userAvatar.svg'
 import { RESOURCES_URL } from 'src/constants/url'
 
 interface IProps {
