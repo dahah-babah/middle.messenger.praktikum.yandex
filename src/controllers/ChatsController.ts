@@ -1,6 +1,6 @@
 import API, { ChatsAPI, IChatsRequest, ITokenResponse, IUserRequest } from 'src/api/ChatsAPI'
 import { ACTIONS } from 'src/core/Store/Actions'
-import { IUser } from '/api/AuthAPI'
+import { IUser } from 'src/api/AuthAPI'
 
 class ChatsController {
   private readonly api: ChatsAPI

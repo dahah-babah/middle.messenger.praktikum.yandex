@@ -9,9 +9,9 @@ import { userPasswordFields } from 'src/data/pages/editPassword'
 import { IUser } from 'src/api/AuthAPI'
 import { connect } from 'src/core/Store/Connect'
 import { isValid, validateField } from 'src/utils/validation'
-import UserController from '/controllers/UserController'
-import { handleRoute } from '/utils/router'
-import { getPropsValue } from '/utils/helpers'
+import UserController from 'src/controllers/UserController'
+import { handleRoute } from 'src/utils/router'
+import { getPropsValue } from 'src/utils/helpers'
 
 interface IProps {
   formId: string

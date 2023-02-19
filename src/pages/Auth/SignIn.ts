@@ -9,7 +9,7 @@ import Link from 'src/components/Link'
 import Input from 'src/components/Input'
 import { validationEvents } from 'src/data/events'
 import { handleRoute } from 'src/utils/router'
-import { signInFields } from '/data/pages/auth'
+import { signInFields } from 'src/data/pages/auth'
 
 interface IProps {
   formId: string
