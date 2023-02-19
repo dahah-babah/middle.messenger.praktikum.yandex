@@ -8,6 +8,15 @@
   right: 10px;
 }
 
+.time {
+  .text_s_special_height();
+
+  grid-area: time;
+  justify-self: end;
+
+  color: @dustyGray;
+}
+
 .chat {
   display: grid;
   row-gap: 4px;
@@ -66,15 +75,6 @@
   grid-area: preview;
   color: @dustyGray;
   margin: 0;
-}
-
-.time {
-  .text_s_special_height();
-
-  grid-area: time;
-  justify-self: end;
-
-  color: @dustyGray;
 }
 
 .counter {
