@@ -14,7 +14,7 @@ class AuthController {
       await this.api.signIn(data)
       await this.fetchUser()
 
-      Router.go(ROUTES.PROFILE)
+      Router.go(ROUTES.MESSENGER)
     } catch (error: any) {
       console.error(error)
     }
@@ -28,7 +28,7 @@ class AuthController {
 
       ACTIONS.setUserId(userId)
 
-      Router.go(ROUTES.PROFILE)
+      Router.go(ROUTES.MESSENGER)
     } catch (error: any) {
       console.error(error)
     }
