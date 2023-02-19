@@ -44,6 +44,14 @@ class UserController {
       throw new Error('Users not found')
     }
   }
+
+  async fetchUserById(data: number): Promise<IUser> {
+    try {
+      return await this.api.fetchUserById(data)
+    } catch (error) {
+      throw new Error('User not found')
+    }
+  }
 }
 
 export default new UserController()

@@ -1,5 +1,6 @@
 import API, { ChatsAPI, IChatsRequest, ITokenResponse, IUserRequest } from 'src/api/ChatsAPI'
 import { ACTIONS } from 'src/core/Store/Actions'
+import { IUser } from '/api/AuthAPI'
 
 class ChatsController {
   private readonly api: ChatsAPI
@@ -58,6 +59,14 @@ class ChatsController {
       return await this.api.getWSToken(data)
     } catch (error) {
       throw new Error('Fetch ws token failed')
+    }
+  }
+
+  async fetchChatUsers(data: number): Promise<IUser[]> {
+    try {
+      return await this.api.fetchChatUsers(data)
+    } catch (error) {
+      throw new Error('Fetch users failed')
     }
   }
 }

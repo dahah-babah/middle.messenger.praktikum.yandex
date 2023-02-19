@@ -26,6 +26,10 @@ export class UserAPI extends BaseAPI {
   fetchUsersByLogin(data: { login: string }): Promise<IUser[]> {
     return this.http.post('/search', data)
   }
+
+  fetchUserById(data: number): Promise<IUser> {
+    return this.http.get(`/${data}`)
+  }
 }
 
 export default new UserAPI()

@@ -67,6 +67,10 @@ export class ChatsAPI extends BaseAPI {
   getWSToken(data: number): Promise<ITokenResponse> {
     return this.http.post(`/token/${data}`)
   }
+
+  fetchChatUsers(data: number): Promise<IUser[]> {
+    return this.http.get(`/${data}/users`)
+  }
 }
 
 export default new ChatsAPI()

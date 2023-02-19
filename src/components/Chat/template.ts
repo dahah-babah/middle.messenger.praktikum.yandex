@@ -6,7 +6,7 @@ import * as s from './styles.module.less'
 const ChatTpl = `
     <div class="${s.root}">
         <div class="${s.header}">
-            <div class="${s.avatar}"> {avatar} </div>
+            <img src="{avatar}" alt="user avatar" class="${s.avatar}" />
             <div class="${s.user}"> {user} </div>
             <img id="chat-options" src="${options}" class="${s.options}" alt="options" />
             

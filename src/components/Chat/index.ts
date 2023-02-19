@@ -12,6 +12,8 @@ import { IUserRequest } from 'src/api/ChatsAPI'
 import WebSocketMessages from 'src/core/WebSocket'
 import { connect } from 'src/core/Store/Connect'
 import { getMessageTime } from 'src/utils/helpers'
+import avatar from 'src/assets/icons/avatar.svg'
+import { RESOURCES_URL } from 'src/constants/url'
 
 interface IProps {
   avatar: string
@@ -27,7 +29,7 @@ class Chat extends Component<IProps> {
     super('div', props, ChatTpl)
   }
 
-  init() {
+  async init() {
     const store = new Store()
 
     const userId = store.state?.user?.id
@@ -35,6 +37,19 @@ class Chat extends Component<IProps> {
 
     if (!userId || !chatId) {
       throw new Error('Cannot open ws without chat id and user id')
+    }
+
+    let userAvatar = avatar
+
+    try {
+      const chatUsers = await ChatsController.fetchChatUsers(chatId)
+      const chatUserId = chatUsers.find((user) => user.id !== userId)?.id || 0
+
+      const user = await UserController.fetchUserById(chatUserId)
+
+      if (user.avatar) userAvatar = RESOURCES_URL + user.avatar
+    } catch (error) {
+      console.error(error)
     }
 
     const socket = new WebSocketMessages(userId, chatId)
@@ -74,7 +89,7 @@ class Chat extends Component<IProps> {
       },
     ]
 
-    this.setProps({ events })
+    this.setProps({ events, avatar: userAvatar })
   }
 
   openTooltip(nodeId: string) {
