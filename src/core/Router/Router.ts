@@ -4,9 +4,9 @@ import { TConstructable } from 'src/core/Component'
 export enum ROUTES {
   SIGN_IN = '/',
   SIGN_UP = '/sign-up',
-  PROFILE = '/profile',
-  SETTINGS = '/settings',
-  PASSWORD = '/password',
+  PROFILE = '/settings',
+  SETTINGS = '/settings/edit',
+  PASSWORD = '/settings/password',
   MESSENGER = '/messenger',
   NOT_FOUND = '/404',
   SERVER_ERROR = '/500',
