@@ -14,6 +14,7 @@ import { connect } from 'src/core/Store/Connect'
 import { getMessageTime } from 'src/utils/helpers'
 import avatar from 'src/assets/icons/userAvatar.svg'
 import { RESOURCES_URL } from 'src/constants/url'
+import { isValid } from '/utils/validation'
 
 interface IProps {
   avatar: string
@@ -39,6 +40,7 @@ class Chat extends Component<IProps> {
       throw new Error('Cannot open ws without chat id and user id')
     }
 
+    // TODO: тут должен быть аватар чата
     let userAvatar = avatar
 
     try {
@@ -84,7 +86,11 @@ class Chat extends Component<IProps> {
 
           if (!input) return
 
-          socket?.sendMessage(input.value)
+          const isInputValid = isValid(input.value, 'message')
+
+          if (isInputValid) {
+            socket?.sendMessage(input.value)
+          }
         },
       },
     ]

@@ -1,7 +1,7 @@
 import { regExpValidation } from 'src/utils/regExp'
 import Input from 'src/components/Input'
 
-export type TField = 'name' | 'email' | 'login' | 'phone' | 'password'
+export type TField = 'name' | 'email' | 'login' | 'phone' | 'password' | 'message'
 
 type TValidationEvent = 'focus' | 'blur' | 'submit'
 
@@ -13,6 +13,7 @@ export const validationError = {
   name: 'Латиница или кириллица, первая буква должна быть заглавной, без пробелов и без цифр, нет спецсимволов (допустим только дефис)',
   phone: 'От 10 до 15 символов, состоит из цифр, может начинается с плюса',
   password: 'От 8 до 40 символов, обязательно хотя бы одна заглавная буква и цифра',
+  message: '',
 }
 
 export const isValid = (str: string, type: TField): boolean => {

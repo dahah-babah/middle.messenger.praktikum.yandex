@@ -5,6 +5,7 @@ interface IProps {
   id: number
   title: string
   avatar: string
+  avatarUrl: string
   preview: string
   time: string
   unreadCount: number

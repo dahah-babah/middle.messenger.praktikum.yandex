@@ -200,6 +200,7 @@ const mapStateToProps = (state: IStoreChats): IProps => {
         id: chat.id,
         title: chat.title,
         avatar: chat.avatar ?? chat.title.slice(0, 1).toUpperCase(),
+        avatarUrl: chat.avatar,
         preview: chat.last_message?.content ?? 'Сообщений нет',
         time: chat.last_message?.time ? getMessageTime(chat.last_message?.time) : '',
         unreadCount: chat.unread_count,
