@@ -69,6 +69,16 @@ class ChatsController {
       throw new Error('Fetch users failed')
     }
   }
+
+  async updateChatPhoto(data: FormData) {
+    try {
+      const chat = await this.api.updateChatPhoto(data)
+
+      ACTIONS.updateChats(chat)
+    } catch (error) {
+      throw new Error('Chat photo upload failed')
+    }
+  }
 }
 
 export default new ChatsController()

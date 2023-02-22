@@ -24,4 +24,20 @@ export const chatsActions = {
 
     store.set('chats', { ...chats, activeChatId: data })
   },
+
+  updateChats: (data: IChatsResponse) => {
+    const state = store.getState()
+    const { chats } = state.chats ?? {}
+
+    const oldChats =
+      chats?.map((chat) => {
+        if (chat.id === data.id) {
+          return { ...chat, avatar: data.avatar }
+        }
+
+        return chat
+      }) ?? []
+
+    store.set('chats', { ...state.chats, chats: [...oldChats] })
+  },
 }

@@ -71,6 +71,10 @@ export class ChatsAPI extends BaseAPI {
   fetchChatUsers(data: number): Promise<IUser[]> {
     return this.http.get(`/${data}/users`)
   }
+
+  updateChatPhoto(data: FormData): Promise<IChatsResponse> {
+    return this.http.put('/avatar', data)
+  }
 }
 
 export default new ChatsAPI()

@@ -5,16 +5,16 @@ import Tooltip from 'src/components/Tooltip'
 import Modal from 'src/components/Modal'
 import Input from 'src/components/Input'
 import Button from 'src/components/Button'
-import Store, { IStoreMessage } from 'src/core/Store/Store'
+import Store, { IState } from 'src/core/Store/Store'
 import UserController from 'src/controllers/UserController'
 import ChatsController from 'src/controllers/ChatsController'
 import { IUserRequest } from 'src/api/ChatsAPI'
 import WebSocketMessages from 'src/core/WebSocket'
 import { connect } from 'src/core/Store/Connect'
 import { getMessageTime } from 'src/utils/helpers'
-import avatar from 'src/assets/icons/userAvatar.svg'
 import { RESOURCES_URL } from 'src/constants/url'
-import { isValid } from '/utils/validation'
+import { isValid } from 'src/utils/validation'
+import chatAvatarUpload from 'src/assets/icons/chatAvatarUpload.svg'
 
 interface IProps {
   avatar: string
@@ -40,19 +40,8 @@ class Chat extends Component<IProps> {
       throw new Error('Cannot open ws without chat id and user id')
     }
 
-    // TODO: тут должен быть аватар чата
-    let userAvatar = avatar
-
-    try {
-      const chatUsers = await ChatsController.fetchChatUsers(chatId)
-      const chatUserId = chatUsers.find((user) => user.id !== userId)?.id || 0
-
-      const user = await UserController.fetchUserById(chatUserId)
-
-      if (user.avatar) userAvatar = RESOURCES_URL + user.avatar
-    } catch (error) {
-      console.error(error)
-    }
+    const activeChatAvatar = store.state?.chats?.chats.find((chat) => chat.id === chatId)?.avatar
+    const chatAvatar = activeChatAvatar ? RESOURCES_URL + activeChatAvatar : chatAvatarUpload
 
     const socket = new WebSocketMessages(userId, chatId)
 
@@ -70,6 +59,21 @@ class Chat extends Component<IProps> {
           } else {
             this.openTooltip(target.id)
           }
+        },
+      },
+      {
+        tag: 'input',
+        name: 'change',
+        callback(event: Event) {
+          const target = event.target as HTMLInputElement
+
+          if (!target || target.id !== 'chat-avatar') return
+
+          const { files } = target
+
+          if (!files) return
+
+          this.uploadFile(chatId, files[0])
         },
       },
       {
@@ -95,7 +99,7 @@ class Chat extends Component<IProps> {
       },
     ]
 
-    this.setProps({ events, avatar: userAvatar })
+    this.setProps({ events, avatar: chatAvatar })
   }
 
   openTooltip(nodeId: string) {
@@ -208,6 +212,16 @@ class Chat extends Component<IProps> {
     }
   }
 
+  async uploadFile(chatId: number, file: File) {
+    const formData = new FormData()
+    const newFile = new File([file], file.name.replace(/\s/g, '_'))
+
+    formData.append('avatar', newFile)
+    formData.append('chatId', chatId.toString())
+
+    await ChatsController.updateChatPhoto(formData)
+  }
+
   componentDidUpdate(oldProps: IProps, newProps: IProps): boolean {
     if (oldProps.messages.length !== newProps.messages.length) {
       setTimeout(() => {
@@ -227,17 +241,24 @@ class Chat extends Component<IProps> {
   }
 }
 
-const mapStateToProps = (state: IStoreMessage[]): IProps => {
+const mapStateToProps = (state: IState): IProps => {
   const props = {} as IProps
-  const store = new Store()
-
-  const userId = store.state?.user?.id
+  const userId = state?.user?.id
 
   if (!userId) {
     throw new Error('No user id while mapping messages')
   }
 
-  props.messages = state.map((msg) => ({
+  const messages = state.messages ?? []
+  const chats = state.chats?.chats ?? []
+
+  const chatAvatar = chats.find(({ id }) => id === state.chats?.activeChatId)?.avatar
+
+  if (chatAvatar) {
+    props.avatar = RESOURCES_URL + chatAvatar
+  }
+
+  props.messages = messages.map((msg) => ({
     message: new Message({
       text: msg.content,
       date: getMessageTime(msg.time),
@@ -249,4 +270,4 @@ const mapStateToProps = (state: IStoreMessage[]): IProps => {
   return props
 }
 
-export default connect(Chat, (state) => mapStateToProps(state.messages ?? []) ?? {})
+export default connect(Chat, (state) => mapStateToProps(state ?? {}) ?? {})

@@ -11,6 +11,7 @@ import Store, { IStoreChats } from 'src/core/Store/Store'
 import { handleRoute } from 'src/utils/router'
 import { ACTIONS } from 'src/core/Store/Actions'
 import { getMessageTime } from 'src/utils/helpers'
+import { RESOURCES_URL } from 'src/constants/url'
 
 type TChatPreview = { [chat: string]: ChatPreview }
 
@@ -199,8 +200,8 @@ const mapStateToProps = (state: IStoreChats): IProps => {
       chat: new ChatPreview({
         id: chat.id,
         title: chat.title,
-        avatar: chat.avatar ?? chat.title.slice(0, 1).toUpperCase(),
-        avatarUrl: chat.avatar,
+        avatar: chat.avatar ? '' : chat.title.slice(0, 1).toUpperCase(),
+        avatarUrl: chat.avatar ? RESOURCES_URL + chat.avatar : null,
         preview: chat.last_message?.content ?? 'Сообщений нет',
         time: chat.last_message?.time ? getMessageTime(chat.last_message?.time) : '',
         unreadCount: chat.unread_count,

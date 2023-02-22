@@ -7,9 +7,9 @@ const ChatPreviewTpl = `
         <div class="${s.avatar}"> {avatar} </div>
         
         {if:avatarUrl
-            <img src="{avatarUrl}" alt="" />
+            <img src="{avatarUrl}" class="${s.avatar}" alt="chat-avatar" />
         %if}
-        
+              
         <span class="${s.name}"> {title} </span>
         
         <p class="${s.preview}"> {preview} </p>

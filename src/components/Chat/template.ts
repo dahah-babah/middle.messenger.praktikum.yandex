@@ -7,7 +7,11 @@ const ChatTpl = `
     <div class="${s.root}">
         <div class="${s.header}">
             <img src="{avatar}" alt="user avatar" class="${s.avatar}" />
+            
+            <input id="chat-avatar" type="file" class="${s.avatarInput}" />
+
             <div class="${s.user}"> {user} </div>
+            
             <img id="chat-options" src="${options}" class="${s.options}" alt="options" />
             
             {tooltip}

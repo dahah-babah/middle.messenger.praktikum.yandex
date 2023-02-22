@@ -70,6 +70,8 @@ class HTTPTransport {
 
       xhr.open(method, url)
 
+      // console.log(Object.values(data, (data) => data instanceof FormData))
+
       if (!(data instanceof FormData)) {
         xhr.setRequestHeader('Content-Type', 'application/json')
       }
