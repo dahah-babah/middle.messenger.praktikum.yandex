@@ -1,4 +1,4 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/084f42de-8aa9-42f1-a0be-7e18d17c3a70/deploy-status)](https://app.netlify.com/sites/celebrated-duckanoo-d58b3d/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/084f42de-8aa9-42f1-a0be-7e18d17c3a70/deploy-status)](https://app.netlify.com/sites/yp-web-messenger/deploys)
 
 ### Описание
 
