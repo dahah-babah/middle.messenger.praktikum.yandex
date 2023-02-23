@@ -1,10 +1,8 @@
 import EditTpl from 'src/pages/Settings/template'
-
 import Component, { TEvent } from 'src/core/Component'
 import Button from 'src/components/Button'
 import Avatar from 'src/components/Avatar'
 import Input from 'src/components/Input'
-import { validationEvents } from 'src/data/events'
 import { userPasswordFields } from 'src/data/pages/editPassword'
 import { IUser } from 'src/api/AuthAPI'
 import { connect } from 'src/core/Store/Connect'
@@ -27,19 +25,44 @@ class Password extends Component<IProps> {
   }
 
   init() {
+    const self = this
     const formId = 'edit-pass'
 
     const avatar = new Avatar({})
 
-    // validate & route
     const button = new Button({
       type: 'submit',
       children: 'Сохранить',
     })
 
     const fields = userPasswordFields
+
     const events = [
-      ...validationEvents,
+      {
+        tag: 'input',
+        name: 'focus',
+        callback(event: Event) {
+          const target = event.target as HTMLInputElement
+
+          validateField.call(self, target, 'focus')
+        },
+      },
+      {
+        tag: 'input',
+        name: 'blur',
+        callback(event: Event) {
+          const target = event.target as HTMLInputElement
+
+          validateField.call(self, target, 'blur')
+        },
+      },
+      {
+        tag: 'form',
+        name: 'submit',
+        callback(event: Event) {
+          self.onSubmit(event)
+        },
+      },
       {
         tag: 'img',
         name: 'click',

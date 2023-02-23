@@ -11,6 +11,8 @@ import Password from 'src/pages/Settings/Password'
 import Chats from 'src/pages/Chats'
 import Profile from 'src/pages/Profile'
 
+import 'src/styles/normalize.less'
+
 const pageNotFound = !(Object.values(ROUTES) as string[]).includes(window.location.pathname)
 const protectedRoutes = [ROUTES.PROFILE, ROUTES.SETTINGS, ROUTES.PASSWORD, ROUTES.MESSENGER]
 

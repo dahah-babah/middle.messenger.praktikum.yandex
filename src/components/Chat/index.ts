@@ -31,6 +31,7 @@ class Chat extends Component<IProps> {
   }
 
   async init() {
+    const self = this
     const store = new Store()
 
     const userId = store.state?.user?.id
@@ -55,9 +56,9 @@ class Chat extends Component<IProps> {
           if (!target || target.id !== 'chat-options') return
 
           if (this._props.tooltip) {
-            this.setProps({ tooltip: null })
+            self.setProps({ tooltip: null })
           } else {
-            this.openTooltip(target.id)
+            self.openTooltip(target.id)
           }
         },
       },
@@ -73,7 +74,7 @@ class Chat extends Component<IProps> {
 
           if (!files) return
 
-          this.uploadFile(chatId, files[0])
+          self.uploadFile(chatId, files[0])
         },
       },
       {
@@ -103,6 +104,8 @@ class Chat extends Component<IProps> {
   }
 
   openTooltip(nodeId: string) {
+    const self = this
+
     const options = [
       { id: 'add-user', title: 'Добавить пользователя' },
       { id: 'delete-user', title: 'Удалить пользователя' },
@@ -112,13 +115,16 @@ class Chat extends Component<IProps> {
       {
         tag: 'li',
         name: 'click',
-        context: this,
         callback(event: Event) {
           const target = event.target as HTMLLIElement
 
           if (!target) return
 
-          this.openModal(options.find(({ id }) => id === target.id))
+          const modalData = options.find(({ id }) => id === target.id)
+
+          if (modalData) {
+            self.openModal(modalData)
+          }
         },
       },
     ]
@@ -129,6 +135,8 @@ class Chat extends Component<IProps> {
   }
 
   openModal({ id, title }: { id: string; title: string }) {
+    const self = this
+
     const input = new Input({
       id,
       type: 'text',
@@ -148,7 +156,7 @@ class Chat extends Component<IProps> {
         tag: 'form',
         name: 'submit',
         context: this,
-        callback(event: Event) {
+        async callback(event: Event) {
           event.preventDefault()
 
           const target = event.target as HTMLFormElement
@@ -157,9 +165,17 @@ class Chat extends Component<IProps> {
           if (!inputLogin) return
 
           if (target.id === 'add-user') {
-            this.addUser(inputLogin.value)
+            try {
+              await self.addUser(inputLogin.value)
+            } catch (error) {
+              console.error(error)
+            }
           } else if (target.id === 'delete-user') {
-            this.deleteUser(inputLogin.value)
+            try {
+              await self.deleteUser(inputLogin.value)
+            } catch (error) {
+              console.error(error)
+            }
           }
         },
       },

@@ -18,6 +18,7 @@ class Avatar extends Component<IProps> {
   }
 
   init() {
+    const self = this
     const store = new Store()
     const storedAvatar = store.state.user?.avatar
     const picture = storedAvatar ? RESOURCES_URL + storedAvatar : avatar
@@ -35,7 +36,7 @@ class Avatar extends Component<IProps> {
 
           if (!files) return
 
-          this.uploadFile(files[0])
+          self.uploadFile(files[0])
         },
       },
     ]

@@ -4,7 +4,6 @@ import Component, { TEvent } from 'src/core/Component'
 import Button from 'src/components/Button'
 import Avatar from 'src/components/Avatar'
 import Input from 'src/components/Input'
-import { validationEvents } from 'src/data/events'
 import { userSettingsFields } from 'src/data/pages/editUser'
 import { connect } from 'src/core/Store/Connect'
 import { IUser } from 'src/api/AuthAPI'
@@ -27,18 +26,42 @@ class User extends Component<IProps> {
   }
 
   init() {
+    const self = this
     const formId = 'edit-user'
 
     const avatar = new Avatar({})
 
-    // validate & route
     const button = new Button({
       type: 'submit',
       children: 'Сохранить',
     })
 
     const events = [
-      ...validationEvents,
+      {
+        tag: 'input',
+        name: 'focus',
+        callback(event: Event) {
+          const target = event.target as HTMLInputElement
+
+          validateField.call(self, target, 'focus')
+        },
+      },
+      {
+        tag: 'input',
+        name: 'blur',
+        callback(event: Event) {
+          const target = event.target as HTMLInputElement
+
+          validateField.call(self, target, 'blur')
+        },
+      },
+      {
+        tag: 'form',
+        name: 'submit',
+        callback(event: Event) {
+          self.onSubmit(event)
+        },
+      },
       {
         tag: 'img',
         name: 'click',

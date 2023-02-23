@@ -17,6 +17,8 @@ class Modal extends Component<IProps> {
   }
 
   init() {
+    const self = this
+
     const events = [
       {
         tag: 'div',
@@ -25,7 +27,7 @@ class Modal extends Component<IProps> {
           const target = event.target as HTMLDivElement
 
           if (target.id === 'overlay') {
-            this.closeModal()
+            self.closeModal()
           }
         },
       },

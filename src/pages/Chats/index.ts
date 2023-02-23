@@ -31,6 +31,7 @@ class Chats extends Component<IProps> {
   }
 
   init() {
+    const self = this
     const hasNoChats = true
 
     const events = [
@@ -43,7 +44,7 @@ class Chats extends Component<IProps> {
           if (!target) return
 
           if (target.id === 'new-chat') {
-            this.openModal()
+            self.openModal()
           } else {
             const chatId = target.closest('div')?.getAttribute('id')
 
@@ -51,7 +52,7 @@ class Chats extends Component<IProps> {
               throw new Error('No chat id')
             }
 
-            this.openChat(chatId)
+            self.openChat(chatId)
           }
         },
       },
@@ -63,7 +64,7 @@ class Chats extends Component<IProps> {
 
           if (!target || target.id !== 'search') return
 
-          this.fetchChats(target.value)
+          self.fetchChats(target.value)
         },
       },
       {
@@ -91,7 +92,7 @@ class Chats extends Component<IProps> {
             throw new Error('No chat id')
           }
 
-          this.deleteChat(chatId)
+          self.deleteChat(chatId)
         },
       },
     ]

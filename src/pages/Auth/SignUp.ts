@@ -2,12 +2,10 @@ import { validateField } from 'src/utils/validation'
 import AuthController from 'src/controllers/AuthController'
 import { ISignUp } from 'src/api/AuthAPI'
 import AuthTpl from 'src/pages/Auth/template'
-
 import Component, { TEvent } from 'src/core/Component'
 import Button from 'src/components/Button'
 import Link from 'src/components/Link'
 import Input from 'src/components/Input'
-import { validationEvents } from 'src/data/events'
 import { handleRoute } from 'src/utils/router'
 import { signUpFields } from 'src/data/pages/auth'
 
@@ -26,6 +24,7 @@ class SignUp extends Component<IProps> {
   }
 
   init() {
+    const self = this
     const formId = 'sign-up'
     const title = 'Регистрация'
 
@@ -49,7 +48,33 @@ class SignUp extends Component<IProps> {
     })
 
     const fields = signUpFields
-    const events = validationEvents
+    const events = [
+      {
+        tag: 'input',
+        name: 'focus',
+        callback(event: Event) {
+          const target = event.target as HTMLInputElement
+
+          validateField.call(self, target, 'focus')
+        },
+      },
+      {
+        tag: 'input',
+        name: 'blur',
+        callback(event: Event) {
+          const target = event.target as HTMLInputElement
+
+          validateField.call(self, target, 'blur')
+        },
+      },
+      {
+        tag: 'form',
+        name: 'submit',
+        callback(event: Event) {
+          self.onSubmit(event)
+        },
+      },
+    ]
 
     this.setProps({ formId, title, fields, button, link, events })
   }
