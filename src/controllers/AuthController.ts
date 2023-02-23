@@ -15,7 +15,7 @@ class AuthController {
       await this.fetchUser()
 
       Router.go(ROUTES.MESSENGER)
-    } catch (error: any) {
+    } catch (error) {
       console.error(error)
     }
   }
@@ -29,7 +29,7 @@ class AuthController {
       ACTIONS.setUserId(userId)
 
       Router.go(ROUTES.MESSENGER)
-    } catch (error: any) {
+    } catch (error) {
       console.error(error)
     }
   }
@@ -39,7 +39,7 @@ class AuthController {
       await this.api.logout()
 
       Router.go(ROUTES.SIGN_IN)
-    } catch (error: any) {
+    } catch (error) {
       console.error(error)
     }
   }
@@ -59,7 +59,7 @@ class AuthController {
       }
 
       ACTIONS.setUser(user)
-    } catch (error: any) {
+    } catch (error) {
       throw new Error(`Error: ${error}`)
     }
   }

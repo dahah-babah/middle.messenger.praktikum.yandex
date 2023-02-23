@@ -1,7 +1,7 @@
 import { TConstructable } from 'src/core/Component'
-import Store, { StoreEvents } from 'src/core/Store/Store'
+import Store, { IState, StoreEvents } from 'src/core/Store/Store'
 
-export function connect(Class: TConstructable, mapStateToProps: (state: any) => any) {
+export function connect(Class: TConstructable, mapStateToProps: (state: IState) => any) {
   return class extends Class {
     constructor(props: any) {
       const store = new Store()
