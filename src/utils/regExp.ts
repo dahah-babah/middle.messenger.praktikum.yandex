@@ -18,5 +18,5 @@ export const regExpValidation = {
   email: /^\w+([\\.-]?\w+)*@\w+(\.\w{2,3})+$/g,
   login: /^(?![\d_-]+$)([\w_-]{3,20})$/g,
   password: /^(?=.*[\d])(?=.*[A-Z])[\w\d]{8,40}$/g,
-  message: /./g,
+  message: /\w/g,
 }

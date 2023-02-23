@@ -46,7 +46,7 @@ class Chats extends Component<IProps> {
           if (target.id === 'new-chat') {
             self.openModal()
           } else {
-            const chatId = target.closest('div')?.getAttribute('id')
+            const chatId = target.closest('li')?.children[0].children[0].getAttribute('id')
 
             if (!chatId) {
               throw new Error('No chat id')
@@ -120,6 +120,8 @@ class Chats extends Component<IProps> {
   }
 
   openModal() {
+    const self = this
+
     const input = new Input({
       id: 'add-chat',
       type: 'text',
@@ -144,7 +146,7 @@ class Chats extends Component<IProps> {
 
           const target = event.target as HTMLFormElement
 
-          this.createChat(target)
+          self.createChat(target)
         },
       },
     ]
