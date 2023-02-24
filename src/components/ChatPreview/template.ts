@@ -1,10 +1,16 @@
+import cross from 'src/assets/icons/cross.svg'
+
 import * as s from './styles.module.less'
 
 const ChatPreviewTpl = `
     <div id="{id}" class="${s.chat}">
         <div class="${s.avatar}"> {avatar} </div>
         
-        <span class="${s.name}"> {name} </span>
+        {if:avatarUrl
+            <img src="{avatarUrl}" class="${s.avatar}" alt="chat-avatar" />
+        %if}
+              
+        <span class="${s.name}"> {title} </span>
         
         <p class="${s.preview}"> {preview} </p>
         
@@ -13,6 +19,8 @@ const ChatPreviewTpl = `
         {if:unreadCount
             <div class="${s.counter}"> {unreadCount} </div>
         %if}
+        
+        <img id="cross" src="${cross}" alt="delete chat" class="${s.cross}" />
     </div>
 `
 

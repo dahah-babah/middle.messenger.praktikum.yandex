@@ -1,0 +1,36 @@
+@import '/src/styles/colors';
+@import '/src/styles/typography';
+@import '/src/styles/shadows';
+
+.root {
+  .form_shadow();
+
+  position: absolute;
+  right: 0;
+  z-index: 10;
+  border-radius: 12px;
+  margin-top: 20px;
+  margin-right: 20px;
+  background-color: @white;
+}
+
+.list {
+  .text_m_special_height();
+}
+
+.item {
+  cursor: pointer;
+  padding: 5px 15px;
+
+  &:hover {
+    background-color: @lightBlue;
+  }
+
+  &:first-child {
+    padding-top: 15px;
+  }
+
+  &:last-child {
+    padding-bottom: 15px;
+  }
+}

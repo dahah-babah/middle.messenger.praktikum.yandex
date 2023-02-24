@@ -21,9 +21,13 @@ export type TEvent = {
   callback: (event: Event) => void
 }
 
-interface IComponent {
+export interface IComponent {
   [key: string]: any
   events?: TEvent[]
+}
+
+export type TConstructable = {
+  new (props: {}): any
 }
 
 abstract class Component<T extends IComponent> {
@@ -52,14 +56,14 @@ abstract class Component<T extends IComponent> {
     this._shouldUpdate = false
 
     this._eventBus = new EventBus()
-    this._props = this._makePropsProxy(props) // for child too
+    this._props = this._makePropsProxy(props)
 
     this._registerEvents()
     this._eventBus.emit(Component.EVENTS.INIT)
   }
 
   private _registerEvents() {
-    this._eventBus.on(Component.EVENTS.INIT, this.init.bind(this))
+    this._eventBus.on(Component.EVENTS.INIT, this._init.bind(this))
     this._eventBus.on(Component.EVENTS.FLOW_CDM, this._componentDidMount.bind(this))
     this._eventBus.on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this))
     this._eventBus.on(Component.EVENTS.FLOW_RENDER, this._render.bind(this))
@@ -110,12 +114,21 @@ abstract class Component<T extends IComponent> {
   }
 
   private _render() {
+    if (!this._element) return
+
     const component = this.render()
 
     this.removeEvents()
     this._element.textContent = ''
     this._element.appendChild(component)
     this.addEvents()
+  }
+
+  private _init() {
+    this.init()
+
+    this._createResources()
+    this._eventBus.emit(Component.EVENTS.FLOW_RENDER)
   }
 
   compile(
@@ -184,7 +197,11 @@ abstract class Component<T extends IComponent> {
           }
 
           case 'value': {
-            children.push(value.toString())
+            if (value == null) {
+              children.push('')
+            } else {
+              children.push(value.toString())
+            }
             break
           }
 
@@ -351,9 +368,7 @@ abstract class Component<T extends IComponent> {
     const { events = [] } = this._props
 
     events.map(({ name, tag, callback }) =>
-      this._element
-        .querySelectorAll(tag)
-        .forEach((elem) => elem.addEventListener(name, callback.bind(this))),
+      this._element.querySelectorAll(tag).forEach((elem) => elem.addEventListener(name, callback)),
     )
   }
 
@@ -363,13 +378,8 @@ abstract class Component<T extends IComponent> {
     events.map(({ name, tag, callback }) =>
       this._element
         .querySelectorAll(tag)
-        .forEach((elem) => elem.removeEventListener(name, callback.bind(this))),
+        .forEach((elem) => elem.removeEventListener(name, callback)),
     )
-  }
-
-  init() {
-    this._createResources()
-    this._eventBus.emit(Component.EVENTS.FLOW_RENDER)
   }
 
   dispatchComponentDidMount() {
@@ -379,6 +389,12 @@ abstract class Component<T extends IComponent> {
   componentDidUpdate(oldProps: IComponent, newProps: IComponent): boolean {
     return oldProps !== newProps
   }
+
+  clear() {
+    this._element.remove()
+  }
+
+  init(): void {}
 
   componentDidMount(): void {}
 

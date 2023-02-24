@@ -17,6 +17,8 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'class-methods-use-this': 0,
     'import/no-absolute-path': 0,
+    'no-constructor-return': 0,
+    'no-console': ["error", { allow: ["warn", "error"] }],
   },
   settings: {
     'import/resolver': {

@@ -1,6 +1,22 @@
 @import '/src/styles/colors';
 @import '/src/styles/typography';
 
+.cross {
+  display: none;
+  position: absolute;
+  top: 12px;
+  right: 10px;
+}
+
+.time {
+  .text_s_special_height();
+
+  grid-area: time;
+  justify-self: end;
+
+  color: @dustyGray;
+}
+
 .chat {
   display: grid;
   row-gap: 4px;
@@ -13,9 +29,18 @@
   ;
   padding: 12px 10px;
   cursor: pointer;
+  max-width: 310px;
 
   &:hover {
     background-color: @lightBlue;
+
+    .cross {
+      display: block;
+    }
+
+    .time {
+      visibility: hidden;
+    }
   }
 }
 
@@ -41,6 +66,8 @@
   grid-area: name;
   font-weight: 600;
   color: @godGray;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .preview {
@@ -49,15 +76,13 @@
   grid-area: preview;
   color: @dustyGray;
   margin: 0;
-}
 
-.time {
-  .text_s_special_height();
-
-  grid-area: time;
-  justify-self: end;
-
-  color: @dustyGray;
+  height: 30px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .counter {

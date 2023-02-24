@@ -4,9 +4,9 @@ import * as s from './styles.module.less'
 const ProfileTpl = `
     <article class="${s.root}">
         <aside class="${s.back}">
-            <a href="/chats">
-                <img src="${arrowLeft}" alt="back" />
-            </a>
+            <div>
+                <img id="chats" src="${arrowLeft}" alt="back" />
+            </div>
         </aside>
             
         <form class="${s.profile}">

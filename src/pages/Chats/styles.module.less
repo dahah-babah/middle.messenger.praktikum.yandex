@@ -4,16 +4,31 @@
 .root {
   display: flex;
   height: 100%;
+
+  > div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .menu {
   min-width: 310px;
   background-color: @alabaster;
   border-right: 1px solid @gallery;
+  overflow: auto;
+}
+
+.fixed {
+  position: fixed;
+  min-width: 310px;
+  height: 100px;
+  background-color: @alabaster;
+  z-index: 1;
 }
 
 .field {
-  width: 100%;
+  width: calc(100% - 310px);
 }
 
 .profile {
@@ -26,13 +41,19 @@
 .link {
   .text_m();
 
+  cursor: pointer;
   color: @dustyGray;
   text-decoration: none;
   margin-right: 8px;
 }
 
 .chats {
-  margin-top: 14px;
+  margin-top: 100px;
+  scrollbar-width: none;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .chat {
@@ -48,6 +69,15 @@
     background-color: @gallery;
     margin-top: 2px;
   }
+}
+
+.chatCreation {
+  .text_l();
+
+  cursor: pointer;
+  text-align: center;
+  padding: 20px 0;
+  color: @royalBlue;
 }
 
 .searchWrapper {
@@ -76,4 +106,5 @@
 
 .activeChat {
   height: 100%;
+  overflow: scroll;
 }
