@@ -1,4 +1,4 @@
-import { API_URL } from 'src/constants/url'
+import { API_URL } from '@/constants/url'
 
 enum METHODS {
   GET = 'GET',

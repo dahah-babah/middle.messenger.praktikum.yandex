@@ -1,5 +1,5 @@
-import Component, { TConstructable, IComponent } from 'src/core/Component'
-import render from 'src/utils/render'
+import Component, { TConstructable, IComponent } from '@/core/Component'
+import render from '@/utils/render'
 
 class Route {
   _pathname: string

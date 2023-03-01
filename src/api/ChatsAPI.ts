@@ -1,5 +1,5 @@
-import BaseAPI from 'src/api/BaseAPI'
-import { IUser } from 'src/api/AuthAPI'
+import BaseAPI from '@/api/BaseAPI'
+import { IUser } from '@/api/AuthAPI'
 
 export interface IChatsRequest {
   limit: number

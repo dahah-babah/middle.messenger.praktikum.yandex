@@ -1,13 +1,13 @@
-import { validateField } from 'src/utils/validation'
-import AuthController from 'src/controllers/AuthController'
-import { ISignUp } from 'src/api/AuthAPI'
-import AuthTpl from 'src/pages/Auth/template'
-import Component, { TEvent } from 'src/core/Component'
-import Button from 'src/components/Button'
-import Link from 'src/components/Link'
-import Input from 'src/components/Input'
-import { handleRoute } from 'src/utils/router'
-import { signUpFields } from 'src/data/pages/auth'
+import { validateField } from '@/utils/validation'
+import AuthController from '@/controllers/AuthController'
+import { ISignUp } from '@/api/AuthAPI'
+import AuthTpl from '@/pages/Auth/template'
+import Component, { TEvent } from '@/core/Component'
+import Button from '@/components/Button'
+import Link from '@/components/Link'
+import Input from '@/components/Input'
+import { handleRoute } from '@/utils/router'
+import { signUpFields } from '@/data/pages/auth'
 
 interface IProps {
   formId: string

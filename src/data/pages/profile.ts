@@ -1,4 +1,4 @@
-import { TInputType } from 'src/components/Input'
+import { TInputType } from '@/components/Input'
 
 export const profileFields = [
   {

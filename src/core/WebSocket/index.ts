@@ -1,7 +1,7 @@
-import { WS_URL } from 'src/constants/url'
-import EventBus, { IEventBus } from 'src/core/EventBus'
-import ChatsController from 'src/controllers/ChatsController'
-import { ACTIONS } from 'src/core/Store/Actions'
+import { WS_URL } from '@/constants/url'
+import EventBus, { IEventBus } from '@/core/EventBus'
+import ChatsController from '@/controllers/ChatsController'
+import { ACTIONS } from '@/core/Store/Actions'
 
 class WebSocketMessages {
   static instance: WebSocketMessages

@@ -1,5 +1,5 @@
-import Store from 'src/core/Store/Store'
-import { IChatsResponse } from 'src/api/ChatsAPI'
+import Store from '@/core/Store/Store'
+import { IChatsResponse } from '@/api/ChatsAPI'
 
 const store = new Store()
 

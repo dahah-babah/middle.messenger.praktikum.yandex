@@ -1,14 +1,14 @@
-import { TInputType } from 'src/components/Input'
-import Link from 'src/components/Link'
-import Component, { TEvent } from 'src/core/Component'
-import Avatar from 'src/components/Avatar'
-import ProfileTpl from 'src/pages/Profile/template'
-import AuthController from 'src/controllers/AuthController'
-import { connect } from 'src/core/Store/Connect'
-import { IUser } from 'src/api/AuthAPI'
-import { profileFields } from 'src/data/pages/profile'
-import { handleRoute } from 'src/utils/router'
-import { getPropsValue } from 'src/utils/helpers'
+import { TInputType } from '@/components/Input'
+import Link from '@/components/Link'
+import Component, { TEvent } from '@/core/Component'
+import Avatar from '@/components/Avatar'
+import ProfileTpl from '@/pages/Profile/template'
+import AuthController from '@/controllers/AuthController'
+import { connect } from '@/core/Store/Connect'
+import { IUser } from '@/api/AuthAPI'
+import { profileFields } from '@/data/pages/profile'
+import { handleRoute } from '@/utils/router'
+import { getPropsValue } from '@/utils/helpers'
 
 type TField = {
   name: string
@@ -123,4 +123,4 @@ const mapStateToProps = (state: IUser): IProps => {
   return props
 }
 
-export default connect(Profile, (state) => mapStateToProps(state.user ?? {}) ?? {})
+export default connect(Profile, (state) => mapStateToProps(state.user ?? ({} as IUser)) ?? {})

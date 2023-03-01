@@ -1,5 +1,5 @@
-import Store from 'src/core/Store/Store'
-import { IUser } from 'src/api/AuthAPI'
+import Store from '@/core/Store/Store'
+import { IUser } from '@/api/AuthAPI'
 
 const store = new Store()
 

@@ -1,4 +1,4 @@
-import Store, { IStoreMessage } from 'src/core/Store/Store'
+import Store, { IStoreMessage } from '@/core/Store/Store'
 
 const store = new Store()
 

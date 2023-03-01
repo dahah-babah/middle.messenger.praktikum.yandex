@@ -1,5 +1,5 @@
-import arrowLeft from 'src/assets/icons/arrowLeft.svg'
-import options from 'src/assets/icons/options.svg'
+import arrowLeft from '@/assets/icons/arrowLeft.svg'
+import options from '@/assets/icons/options.svg'
 
 import * as s from './styles.module.less'
 

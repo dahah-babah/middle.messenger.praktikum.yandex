@@ -1,5 +1,5 @@
-import { regExpValidation } from 'src/utils/regExp'
-import Input from 'src/components/Input'
+import { regExpValidation } from '@/utils/regExp'
+import Input from '@/components/Input'
 
 export type TField = 'name' | 'email' | 'login' | 'phone' | 'password' | 'message'
 

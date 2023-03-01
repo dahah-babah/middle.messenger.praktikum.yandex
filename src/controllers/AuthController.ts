@@ -1,6 +1,6 @@
-import API, { AuthAPI, ISignIn, ISignUp } from 'src/api/AuthAPI'
-import { ACTIONS } from 'src/core/Store/Actions'
-import Router, { ROUTES } from 'src/core/Router/Router'
+import API, { AuthAPI, ISignIn, ISignUp } from '@/api/AuthAPI'
+import { ACTIONS } from '@/core/Store/Actions'
+import Router, { ROUTES } from '@/core/Router/Router'
 
 class AuthController {
   private readonly api: AuthAPI

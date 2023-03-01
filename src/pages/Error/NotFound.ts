@@ -1,7 +1,7 @@
-import Component, { TEvent } from 'src/core/Component'
-import Link from 'src/components/Link'
-import ErrorTpl from 'src/pages/Error/template'
-import { handleRoute } from 'src/utils/router'
+import Component, { TEvent } from '@/core/Component'
+import Link from '@/components/Link'
+import ErrorTpl from '@/pages/Error/template'
+import { handleRoute } from '@/utils/router'
 
 interface IProps {
   code: string

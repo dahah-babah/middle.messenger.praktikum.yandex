@@ -1,15 +1,15 @@
-import EditTpl from 'src/pages/Settings/template'
-import Component, { TEvent } from 'src/core/Component'
-import Button from 'src/components/Button'
-import Avatar from 'src/components/Avatar'
-import Input from 'src/components/Input'
-import { userPasswordFields } from 'src/data/pages/editPassword'
-import { IUser } from 'src/api/AuthAPI'
-import { connect } from 'src/core/Store/Connect'
-import { isValid, validateField } from 'src/utils/validation'
-import UserController from 'src/controllers/UserController'
-import { handleRoute } from 'src/utils/router'
-import { getPropsValue } from 'src/utils/helpers'
+import EditTpl from '@/pages/Settings/template'
+import Component, { TEvent } from '@/core/Component'
+import Button from '@/components/Button'
+import Avatar from '@/components/Avatar'
+import Input from '@/components/Input'
+import { userPasswordFields } from '@/data/pages/editPassword'
+import { IUser } from '@/api/AuthAPI'
+import { connect } from '@/core/Store/Connect'
+import { isValid, validateField } from '@/utils/validation'
+import UserController from '@/controllers/UserController'
+import { handleRoute } from '@/utils/router'
+import { getPropsValue } from '@/utils/helpers'
 
 interface IProps {
   formId: string
@@ -158,4 +158,4 @@ const mapStateToProps = (state: IUser): IProps => {
   return props
 }
 
-export default connect(Password, (state) => mapStateToProps(state.user ?? {}) ?? {})
+export default connect(Password, (state) => mapStateToProps(state.user ?? ({} as IUser)) ?? {})

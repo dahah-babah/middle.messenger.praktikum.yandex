@@ -1,5 +1,5 @@
-import Component, { TEvent } from 'src/core/Component'
-import LinkTpl from 'src/components/Link/template'
+import Component, { TEvent } from '@/core/Component'
+import LinkTpl from '@/components/Link/template'
 
 interface IProps {
   id: string

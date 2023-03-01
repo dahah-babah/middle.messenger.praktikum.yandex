@@ -1,47 +1,49 @@
 {
-  "name": "web-messenger",
+  "name": "my-webpack-project",
   "version": "1.0.0",
   "scripts": {
-    "dev": "parcel src/index.html",
-    "start": "parcel build src/index.html && node server.js",
-    "build": "parcel build src/index.html",
+    "build": "webpack --mode=production --node-env=production",
+    "dev": "webpack serve",
+    "start": "webpack serve node server.js",
     "lint": "eslint . --ext ts --ext js",
     "lint:fix": "eslint . --ext ts --ext js --fix",
-    "lint:css": "stylelint \"**/*.less\""
+    "lint:css": "stylelint \"**/*.less\"",
+    "build:dev": "webpack --mode=development",
+    "build:prod": "webpack --mode=production --node-env=production",
+    "watch": "webpack --watch",
+    "serve": "webpack serve"
   },
+  "author": "daria lobanova",
   "license": "ISC",
   "devDependencies": {
-    "@parcel/config-default": "2.8.2",
-    "@parcel/plugin": "2.8.2",
+    "@webpack-cli/generators": "^3.0.1",
+    "css-loader": "^6.4.0",
     "eslint": "8.32.0",
     "eslint-config-airbnb-typescript": "17.0.0",
     "eslint-config-prettier": "8.6.0",
     "eslint-import-resolver-typescript": "3.5.3",
     "eslint-plugin-import": "2.27.5",
     "eslint-plugin-prettier": "4.2.1",
-    "parcel": "2.8.2",
-    "parcel-resolver-ts-base-url": "1.3.1",
-    "postcss-less": "6.0.0",
+    "html-webpack-plugin": "^5.5.0",
+    "less": "^4.1.3",
+    "less-loader": "^10.1.0",
     "prettier": "2.8.3",
+    "style-loader": "^3.3.0",
     "stylelint": "14.16.1",
     "stylelint-config-recommended-less": "1.0.4",
-    "typescript": "4.9.4"
+    "ts-loader": "^9.4.2",
+    "typescript": "^4.9.4",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.3.1",
+    "workbox-webpack-plugin": "^6.5.4"
   },
   "dependencies": {
-    "@parcel/transformer-less": "2.8.2",
-    "express": "4.18.2"
-  },
-  "alias": {
-    "process": {
-      "global": "{}"
-    }
+    "express": "4.18.2",
+    "mini-css-extract-plugin": "2.7.2",
+    "tsconfig-paths-webpack-plugin": "^4.0.0"
   },
   "engines": {
     "node": ">=12.0.0"
-  },
-  "targets": {
-    "default": {
-      "includeNodeModules": true
-    }
   }
 }

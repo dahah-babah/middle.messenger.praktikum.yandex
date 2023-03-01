@@ -1,5 +1,5 @@
-import Route from 'src/core/Router/Route'
-import { TConstructable } from 'src/core/Component'
+import Route from '@/core/Router/Route'
+import { TConstructable } from '@/core/Component'
 
 export enum ROUTES {
   SIGN_IN = '/',
