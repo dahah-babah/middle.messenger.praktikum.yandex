@@ -1,5 +1,5 @@
 {
-  "name": "my-webpack-project",
+  "name": "messenger",
   "version": "1.0.0",
   "scripts": {
     "dev": "webpack serve",
@@ -21,9 +21,11 @@
     "eslint-plugin-import": "2.27.5",
     "eslint-plugin-prettier": "4.2.1",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "8.0.3",
     "less": "4.1.3",
     "less-loader": "10.1.0",
     "mini-css-extract-plugin": "2.7.2",
+    "postcss-less": "6.0.0",
     "prettier": "2.8.3",
     "stylelint": "14.16.1",
     "stylelint-config-recommended-less": "1.0.4",
