@@ -1,4 +1,4 @@
-import Component, { TEvent } from '@/core/Component'
+import { Component, TEvent } from '@/core/Component'
 import AvatarTpl from '@/components/Avatar/template'
 import avatar from '@/assets/icons/avatar.svg'
 import UserController from '@/controllers/UserController'

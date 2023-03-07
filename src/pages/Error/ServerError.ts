@@ -1,4 +1,4 @@
-import Component, { TEvent } from '@/core/Component'
+import { Component, TEvent } from '@/core/Component'
 import Link from '@/components/Link'
 import ErrorTpl from '@/pages/Error/template'
 import { handleRoute } from '@/utils/router'

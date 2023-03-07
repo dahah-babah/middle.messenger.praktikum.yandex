@@ -1,5 +1,5 @@
 import EditTpl from '@/pages/Settings/template'
-import Component, { TEvent } from '@/core/Component'
+import { Component, TEvent } from '@/core/Component'
 import Button from '@/components/Button'
 import Avatar from '@/components/Avatar'
 import Input from '@/components/Input'

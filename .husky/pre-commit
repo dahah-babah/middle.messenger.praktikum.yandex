@@ -4,3 +4,4 @@
 tsc --noEmit
 npm run lint
 npm run lint:css
+npm run test

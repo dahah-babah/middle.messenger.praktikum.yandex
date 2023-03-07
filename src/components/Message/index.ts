@@ -1,4 +1,4 @@
-import Component from '@/core/Component'
+import { Component } from '@/core/Component'
 import MessageTpl from '@/components/Message/template'
 
 interface IProps {

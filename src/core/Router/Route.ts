@@ -1,4 +1,4 @@
-import Component, { TConstructable, IComponent } from '@/core/Component'
+import { Component, TConstructable, IComponent } from '@/core/Component'
 import render from '@/utils/render'
 
 class Route {

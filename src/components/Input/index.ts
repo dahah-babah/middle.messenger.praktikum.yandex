@@ -1,5 +1,5 @@
 import InputTpl from '@/components/Input/template'
-import Component from '@/core/Component'
+import { Component } from '@/core/Component'
 
 export type TInputType = 'text' | 'email' | 'password' | 'phone'
 

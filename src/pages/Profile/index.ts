@@ -1,6 +1,6 @@
 import { TInputType } from '@/components/Input'
 import Link from '@/components/Link'
-import Component, { TEvent } from '@/core/Component'
+import { Component, TEvent } from '@/core/Component'
 import Avatar from '@/components/Avatar'
 import ProfileTpl from '@/pages/Profile/template'
 import AuthController from '@/controllers/AuthController'

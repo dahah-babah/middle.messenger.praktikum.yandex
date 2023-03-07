@@ -1,4 +1,4 @@
-import Component, { TEvent } from '@/core/Component'
+import { Component, TEvent } from '@/core/Component'
 import ChatPreviewTpl from '@/components/ChatPreview/template'
 
 interface IProps {

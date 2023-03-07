@@ -1,4 +1,4 @@
-import Component, { TEvent } from '@/core/Component'
+import { Component, TEvent } from '@/core/Component'
 import TooltipTpl from '@/components/Tooltip/template'
 
 interface IOption {

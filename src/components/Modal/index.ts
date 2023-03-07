@@ -1,4 +1,4 @@
-import Component, { TEvent } from '@/core/Component'
+import { Component, TEvent } from '@/core/Component'
 import ModalTpl from '@/components/Modal/template'
 import Input from '@/components/Input'
 import Button from '@/components/Button'

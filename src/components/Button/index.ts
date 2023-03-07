@@ -1,4 +1,4 @@
-import Component from '@/core/Component'
+import { Component } from '@/core/Component'
 import ButtonTpl from '@/components/Button/template'
 
 interface IProps {

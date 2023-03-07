@@ -30,7 +30,7 @@ export type TConstructable = {
   new (props: {}): any
 }
 
-abstract class Component<T extends IComponent> {
+export abstract class Component<T extends IComponent> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -174,6 +174,8 @@ abstract class Component<T extends IComponent> {
           }
 
           case 'loop': {
+            if (!value) break
+
             const loopData = value as Array<{ [key: string]: string | Component<T> }>
 
             loopData.forEach((data) => {
@@ -400,5 +402,3 @@ abstract class Component<T extends IComponent> {
 
   abstract render(): HTMLElement
 }
-
-export default Component

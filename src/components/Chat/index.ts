@@ -1,4 +1,4 @@
-import Component, { TEvent } from '@/core/Component'
+import { Component, TEvent } from '@/core/Component'
 import ChatTpl from '@/components/Chat/template'
 import Message from '@/components/Message'
 import Tooltip from '@/components/Tooltip'

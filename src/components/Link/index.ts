@@ -1,4 +1,4 @@
-import Component, { TEvent } from '@/core/Component'
+import { TEvent, Component } from '@/core/Component'
 import LinkTpl from '@/components/Link/template'
 
 interface IProps {

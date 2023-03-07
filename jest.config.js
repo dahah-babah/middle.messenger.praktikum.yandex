@@ -4,6 +4,7 @@ module.exports = {
   moduleDirectories: ['node_modules', 'src'],
   moduleNameMapper: {
     '@/(.*)': '<rootDir>/src/$1',
+    '\\.(css|less|scss|sss|styl)$': '<rootDir>/node_modules/jest-css-modules',
   },
   transform: {
     '\\.(less|svg)$': 'jest-transform-stub',
