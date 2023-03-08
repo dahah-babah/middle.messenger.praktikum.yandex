@@ -33,7 +33,7 @@ class Modal extends Component<IProps> {
       },
     ]
 
-    const comingEvents = this._props.events ?? []
+    const comingEvents = this.props.events ?? []
 
     this.setProps({ events: [...comingEvents, ...events] })
   }

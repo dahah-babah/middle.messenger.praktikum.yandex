@@ -55,8 +55,7 @@ class Chat extends Component<IProps> {
 
           if (!target || target.id !== 'chat-options') return
 
-          // eslint-disable-next-line no-underscore-dangle
-          if (self._props.tooltip) {
+          if (self.props.tooltip) {
             self.setProps({ tooltip: null })
           } else {
             self.openTooltip(target.id)

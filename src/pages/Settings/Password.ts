@@ -117,10 +117,8 @@ class Password extends Component<IProps> {
     if (!oldFields) return shouldUpdate
 
     oldFields.forEach((oldField, index) => {
-      // eslint-disable-next-line no-underscore-dangle
-      const oldInputProps = oldField.input._props
-      // eslint-disable-next-line no-underscore-dangle
-      const newInputProps = newFields[index].input._props
+      const oldInputProps = oldField.input.props
+      const newInputProps = newFields[index].input.props
 
       if (oldInputProps.error !== newInputProps.error) {
         shouldUpdate = true
@@ -139,13 +137,11 @@ const mapStateToProps = (state: IUser): IProps => {
   const props = {} as IProps
 
   props.fields = userPasswordFields.map((field) => {
-    // eslint-disable-next-line no-underscore-dangle
-    const { id, name, type, placeholder } = field.input._props
+    const { id, name, type, placeholder } = field.input.props
 
     return {
       input: new Input({
-        // eslint-disable-next-line no-underscore-dangle
-        ...field.input._props,
+        ...field.input.props,
         id,
         name,
         type,

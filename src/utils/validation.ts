@@ -29,7 +29,7 @@ const validName = (name: string): string => {
 }
 
 export function highlightErrors() {
-  const inputs = this._element.querySelectorAll('input')
+  const inputs = this.element.querySelectorAll('input')
 
   if (!inputs.length) return
 
@@ -45,13 +45,12 @@ export function highlightErrors() {
 }
 
 function getNewProps(target: HTMLInputElement, isValueValid: boolean) {
-  return this._props.fields.map((field: { [_key: string]: Input }) => {
-    // eslint-disable-next-line no-underscore-dangle
-    if (field.input._props.id !== target.id) {
+  return this.props.fields.map((field: { [_key: string]: Input }) => {
+    if (field.input.props.id !== target.id) {
       return field
     }
-    // eslint-disable-next-line no-underscore-dangle
-    const { id, type, name, label, placeholder } = field.input._props
+
+    const { id, type, name, label, placeholder } = field.input.props
 
     return {
       input: new Input({

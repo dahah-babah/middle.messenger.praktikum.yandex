@@ -15,16 +15,16 @@ interface IProps {
   name?: string
 }
 
-const tpl = `<div> <h1> {title} </h1> <p> {text} </p> </div>`
-const tag = 'div'
+const pageTpl = `<div> <h1> {title} </h1> <p> {text} </p> </div>`
+const pageTag = 'div'
 
 class Page extends Component<IProps> {
   constructor(props: IProps) {
-    super(tag, props, tpl)
+    super(pageTag, props, pageTpl)
   }
 
   render() {
-    return this.compile(tpl)
+    return this.compile(pageTpl)
   }
 }
 
@@ -32,30 +32,57 @@ describe('Component', () => {
   const title = 'This is title'
   const text = 'This is text'
 
-  const props = { title, text }
+  const pageProps = { title, text }
 
   let component: Page
 
   beforeAll(() => {
-    component = new Page(props)
+    component = new Page(pageProps)
   })
 
   describe('Initial state', () => {
     test('Class fields should be correct', () => {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      const { _tag, _tpl, _props, _element } = component
+      const { tag, tpl, props, element } = component
 
       const compiledTpl = '<div><div><h1>This is title</h1><p>This is text</p></div></div>'
 
-      expect(_tag).toEqual(tag)
-      expect(_tpl).toEqual(tpl)
-      expect(_props).toEqual(props)
-      expect(_element.outerHTML).toBe(compiledTpl)
+      expect(tag).toEqual(pageTag)
+      expect(tpl).toEqual(pageTpl)
+      expect(props).toEqual(pageProps)
+      expect(element.outerHTML).toBe(compiledTpl)
     })
   })
 
-  // тесты для шаблонизатора
+  describe('Attributes', () => {
+    const attrs = { id: 'rootId', class: 'root' }
+
+    test('Should return object with attributes - without props', () => {
+      const tpl = `<div id="rootId" class="root"> Test </div>`
+
+      expect(component.getAttributes(tpl, {})).toEqual(attrs)
+    })
+
+    test('Should return object with attributes - with props', () => {
+      const tpl = `<div id="{id}" class="{class}"> Test </div>`
+
+      expect(component.getAttributes(tpl, attrs)).toEqual(attrs)
+    })
+  })
+
+  describe('Props', () => {
+    test('Props should be changed', () => {
+      component.setProps({ title: 'new title' })
+
+      expect(component.props.title).toEqual('new title')
+      expect(component.props.text).toEqual('This is text')
+    })
+  })
+
   describe('Template', () => {
+    beforeAll(() => {
+      component.setProps({ title, text })
+    })
+
     describe('Conditional block', () => {
       const conditionalTpl = `
         <div class="root"> 

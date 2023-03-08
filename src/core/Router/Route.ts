@@ -8,13 +8,13 @@ class Route {
 
   _component: null | Component<IComponent>
 
-  _props: IComponent
+  props: IComponent
 
   constructor(pathname: string, view: TConstructable, props = {}) {
     this._pathname = pathname
     this._componentClass = view
     this._component = null
-    this._props = props
+    this.props = props
   }
 
   leave() {
@@ -30,10 +30,10 @@ class Route {
 
   render() {
     if (!this._component) {
-      this._component = new this._componentClass(this._props)
+      this._component = new this._componentClass(this.props)
 
       if (this._component) {
-        render(this._props.rootQuery, this._component)
+        render(this.props.rootQuery, this._component)
       }
     }
   }

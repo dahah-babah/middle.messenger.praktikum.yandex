@@ -23,10 +23,6 @@ class WebSocketMessages {
   }
 
   constructor(userId: number, chatId: number) {
-    // if (WebSocketMessages.instance) {
-    //   return WebSocketMessages.instance
-    // }
-
     WebSocketMessages.instance = this
 
     this.userId = userId

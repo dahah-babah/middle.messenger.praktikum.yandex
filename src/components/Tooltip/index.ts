@@ -19,7 +19,7 @@ class Tooltip extends Component<IProps> {
   }
 
   init() {
-    const comingEvents = this._props.events ?? []
+    const comingEvents = this.props.events ?? []
 
     this.setProps({ events: [...comingEvents] })
   }
