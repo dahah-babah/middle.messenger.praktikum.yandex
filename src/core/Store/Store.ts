@@ -1,6 +1,6 @@
-import EventBus from 'src/core/EventBus'
-import { IUser } from 'src/api/AuthAPI'
-import { IChatsResponse } from 'src/api/ChatsAPI'
+import EventBus from '@/core/EventBus'
+import { IUser } from '@/api/AuthAPI'
+import { IChatsResponse } from '@/api/ChatsAPI'
 
 export enum StoreEvents {
   UPDATED = 'updated',

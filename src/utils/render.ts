@@ -1,4 +1,4 @@
-import Component from 'src/core/Component'
+import { Component } from '@/core/Component'
 
 const render = (query: string, component: Component<{}>) => {
   const root = document.querySelector(query) as HTMLElement

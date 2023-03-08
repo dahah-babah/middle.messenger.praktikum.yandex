@@ -1,4 +1,4 @@
-import Router, { ROUTES } from 'src/core/Router/Router'
+import Router, { ROUTES } from '@/core/Router/Router'
 
 const routeIds = ['sign-in', 'sign-up', 'chats', 'profile', 'settings-user', 'settings-pass']
 

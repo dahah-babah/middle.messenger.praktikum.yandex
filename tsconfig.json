@@ -11,9 +11,9 @@
     "lib": ["dom", "es2020"],
     "baseUrl": ".",
     "paths": {
-      "/*": ["./src/*"]
+      "@/*": ["./src/*"]
     }
   },
-  "include": ["externals.d.ts", "src/**/*"],
+  "include": ["externals.d.ts", "src/**/*", "jest.setup.js"],
   "exclude": ["node_modules"]
 }

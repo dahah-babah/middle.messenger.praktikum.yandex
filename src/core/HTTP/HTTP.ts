@@ -1,4 +1,4 @@
-import { API_URL } from 'src/constants/url'
+import { queryStringify } from '@/core/HTTP/utils'
 
 enum METHODS {
   GET = 'GET',
@@ -21,17 +21,11 @@ type TOptions = {
 
 type HTTPMethod = (path: string, options?: TData) => Promise<any>
 
-function queryStringify(data: TData) {
-  return `?${Object.entries(data)
-    .map((param) => param.join('='))
-    .join('&')}`
-}
-
-class HTTPTransport {
+export class HTTPTransport {
   protected endpoint: string
 
   constructor(endpoint: string) {
-    this.endpoint = `${API_URL}${endpoint}`
+    this.endpoint = endpoint
   }
 
   get: HTTPMethod = (path, data) => {
@@ -70,8 +64,6 @@ class HTTPTransport {
 
       xhr.open(method, url)
 
-      // console.log(Object.values(data, (data) => data instanceof FormData))
-
       if (!(data instanceof FormData)) {
         xhr.setRequestHeader('Content-Type', 'application/json')
       }
@@ -108,5 +100,3 @@ class HTTPTransport {
     })
   }
 }
-
-export default HTTPTransport

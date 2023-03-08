@@ -1,5 +1,5 @@
-import Component from 'src/core/Component'
-import MessageTpl from 'src/components/Message/template'
+import { Component } from '@/core/Component'
+import MessageTpl from '@/components/Message/template'
 
 interface IProps {
   text: string
