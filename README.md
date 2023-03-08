@@ -13,3 +13,12 @@
 - `npm run dev` — запуск дев версии,
 - `npm run build` — сборка стабильной версии,
 - `npm run build:dev` — сборка дев версии.
+
+### Сборка и запуск docker-образа
+
+1. `docker build -t messenger .` - сборка образа
+2. `docker images` - просмотр существующих образов
+3. `docker run -d -p {port}:3000 {image_id}` - запуск контейнера
+4. `docker ps` - просмотр запущенных контейнеров
+5. Перейти на `localhost:{port}`
+
