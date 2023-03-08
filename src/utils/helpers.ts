@@ -1,4 +1,4 @@
-import { IUser } from 'src/api/AuthAPI'
+import { IUser } from '@/api/AuthAPI'
 
 export const getChildren = (template: string): string[] => {
   const arr = template.trim().split(' ')

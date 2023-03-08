@@ -1,17 +1,17 @@
-import Component, { TEvent } from 'src/core/Component'
-import ChatsTpl from 'src/pages/Chats/template'
-import ChatPreview from 'src/components/ChatPreview'
-import Chat from 'src/components/Chat'
-import Modal from 'src/components/Modal'
-import Input from 'src/components/Input'
-import Button from 'src/components/Button'
-import ChatsController from 'src/controllers/ChatsController'
-import { connect } from 'src/core/Store/Connect'
-import Store, { IStoreChats } from 'src/core/Store/Store'
-import { handleRoute } from 'src/utils/router'
-import { ACTIONS } from 'src/core/Store/Actions'
-import { getMessageTime } from 'src/utils/helpers'
-import { RESOURCES_URL } from 'src/constants/url'
+import { Component, TEvent } from '@/core/Component'
+import ChatsTpl from '@/pages/Chats/template'
+import ChatPreview from '@/components/ChatPreview'
+import Chat from '@/components/Chat'
+import Modal from '@/components/Modal'
+import Input from '@/components/Input'
+import Button from '@/components/Button'
+import ChatsController from '@/controllers/ChatsController'
+import { connect } from '@/core/Store/Connect'
+import Store, { IStoreChats } from '@/core/Store/Store'
+import { handleRoute } from '@/utils/router'
+import { ACTIONS } from '@/core/Store/Actions'
+import { getMessageTime } from '@/utils/helpers'
+import { RESOURCES_URL } from '@/constants/url'
 
 type TChatPreview = { [chat: string]: ChatPreview }
 
@@ -214,4 +214,4 @@ const mapStateToProps = (state: IStoreChats): IProps => {
   return props
 }
 
-export default connect(Chats, (state) => mapStateToProps(state.chats ?? {}) ?? {})
+export default connect(Chats, (state) => mapStateToProps(state.chats ?? ({} as IStoreChats)) ?? {})

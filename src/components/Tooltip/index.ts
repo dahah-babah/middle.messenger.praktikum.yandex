@@ -1,5 +1,5 @@
-import Component, { TEvent } from 'src/core/Component'
-import TooltipTpl from 'src/components/Tooltip/template'
+import { Component, TEvent } from '@/core/Component'
+import TooltipTpl from '@/components/Tooltip/template'
 
 interface IOption {
   id: string
@@ -19,7 +19,7 @@ class Tooltip extends Component<IProps> {
   }
 
   init() {
-    const comingEvents = this._props.events ?? []
+    const comingEvents = this.props.events ?? []
 
     this.setProps({ events: [...comingEvents] })
   }

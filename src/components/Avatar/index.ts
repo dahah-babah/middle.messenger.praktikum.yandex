@@ -1,11 +1,11 @@
-import Component, { TEvent } from 'src/core/Component'
-import AvatarTpl from 'src/components/Avatar/template'
-import avatar from 'src/assets/icons/avatar.svg'
-import UserController from 'src/controllers/UserController'
-import { connect } from 'src/core/Store/Connect'
-import { IUser } from 'src/api/AuthAPI'
-import { RESOURCES_URL } from 'src/constants/url'
-import Store from 'src/core/Store/Store'
+import { Component, TEvent } from '@/core/Component'
+import AvatarTpl from '@/components/Avatar/template'
+import avatar from '@/assets/icons/avatar.svg'
+import UserController from '@/controllers/UserController'
+import { connect } from '@/core/Store/Connect'
+import { IUser } from '@/api/AuthAPI'
+import { RESOURCES_URL } from '@/constants/url'
+import Store from '@/core/Store/Store'
 
 interface IProps {
   picture?: string
@@ -72,4 +72,4 @@ const mapStateToProps = (user: IUser) => {
   return props
 }
 
-export default connect(Avatar, (state) => mapStateToProps(state.user ?? {}) ?? {})
+export default connect(Avatar, (state) => mapStateToProps(state.user ?? ({} as IUser)) ?? {})

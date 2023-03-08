@@ -1,4 +1,4 @@
-import BaseAPI from 'src/api/BaseAPI'
+import BaseAPI from '@/api/BaseAPI'
 
 export interface ISignIn {
   login: string

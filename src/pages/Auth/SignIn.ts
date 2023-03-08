@@ -1,13 +1,13 @@
-import { validateField } from 'src/utils/validation'
-import AuthController from 'src/controllers/AuthController'
-import { ISignIn } from 'src/api/AuthAPI'
-import AuthTpl from 'src/pages/Auth/template'
-import Component, { TEvent } from 'src/core/Component'
-import Button from 'src/components/Button'
-import Link from 'src/components/Link'
-import Input from 'src/components/Input'
-import { handleRoute } from 'src/utils/router'
-import { signInFields } from 'src/data/pages/auth'
+import { validateField } from '@/utils/validation'
+import AuthController from '@/controllers/AuthController'
+import { ISignIn } from '@/api/AuthAPI'
+import AuthTpl from '@/pages/Auth/template'
+import { Component, TEvent } from '@/core/Component'
+import Button from '@/components/Button'
+import Link from '@/components/Link'
+import Input from '@/components/Input'
+import { handleRoute } from '@/utils/router'
+import { signInFields } from '@/data/pages/auth'
 
 interface IProps {
   formId: string
@@ -89,10 +89,8 @@ class SignIn extends Component<IProps> {
     if (!oldFields) return shouldUpdate
 
     oldFields.forEach((oldField, index) => {
-      // eslint-disable-next-line no-underscore-dangle
-      const oldInputProps = oldField.input._props
-      // eslint-disable-next-line no-underscore-dangle
-      const newInputProps = newFields[index].input._props
+      const oldInputProps = oldField.input.props
+      const newInputProps = newFields[index].input.props
 
       if (oldInputProps.error !== newInputProps.error) {
         shouldUpdate = true

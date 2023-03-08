@@ -1,4 +1,4 @@
-import EventBus, { IEventBus } from 'src/core/EventBus'
+import EventBus, { IEventBus } from '@/core/EventBus'
 import {
   clearTemplate,
   getAttributeData,
@@ -10,8 +10,8 @@ import {
   isAttribute,
   isFullAttributeValue,
   isProp,
-} from 'src/utils/helpers'
-import { regExpProps, regExpSubstitution } from 'src/utils/regExp'
+} from '@/utils/helpers'
+import { regExpProps, regExpSubstitution } from '@/utils/regExp'
 
 type TChildren = 'tag' | 'value' | 'component' | 'loop' | 'text' | 'if'
 
@@ -30,7 +30,7 @@ export type TConstructable = {
   new (props: {}): any
 }
 
-abstract class Component<T extends IComponent> {
+export abstract class Component<T extends IComponent> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -38,39 +38,39 @@ abstract class Component<T extends IComponent> {
     FLOW_RENDER: 'flow:render',
   }
 
-  _tag: string
+  tag: string
 
-  _tpl: string
+  tpl: string
 
-  _eventBus: IEventBus
+  eventBus: IEventBus
 
-  _element: HTMLElement
+  element: HTMLElement
 
-  _props: IComponent
+  props: IComponent
 
-  _shouldUpdate: boolean
+  shouldUpdate: boolean
 
   protected constructor(tagName: string, props: T, tpl: string) {
-    this._tag = tagName
-    this._tpl = tpl
-    this._shouldUpdate = false
+    this.tag = tagName
+    this.tpl = tpl
+    this.shouldUpdate = false
 
-    this._eventBus = new EventBus()
-    this._props = this._makePropsProxy(props)
+    this.eventBus = new EventBus()
+    this.props = this.makePropsProxy(props)
 
-    this._registerEvents()
-    this._eventBus.emit(Component.EVENTS.INIT)
+    this.registerEvents()
+    this.eventBus.emit(Component.EVENTS.INIT)
   }
 
-  private _registerEvents() {
-    this._eventBus.on(Component.EVENTS.INIT, this._init.bind(this))
-    this._eventBus.on(Component.EVENTS.FLOW_CDM, this._componentDidMount.bind(this))
-    this._eventBus.on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this))
-    this._eventBus.on(Component.EVENTS.FLOW_RENDER, this._render.bind(this))
+  private registerEvents() {
+    this.eventBus.on(Component.EVENTS.INIT, this._init.bind(this))
+    this.eventBus.on(Component.EVENTS.FLOW_CDM, this._componentDidMount.bind(this))
+    this.eventBus.on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this))
+    this.eventBus.on(Component.EVENTS.FLOW_RENDER, this._render.bind(this))
   }
 
-  private _createResources() {
-    this._element = this._createDocumentElement()
+  private createResources() {
+    this.element = this.createDocumentElement()
   }
 
   private _componentDidMount() {
@@ -81,11 +81,11 @@ abstract class Component<T extends IComponent> {
     const shouldUpdate = this.componentDidUpdate(oldProps, newProps)
 
     if (shouldUpdate) {
-      this._eventBus.emit(Component.EVENTS.FLOW_RENDER)
+      this.eventBus.emit(Component.EVENTS.FLOW_RENDER)
     }
   }
 
-  private _makePropsProxy(props: IComponent) {
+  private makePropsProxy(props: IComponent) {
     return new Proxy(props, {
       deleteProperty: () => {
         throw new Error('Нет доступа')
@@ -101,7 +101,7 @@ abstract class Component<T extends IComponent> {
           // eslint-disable-next-line no-param-reassign
           target[prop] = value
 
-          this._shouldUpdate = true
+          this.shouldUpdate = true
         }
 
         return true
@@ -109,26 +109,26 @@ abstract class Component<T extends IComponent> {
     })
   }
 
-  private _createDocumentElement(): HTMLElement {
-    return document.createElement(this._tag)
+  private createDocumentElement(): HTMLElement {
+    return document.createElement(this.tag)
   }
 
   private _render() {
-    if (!this._element) return
+    if (!this.element) return
 
     const component = this.render()
 
     this.removeEvents()
-    this._element.textContent = ''
-    this._element.appendChild(component)
+    this.element.textContent = ''
+    this.element.appendChild(component)
     this.addEvents()
   }
 
   private _init() {
     this.init()
 
-    this._createResources()
-    this._eventBus.emit(Component.EVENTS.FLOW_RENDER)
+    this.createResources()
+    this.eventBus.emit(Component.EVENTS.FLOW_RENDER)
   }
 
   compile(
@@ -136,8 +136,8 @@ abstract class Component<T extends IComponent> {
     tag?: string,
     props?: { [key: string]: string | Component<T> },
   ): HTMLElement {
-    const rootTag = tag ?? this._tag
-    const rootProps = props ?? this._props
+    const rootTag = tag ?? this.tag
+    const rootProps = props ?? this.props
 
     const clearedTemplate = clearTemplate(template)
     const childrenTpl = getChildrenTpl(clearedTemplate, rootTag)
@@ -174,6 +174,8 @@ abstract class Component<T extends IComponent> {
           }
 
           case 'loop': {
+            if (!value) break
+
             const loopData = value as Array<{ [key: string]: string | Component<T> }>
 
             loopData.forEach((data) => {
@@ -335,10 +337,6 @@ abstract class Component<T extends IComponent> {
     return attrs
   }
 
-  get element(): HTMLElement {
-    return this._element
-  }
-
   getContent(): HTMLElement {
     return this.element
   }
@@ -348,42 +346,42 @@ abstract class Component<T extends IComponent> {
       return
     }
 
-    this._shouldUpdate = false
+    this.shouldUpdate = false
 
-    const oldProps = { ...this._props }
+    const oldProps = { ...this.props }
 
     if (Object.values(nextProps).length) {
-      Object.assign(this._props, nextProps)
+      Object.assign(this.props, nextProps)
     }
 
-    if (this._shouldUpdate) {
-      const args = [oldProps, this._props]
+    if (this.shouldUpdate) {
+      const args = [oldProps, this.props]
 
-      this._eventBus.emit(Component.EVENTS.FLOW_CDU, args)
-      this._shouldUpdate = false
+      this.eventBus.emit(Component.EVENTS.FLOW_CDU, args)
+      this.shouldUpdate = false
     }
   }
 
   addEvents() {
-    const { events = [] } = this._props
+    const { events = [] } = this.props
 
     events.map(({ name, tag, callback }) =>
-      this._element.querySelectorAll(tag).forEach((elem) => elem.addEventListener(name, callback)),
+      this.element.querySelectorAll(tag).forEach((elem) => elem.addEventListener(name, callback)),
     )
   }
 
   removeEvents() {
-    const { events = [] } = this._props
+    const { events = [] } = this.props
 
     events.map(({ name, tag, callback }) =>
-      this._element
+      this.element
         .querySelectorAll(tag)
         .forEach((elem) => elem.removeEventListener(name, callback)),
     )
   }
 
   dispatchComponentDidMount() {
-    this._eventBus.emit(Component.EVENTS.FLOW_CDM)
+    this.eventBus.emit(Component.EVENTS.FLOW_CDM)
   }
 
   componentDidUpdate(oldProps: IComponent, newProps: IComponent): boolean {
@@ -391,7 +389,7 @@ abstract class Component<T extends IComponent> {
   }
 
   clear() {
-    this._element.remove()
+    this.element.remove()
   }
 
   init(): void {}
@@ -400,5 +398,3 @@ abstract class Component<T extends IComponent> {
 
   abstract render(): HTMLElement
 }
-
-export default Component

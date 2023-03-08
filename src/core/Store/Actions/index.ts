@@ -1,6 +1,6 @@
-import { userActions } from 'src/core/Store/Actions/UserActions'
-import { chatsActions } from 'src/core/Store/Actions/ChatsActions'
-import { messagesActions } from 'src/core/Store/Actions/MessagesActions'
+import { userActions } from '@/core/Store/Actions/UserActions'
+import { chatsActions } from '@/core/Store/Actions/ChatsActions'
+import { messagesActions } from '@/core/Store/Actions/MessagesActions'
 
 export const ACTIONS = {
   ...userActions,

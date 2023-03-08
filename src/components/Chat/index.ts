@@ -1,20 +1,20 @@
-import Component, { TEvent } from 'src/core/Component'
-import ChatTpl from 'src/components/Chat/template'
-import Message from 'src/components/Message'
-import Tooltip from 'src/components/Tooltip'
-import Modal from 'src/components/Modal'
-import Input from 'src/components/Input'
-import Button from 'src/components/Button'
-import Store, { IState } from 'src/core/Store/Store'
-import UserController from 'src/controllers/UserController'
-import ChatsController from 'src/controllers/ChatsController'
-import { IUserRequest } from 'src/api/ChatsAPI'
-import WebSocketMessages from 'src/core/WebSocket'
-import { connect } from 'src/core/Store/Connect'
-import { getMessageTime } from 'src/utils/helpers'
-import { RESOURCES_URL } from 'src/constants/url'
-import { isValid } from 'src/utils/validation'
-import chatAvatarUpload from 'src/assets/icons/chatAvatarUpload.svg'
+import { Component, TEvent } from '@/core/Component'
+import ChatTpl from '@/components/Chat/template'
+import Message from '@/components/Message'
+import Tooltip from '@/components/Tooltip'
+import Modal from '@/components/Modal'
+import Input from '@/components/Input'
+import Button from '@/components/Button'
+import Store, { IState } from '@/core/Store/Store'
+import UserController from '@/controllers/UserController'
+import ChatsController from '@/controllers/ChatsController'
+import { IUserRequest } from '@/api/ChatsAPI'
+import WebSocketMessages from '@/core/WebSocket'
+import { connect } from '@/core/Store/Connect'
+import { getMessageTime } from '@/utils/helpers'
+import { RESOURCES_URL } from '@/constants/url'
+import { isValid } from '@/utils/validation'
+import chatAvatarUpload from '@/assets/icons/chatAvatarUpload.svg'
 
 interface IProps {
   avatar: string
@@ -55,8 +55,7 @@ class Chat extends Component<IProps> {
 
           if (!target || target.id !== 'chat-options') return
 
-          // eslint-disable-next-line no-underscore-dangle
-          if (self._props.tooltip) {
+          if (self.props.tooltip) {
             self.setProps({ tooltip: null })
           } else {
             self.openTooltip(target.id)

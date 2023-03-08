@@ -1,4 +1,4 @@
-import cross from 'src/assets/icons/cross.svg'
+import cross from '@/assets/icons/cross.svg'
 
 import * as s from './styles.module.less'
 

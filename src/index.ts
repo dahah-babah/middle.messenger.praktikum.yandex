@@ -1,17 +1,14 @@
-import Router, { ROUTES } from 'src/core/Router/Router'
-import AuthController from 'src/controllers/AuthController'
-import ChatsController from 'src/controllers/ChatsController'
-
-import SignIn from 'src/pages/Auth/SignIn'
-import SignUp from 'src/pages/Auth/SignUp'
-import NotFound from 'src/pages/Error/NotFound'
-import ServerError from 'src/pages/Error/ServerError'
-import User from 'src/pages/Settings/User'
-import Password from 'src/pages/Settings/Password'
-import Chats from 'src/pages/Chats'
-import Profile from 'src/pages/Profile'
-
-import 'src/styles/normalize.less'
+import Router, { ROUTES } from '@/core/Router/Router'
+import AuthController from '@/controllers/AuthController'
+import ChatsController from '@/controllers/ChatsController'
+import SignIn from '@/pages/Auth/SignIn'
+import SignUp from '@/pages/Auth/SignUp'
+import NotFound from '@/pages/Error/NotFound'
+import ServerError from '@/pages/Error/ServerError'
+import User from '@/pages/Settings/User'
+import Password from '@/pages/Settings/Password'
+import Chats from '@/pages/Chats'
+import Profile from '@/pages/Profile'
 
 const pageNotFound = !(Object.values(ROUTES) as string[]).includes(window.location.pathname)
 const protectedRoutes = [ROUTES.PROFILE, ROUTES.SETTINGS, ROUTES.PASSWORD, ROUTES.MESSENGER]

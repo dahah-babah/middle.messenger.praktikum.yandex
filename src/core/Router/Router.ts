@@ -1,5 +1,5 @@
-import Route from 'src/core/Router/Route'
-import { TConstructable } from 'src/core/Component'
+import Route from '@/core/Router/Route'
+import { TConstructable } from '@/core/Component'
 
 export enum ROUTES {
   SIGN_IN = '/',
@@ -19,9 +19,9 @@ class Router {
 
   history: History
 
-  _currentRoute: null | Route
+  private currentRoute: null | Route
 
-  _rootQuery: string
+  private readonly rootQuery: string
 
   constructor(rootQuery: string) {
     if (Router.instance) {
@@ -30,24 +30,24 @@ class Router {
 
     this.routes = []
     this.history = window.history
-    this._currentRoute = null
-    this._rootQuery = rootQuery
+    this.currentRoute = null
+    this.rootQuery = rootQuery
 
     Router.instance = this
   }
 
-  _onRoute(pathname: string) {
+  private onRoute(pathname: string) {
     const route = this.getRoute(pathname)
 
     if (!route) {
       return
     }
 
-    if (this._currentRoute && this._currentRoute !== route) {
-      this._currentRoute.leave()
+    if (this.currentRoute && this.currentRoute !== route) {
+      this.currentRoute.leave()
     }
 
-    this._currentRoute = route
+    this.currentRoute = route
 
     route.render()
   }
@@ -57,7 +57,7 @@ class Router {
   }
 
   use(pathname: string, component: TConstructable) {
-    const route = new Route(pathname, component, { rootQuery: this._rootQuery })
+    const route = new Route(pathname, component, { rootQuery: this.rootQuery })
 
     this.routes.push(route)
 
@@ -68,15 +68,15 @@ class Router {
     window.onpopstate = (event) => {
       const target = event.currentTarget as Window
 
-      this._onRoute(target.location.pathname)
+      this.onRoute(target.location.pathname)
     }
 
-    this._onRoute(window.location.pathname)
+    this.onRoute(window.location.pathname)
   }
 
   go(pathname: string) {
     this.history.pushState({}, '', pathname)
-    this._onRoute(pathname)
+    this.onRoute(pathname)
   }
 
   back() {

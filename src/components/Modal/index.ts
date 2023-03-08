@@ -1,7 +1,7 @@
-import Component, { TEvent } from 'src/core/Component'
-import ModalTpl from 'src/components/Modal/template'
-import Input from 'src/components/Input'
-import Button from 'src/components/Button'
+import { Component, TEvent } from '@/core/Component'
+import ModalTpl from '@/components/Modal/template'
+import Input from '@/components/Input'
+import Button from '@/components/Button'
 
 interface IProps {
   id: string
@@ -33,7 +33,7 @@ class Modal extends Component<IProps> {
       },
     ]
 
-    const comingEvents = this._props.events ?? []
+    const comingEvents = this.props.events ?? []
 
     this.setProps({ events: [...comingEvents, ...events] })
   }
